@@ -1,12 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-
+import { TrainingData } from '../../core/constant';
+import { Tabs } from '@/Components/Tabs/Tabs';
 export default function Training({ auth }) {
   return (
-    <AuthenticatedLayout
-      user={auth.user}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Welcome, User</h2>}
-    >
+    <AuthenticatedLayout user={auth.user}>
       <Head title="Training" />
 
       <div className="py-12">
@@ -14,20 +12,20 @@ export default function Training({ auth }) {
           <div className="bg-indigo-200  overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 text-black font-bold">Training Platform</div>
           </div>
+          <Tabs />
           <div class="grid grid-cols-3 gap-4 mt-4">
-            <div className="card bg-base-100 w-96 shadow-xl">
-              <figure>
-                <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
-              </figure>
-              <div className="card-body bg-indigo-200 text-black text-center">
-                <h2 className="card-title justify-center">Learn HTML and CSS</h2>
-                <p className="text-gray-500">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae quibusdam iure perspiciatis
-                  officia dicta fugiat, explicabo corrupti quod facere sapiente dolorum maiores fuga porro minus ipsa
-                  illo cum, error nam.
-                </p>
+            {TrainingData.map(item => (
+              <div className="cursor-pointer hover:opacity-90 hover:scale-90 transition-all ">
+                <div className="card bg-base-100 w-full shadow-md h-60">
+                  <div className="card-body bg-indigo-200 text-black text-center">
+                    <h2 className="card-title justify-center bg-indigo-600 text-white rounded-lg p-3 mb-2">
+                      {item.title}
+                    </h2>
+                    <p className="text-gray-500">{item.description}</p>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

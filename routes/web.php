@@ -25,15 +25,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/Admin/Login', function () {
-    return Inertia::render('Login', [
-        'canLogin' => Route::has('Login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -57,6 +48,10 @@ Route::get('/feedback', function () {
 Route::get('/support', function () {
     return Inertia::render('Support');
 })->middleware(['auth'])->name('support');
+
+Route::get('/experience', function () {
+    return Inertia::render('Experience');
+})->middleware(['auth'])->name('experience');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

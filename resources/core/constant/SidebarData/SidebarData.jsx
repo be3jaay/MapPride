@@ -23,4 +23,8 @@ export const SidebarData = [
     title: 'Support Assistance',
     path: 'support',
   },
+  {
+    title: 'Experience',
+    path: 'experience',
+  },
 ];

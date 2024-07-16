@@ -5,6 +5,7 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { SidebarData } from '../../core/constant';
+// import { ToastValueProvider } from '../../core/context';
 
 export default function Authenticated({ user, header, children }) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -122,7 +123,10 @@ export default function Authenticated({ user, header, children }) {
         </header>
       )}
 
-      <main>{children}</main>
+      <main>
+        {/* <ToastValueProvider>{children}</ToastValueProvider> */}
+        {children}
+      </main>
     </div>
   );
 }
