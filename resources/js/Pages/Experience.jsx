@@ -1,6 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { ExperienceData } from '../../core/constant/ExperienceData/ExperienceData';
+import { FaUserCheck } from 'react-icons/fa';
 
 export default function Experience({ auth }) {
   return (
@@ -10,7 +11,9 @@ export default function Experience({ auth }) {
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-indigo-200  overflow-hidden shadow-sm sm:rounded-lg">
-            <div className="p-6 text-indigo-800 font-bold">User Experiences</div>
+            <div className="p-6 text-indigo-800 font-bold text-center">
+              This is a freedom wall - These posted below are the shared experiences of the user.
+            </div>
           </div>
           <div class="grid grid-cols-2 gap-4 mt-4">
             {ExperienceData.map(item => (
@@ -33,24 +36,9 @@ export default function Experience({ auth }) {
                     </div>
                   </div>
                 </div>
-
                 <div className="flex justify-end">
                   <strong className="-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-green-600 px-3 py-1.5 text-white">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                      />
-                    </svg>
-
+                    <FaUserCheck />
                     <span className="text-[10px] font-medium sm:text-xs">Posted!</span>
                   </strong>
                 </div>

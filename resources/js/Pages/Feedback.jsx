@@ -15,11 +15,12 @@ export default function Feedback({ auth }) {
     defaultValues: feedbackSchema.getDefault(),
   });
 
-  const { handleSubmit, register } = form;
+  const { handleSubmit, register, reset } = form;
 
   const onSubmit = data => {
     console.log(data);
     notify();
+    reset();
   };
 
   return (

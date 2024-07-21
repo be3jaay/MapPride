@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { ResourcesData } from '../../core/constant/ResourcesData/ResourcesData';
-import { Tabs } from '@/Components/Tabs/Tabs';
+import { ResourcesTabs } from '../../core/constant/ResourcesTabs/ResourcesTabs';
+import { CustomTabs } from '@/Components/Tabs/CustomTabs';
 
 export default function Resources({ auth }) {
   return (
@@ -12,19 +12,8 @@ export default function Resources({ auth }) {
           <div className="bg-indigo-200  overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 text-black font-bold">Resources Module</div>
           </div>
-          <Tabs />
-          <div class="grid grid-cols-3 gap-4 mt-4">
-            {ResourcesData.map(item => (
-              <div className="card bg-base-100 w-96 shadow-md">
-                <div className="card-body bg-indigo-200 text-black">
-                  <h2 className="card-title">{item.title}</h2>
-                  <p className="text-gray-500">{item.description}</p>
-                  <div className="card-actions justify-center">
-                    <button className="btn btn-primary w-full text-white">{item.button}</button>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="mt-4">
+            <CustomTabs tabs={ResourcesTabs} />
           </div>
         </div>
       </div>
