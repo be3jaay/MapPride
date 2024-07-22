@@ -22,17 +22,12 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
   return (
     <section className={className}>
       <header>
-        <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Profile Information</h2>
-
-        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-          Update your account's profile information and email address.
-        </p>
+        <h2 className="text-xl font-bold text-indigo-700">Profile Information</h2>
+        <p className="mt-1 text-sm text-black ">Update your account's profile information and email address.</p>
       </header>
-
       <form onSubmit={submit} className="mt-6 space-y-6">
         <div>
           <InputLabel htmlFor="name" value="Name" />
-
           <TextInput
             id="name"
             className="mt-1 block w-full"
@@ -42,13 +37,10 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             isFocused
             autoComplete="name"
           />
-
           <InputError className="mt-2" message={errors.name} />
         </div>
-
         <div>
           <InputLabel htmlFor="email" value="Email" />
-
           <TextInput
             id="email"
             type="email"
@@ -58,10 +50,8 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             required
             autoComplete="username"
           />
-
           <InputError className="mt-2" message={errors.email} />
         </div>
-
         {mustVerifyEmail && user.email_verified_at === null && (
           <div>
             <p className="text-sm mt-2 text-gray-800 dark:text-gray-200">
@@ -83,10 +73,8 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             )}
           </div>
         )}
-
         <div className="flex items-center gap-4">
           <PrimaryButton disabled={processing}>Save</PrimaryButton>
-
           <Transition
             show={recentlySuccessful}
             enter="transition ease-in-out"

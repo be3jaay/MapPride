@@ -60,21 +60,28 @@ export default function Login({ status, canResetPassword }) {
           />
           <InputError message={errors.password} className="mt-2" />
         </div>
-        <div className="block mt-4">
+        <div className="flex my-4 items-center justify-between">
           <label className="flex items-center">
             <Checkbox name="remember" checked={data.remember} onChange={e => setData('remember', e.target.checked)} />
-            <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+            <span className="ms-2 text-md text-black">Remember me</span>
           </label>
-        </div>
-        <div className="flex items-center justify-end mt-4">
           {canResetPassword && (
             <Link
               href={route('password.request')}
-              className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+              className="underline text-md text-black dark:hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
             >
               Forgot your password?
             </Link>
           )}
+        </div>
+
+        <div className="flex items-center justify-between my-4">
+          <Link href={route('password.request')} className="text-black">
+            Don't have an account?{' '}
+            <span className="underline font-bold text-md text-black dark:hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+              Register here
+            </span>
+          </Link>
           <PrimaryButton className="ms-4" disabled={processing}>
             Login
           </PrimaryButton>

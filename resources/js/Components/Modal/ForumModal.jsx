@@ -32,6 +32,7 @@ export const ForumModal = () => {
 
   const onSubmit = data => {
     console.log(data);
+    reset();
     notify();
   };
 
