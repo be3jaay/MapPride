@@ -1,4 +1,4 @@
-export const SidebarData = [
+export const UserHeaderData = [
   {
     title: 'Dashboard',
     path: 'dashboard',

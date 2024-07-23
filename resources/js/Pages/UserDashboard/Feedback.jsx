@@ -2,7 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Head } from '@inertiajs/react';
 import { useForm } from 'react-hook-form';
-import { feedbackSchema } from '../../core/schema';
+import { feedbackSchema } from '../../../core/schema';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

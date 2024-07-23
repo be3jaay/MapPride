@@ -1,8 +1,10 @@
+import PrimaryButton from '@/Components/PrimaryButton';
 import { ResourcesData } from '../ResourcesData/ResourcesData';
+import { FaArrowRightLong } from 'react-icons/fa6';
 
 export const ResourcesTabs = [
   {
-    title: 'LGBTQ Rights',
+    title: 'Legal Rights',
     content: (
       <div class="grid grid-cols-2 gap-4 mt-4">
         {ResourcesData.map(item => (
@@ -11,7 +13,10 @@ export const ResourcesTabs = [
               <h2 className="card-title text-indigo-700 text-2xl">{item.title}</h2>
               <p className="text-black my-2">{item.description}</p>
               <div className="card-actions justify-center">
-                <button className="btn btn-primary w-full text-white">{item.button}</button>
+                <PrimaryButton className="w-full text-white justify-center py-4">
+                  {item.button}
+                  <FaArrowRightLong className="ml-2" />
+                </PrimaryButton>
               </div>
             </div>
           </div>
@@ -20,7 +25,7 @@ export const ResourcesTabs = [
     ),
   },
   {
-    title: 'Policies Related to LGBTQ',
+    title: 'Health',
     content: (
       <div class="grid grid-cols-2 gap-4 mt-4">
         {ResourcesData.map(item => (
@@ -29,7 +34,10 @@ export const ResourcesTabs = [
               <h2 className="card-title text-indigo-700 text-2xl">{item.title}</h2>
               <p className="text-black my-2">{item.description}</p>
               <div className="card-actions justify-center">
-                <button className="btn btn-primary w-full text-white">{item.button}</button>
+                <PrimaryButton className="w-full text-white justify-center py-4">
+                  {item.button}
+                  <FaArrowRightLong className="ml-2" />
+                </PrimaryButton>
               </div>
             </div>
           </div>
@@ -38,7 +46,7 @@ export const ResourcesTabs = [
     ),
   },
   {
-    title: "Do's and don'ts as LGBTQ individual",
+    title: 'LGBTQ+',
     content: (
       <div class="grid grid-cols-2 gap-4 mt-4">
         {ResourcesData.map(item => (
@@ -47,7 +55,10 @@ export const ResourcesTabs = [
               <h2 className="card-title text-indigo-700 text-2xl">{item.title}</h2>
               <p className="text-black my-2">{item.description}</p>
               <div className="card-actions justify-center">
-                <button className="btn btn-primary w-full text-white">{item.button}</button>
+                <PrimaryButton className="w-full text-white justify-center py-4">
+                  {item.button}
+                  <FaArrowRightLong className="ml-2" />
+                </PrimaryButton>
               </div>
             </div>
           </div>

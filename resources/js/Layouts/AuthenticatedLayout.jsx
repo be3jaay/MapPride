@@ -5,26 +5,27 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { SidebarData } from '../../core/constant';
 import { FaChevronDown } from 'react-icons/fa6';
+import ally from '../../core/images/ally.png';
 
 export default function Authenticated({ user, header, children }) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
   return (
     <div className="min-h-screen bg-white">
-      <nav className="bg-white dark:bg-indigo-600 border-b border-white">
+      <nav className="bg-white border-b border-white drop-shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="shrink-0 flex items-center">
                 <Link href="/">
-                  <span className="text-white font-bold">Map-Pride</span>
+                  <img src={ally} alt="" className="w-10 h-10" />
                 </Link>
               </div>
 
               <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 {SidebarData.map((item, index) => (
                   <NavLink href={route(item.path)} active={route().current(item.path)} key={index}>
-                    <span className="text-white">{item.title}</span>
+                    <span className="text-indigo-700">{item.title}</span>
                   </NavLink>
                 ))}
               </div>
@@ -37,7 +38,7 @@ export default function Authenticated({ user, header, children }) {
                     <span className="inline-flex rounded-md">
                       <button
                         type="button"
-                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black bg-white hover:text-gray-400 focus:outline-none transition ease-in-out duration-150"
+                        className="inline-flex text-indigo-700 items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md bg-white hover:text-gray-400 focus:outline-none transition ease-in-out duration-150"
                       >
                         {user.name}
                         <FaChevronDown className="ms-2 -me-0.5 h-4 w-3" />

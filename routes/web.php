@@ -4,18 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\HomeController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\AdminDashboardController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -27,31 +16,31 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('UserDashboard/Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/map', function () {
-    return Inertia::render('Map');
+    return Inertia::render('UserDashboard/Map');
 })->middleware(['auth'])->name('map');
 
 Route::get('/resources', function () {
-    return Inertia::render('Resources');
+    return Inertia::render('UserDashboard/Resources');
 })->middleware(['auth'])->name('resources');
 
 Route::get('/training', function () {
-    return Inertia::render('Training');
+    return Inertia::render('UserDashboard/Training');
 })->middleware(['auth'])->name('training');
 
 Route::get('/feedback', function () {
-    return Inertia::render('Feedback');
+    return Inertia::render('UserDashboard/Feedback');
 })->middleware(['auth'])->name('feedback');
 
 Route::get('/support', function () {
-    return Inertia::render('Support');
+    return Inertia::render('UserDashboard/Support');
 })->middleware(['auth'])->name('support');
 
 Route::get('/experience', function () {
-    return Inertia::render('Experience');
+    return Inertia::render('UserDashboard/Experience');
 })->middleware(['auth'])->name('experience');
 
 Route::middleware('auth')->group(function () {
@@ -60,6 +49,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return Inertia::render('AdminDashboard/AdminDashboard');
+    })->name('admin.dashboard');
+
+    Route::get('/admin/resources', function () {
+        return Inertia::render('AdminDashboard/AdminResources');
+    })->name('admin.resources');
+
+    // Add more admin routes as needed
+});
+
 require __DIR__.'/auth.php';
 
-route::get('admin/dashboard',[HomeController::class,'index']);
+

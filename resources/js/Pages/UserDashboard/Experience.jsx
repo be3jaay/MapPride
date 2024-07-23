@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { ExperienceData } from '../../core/constant/ExperienceData/ExperienceData';
+import { ExperienceData } from '../../../core/constant/ExperienceData/ExperienceData';
 import { FaUserCheck } from 'react-icons/fa';
 
 export default function Experience({ auth }) {
