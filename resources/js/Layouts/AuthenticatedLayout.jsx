@@ -3,7 +3,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
-import { SidebarData } from '../../core/constant';
+import { UserHeaderData } from '../../core/constant';
 import { FaChevronDown } from 'react-icons/fa6';
 import ally from '../../core/images/ally.png';
 
@@ -23,7 +23,7 @@ export default function Authenticated({ user, header, children }) {
               </div>
 
               <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                {SidebarData.map((item, index) => (
+                {UserHeaderData.map((item, index) => (
                   <NavLink href={route(item.path)} active={route().current(item.path)} key={index}>
                     <span className="text-indigo-700">{item.title}</span>
                   </NavLink>

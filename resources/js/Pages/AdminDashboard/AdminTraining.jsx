@@ -4,7 +4,7 @@ import { ResourcesTable } from '@/Components/Tables/ResourcesTable';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
 
-export default function AdminDashboard({ auth }) {
+export default function AdminTraining({ auth }) {
   const user = auth.user;
 
   return (
@@ -17,8 +17,8 @@ export default function AdminDashboard({ auth }) {
               <div className="w-full">
                 <Alert
                   type="info"
-                  message="Resources Content Management"
-                  description="In this section, the administrator will add/create resources that will be shown for user resources module."
+                  message="Training Content Management"
+                  description="In this section, the administrator will add/create training platform that will be shown for user training platform."
                 />
                 <div className="my-4">
                   <AdminResourcesModal />

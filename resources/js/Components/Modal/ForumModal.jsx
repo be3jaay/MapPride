@@ -65,30 +65,26 @@ export const ForumModal = () => {
                 {...register('username')}
               />
             </label>
-            <select
-              className="select select-bordered w-full p-4 h-14 bg-white border-black text-black font-bold"
-              {...register('experience')}
-            >
-              <option value="" disabled selected>
-                Type of experience
-              </option>
-              <option value="Harassment">Harassment</option>
-              <option value="Bullying">Bullying</option>
-              <option value="Cyber-Bullying">Cyber-Bullying</option>
-              <option value="CatCalled">CatCalled</option>
-              <option value="Mental Issue">Mental Issue</option>
-            </select>
+            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+              Experience
+              <input
+                type="text"
+                className="input w-full bg-transparent my-2"
+                placeholder="What type of experience (eg. Harassment)"
+                {...register('experience')}
+              />
+            </label>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Location
               <input
                 type="text"
                 className="input w-full bg-transparent my-2"
-                placeholder="Type your anonymous name here.."
+                placeholder="Where did the experience happens..."
                 {...register('location')}
               />
             </label>
             <textarea
-              placeholder="Share your experience here..."
+              placeholder="Share your story here..."
               className="textarea border-black w-full h-64 bg-white font-bold text-black"
               {...register('description')}
             ></textarea>

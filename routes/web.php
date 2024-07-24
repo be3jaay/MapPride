@@ -58,6 +58,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return Inertia::render('AdminDashboard/AdminResources');
     })->name('admin.resources');
 
+    Route::get('/admin/training', function () {
+        return Inertia::render('AdminDashboard/AdminTraining');
+    })->name('admin.training');
+
+    Route::get('/admin/experience', function () {
+        return Inertia::render('AdminDashboard/AdminExperience');
+    })->name('admin.experience');
+
+    Route::get('/admin/feedback', function () {
+        return Inertia::render('AdminDashboard/AdminFeedback');
+    })->name('admin.feedback');
+
     // Add more admin routes as needed
 });
 

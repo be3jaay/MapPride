@@ -40,14 +40,12 @@ export const AdminResourcesModal = () => {
     <>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
-        Add Resources <MdForum />
+        Create Resources <MdForum className="ml-2" />
       </PrimaryButton>
-
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 p-12">
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-2xl text-indigo-800">Manage Resources Content</h3>
-
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Tab
               <input
@@ -67,7 +65,6 @@ export const AdminResourcesModal = () => {
                 {...register('title')}
               />
             </label>
-
             <textarea
               placeholder="Enter description here..."
               className="textarea border-black w-full h-64 bg-white font-bold text-black"

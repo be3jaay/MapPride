@@ -2,6 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { ExperienceData } from '../../../core/constant/ExperienceData/ExperienceData';
 import { FaUserCheck } from 'react-icons/fa';
+import { Alert } from '@/Components/Alert';
 
 export default function Experience({ auth }) {
   return (
@@ -11,9 +12,11 @@ export default function Experience({ auth }) {
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-indigo-200  overflow-hidden shadow-sm sm:rounded-lg">
-            <div className="p-6 text-indigo-800 font-bold text-center">
-              This is a freedom wall - These posted below are the shared experiences of the user.
-            </div>
+            <Alert
+              type="info"
+              message="Map-Pride Freedom Wall"
+              description="This is a freedom wall - These posted below are the shared experiences of the user."
+            />
           </div>
           <div class="grid grid-cols-2 gap-4 mt-4">
             {ExperienceData.map(item => (

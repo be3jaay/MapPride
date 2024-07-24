@@ -1,10 +1,9 @@
 import { Alert } from '@/Components/Alert';
-import { AdminResourcesModal } from '@/Components/Modal/AdminResourcesModal';
-import { ResourcesTable } from '@/Components/Tables/ResourcesTable';
+import { FeedbackTable } from '@/Components/Tables/FeedbackTable';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
 
-export default function AdminDashboard({ auth }) {
+export default function AdminFeedback({ auth }) {
   const user = auth.user;
 
   return (
@@ -14,18 +13,15 @@ export default function AdminDashboard({ auth }) {
         <header>
           <div className="mx-auto max-w-screen-xl">
             <div className="sm:flex sm:items-center sm:justify-between">
-              <div className="w-full">
+              <div className="w-full mb-4">
                 <Alert
                   type="info"
-                  message="Resources Content Management"
-                  description="In this section, the administrator will add/create resources that will be shown for user resources module."
+                  message="Feedback Content Management"
+                  description="In this section, the administrator will see all the user's feedback regarding the web application, then check all the bugs or issues found."
                 />
-                <div className="my-4">
-                  <AdminResourcesModal />
-                </div>
               </div>
             </div>
-            <ResourcesTable />
+            <FeedbackTable />
           </div>
         </header>
       }

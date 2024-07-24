@@ -4,8 +4,20 @@ export const AdminHeaderData = [
     path: 'admin.dashboard',
   },
   {
-    title: 'Add Resources',
+    title: 'Resource Content',
     path: 'admin.resources',
+  },
+  {
+    title: 'Training Content',
+    path: 'admin.training',
+  },
+  {
+    title: 'Experience Content',
+    path: 'admin.experience',
+  },
+  {
+    title: 'Feedback Content',
+    path: 'admin.feedback',
   },
   // {
   //   title: 'View Map',
@@ -28,7 +40,6 @@ export const AdminHeaderData = [
   //   path: 'admin.support',
   // },
   // {
-  //   title: 'Experience',
-  //   path: 'admin.experience',
+
   // },
 ];
