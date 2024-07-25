@@ -1,17 +1,18 @@
 import Modal from '@/Components/Modal';
 import PrimaryButton from '../PrimaryButton';
 import { MdForum } from 'react-icons/md';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resourcesForumSchema } from '../../../core/schema';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 export const AdminResourcesModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const notify = () => toast('Your experience have been posted, Thank you.');
+  const [tabs, setTabs] = useState([]);
+  const notify = () => toast('Your experience has been posted, Thank you.');
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -30,10 +31,31 @@ export const AdminResourcesModal = () => {
 
   const { register, handleSubmit, reset, processing } = form;
 
-  const onSubmit = data => {
-    reset();
-    notify();
+  const onSubmit = async data => {
+    try {
+      const response = await axios.post('/api/resources', data);
+      console.log('API response:', response);
+      reset();
+      notifySuccess();
+    } catch (error) {
+      console.error('API error:', error);
+      notifyError();
+    }
   };
+
+  useEffect(() => {
+    const fetchTabs = async () => {
+      try {
+        const response = await axios.get('/api/tabs');
+        const tabTitles = response.data.map(tab => tab.tabs_title);
+        setTabs(tabTitles);
+      } catch (error) {
+        console.error('Error fetching tabs:', error);
+      }
+    };
+
+    fetchTabs();
+  }, []);
 
   return (
     <>
@@ -42,19 +64,25 @@ export const AdminResourcesModal = () => {
         Create Resources <MdForum className="ml-2" />
       </PrimaryButton>
       <Modal show={isOpen} onClose={closeModal}>
-        <div className="modal-box bg-indigo-200 p-12">
+        <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
-            <h3 className="font-bold text-2xl text-indigo-800">Manage Resources Content</h3>
+            <h3 className="font-bold text-2xl text-indigo-800">
+              How are you? This is a freedom wall, feel free to share your experience here.
+            </h3>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Tab
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="Tab Title"
-                {...register('tab')}
-              />
+              Tab-Title
+              <select
+                className="select w-full bg-transparent border-transparent text-black font-bold my-4"
+                {...register('tabs_title')}
+              >
+                <option disabled>Create a tab for...</option>
+                {tabs.map((title, index) => (
+                  <option key={index} value={title}>
+                    {title}
+                  </option>
+                ))}
+              </select>
             </label>
-
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Title
               <input
@@ -75,7 +103,7 @@ export const AdminResourcesModal = () => {
                 type="text"
                 className="input w-full bg-transparent my-2"
                 placeholder="Paste the url link"
-                {...register('urlLink')}
+                {...register('url_link')}
               />
             </label>
             <PrimaryButton className="w-full justify-center py-4" disabled={processing} type="submit">

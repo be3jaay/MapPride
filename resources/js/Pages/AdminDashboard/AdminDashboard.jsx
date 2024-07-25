@@ -1,8 +1,8 @@
 import React from 'react';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
-import { ForumModal } from '@/Components/Modal/ForumModal';
 import { DashboardOverview } from '@/Components/DashboardOverview/DashboardOverview';
+import { AdminCreateTabs } from '@/Components/Modal/AdminCreateTabs';
 
 export default function AdminDashboard({ auth }) {
   const user = auth.user;
@@ -19,7 +19,7 @@ export default function AdminDashboard({ auth }) {
                 <p className="mt-1.5 text-sm text-gray-500">I hope you're doing good, best of luck! 🎉</p>
               </div>
               <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                <ForumModal />
+                <AdminCreateTabs />
               </div>
             </div>
           </div>

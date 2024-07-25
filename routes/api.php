@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\TabsController;
+use App\Http\Controllers\ResourcesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +23,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/experience', [ExperienceController::class, 'store']);
 Route::get('/experience', [ExperienceController::class, 'index']);
+
+Route::post('/tabs', [TabsController::class, 'store']);
+Route::get('/tabs', [TabsController::class, 'index']);
+
+Route::post('/resources', [ResourcesController::class, 'store']);
+Route::get('/resources', [ResourcesController::class, 'index']);
