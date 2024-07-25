@@ -18,7 +18,7 @@ export default function Experience({ auth }) {
               description="This is a freedom wall - These posted below are the shared experiences of the user."
             />
           </div>
-          <div class="grid grid-cols-2 gap-4 mt-4">
+          <div className="grid grid-cols-2 gap-4 mt-4">
             {ExperienceData.map(item => (
               <article className="rounded-xl border-2 border-gray-100 bg-indigo-200 cursor-pointer hover:opacity-90 hover:scale-90 transition-all">
                 <div className="flex items-start gap-4 p-4 sm:p-6 lg:p-8">

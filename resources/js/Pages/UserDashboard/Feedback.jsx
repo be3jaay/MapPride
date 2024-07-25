@@ -19,7 +19,6 @@ export default function Feedback({ auth }) {
   const { handleSubmit, register, reset } = form;
 
   const onSubmit = data => {
-    console.log(data);
     notify();
     reset();
   };

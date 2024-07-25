@@ -6,12 +6,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { forumSchema } from '../../../core/schema';
 import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const ForumModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const notify = () => toast('Your experience have been posted, Thank you.');
+  const notifySuccess = () => toast.success('Your experience has been posted, thank you.');
+  const notifyError = () => toast.error('There was an error posting your experience.');
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -25,15 +27,21 @@ export const ForumModal = () => {
   const form = useForm({
     mode: 'all',
     resolver: yupResolver(forumSchema),
-    defaultValues: forumSchema.getDefault(),
   });
 
   const { register, handleSubmit, reset } = form;
 
-  const onSubmit = data => {
-    console.log(data);
-    reset();
-    notify();
+  const onSubmit = async data => {
+    console.log('Form submitted:', data); // Check if this logs
+    try {
+      const response = await axios.post('/api/experience', data);
+      console.log('API response:', response);
+      reset();
+      notifySuccess();
+    } catch (error) {
+      console.error('API error:', error);
+      notifyError();
+    }
   };
 
   return (
@@ -45,7 +53,7 @@ export const ForumModal = () => {
 
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 max-w-7xl p-12">
-          <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <button
               className="btn btn-md text-black btn-circle btn-ghost absolute right-2 top-2"
               type="button"
@@ -66,12 +74,21 @@ export const ForumModal = () => {
               />
             </label>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+              Title
+              <input
+                type="text"
+                className="input w-full bg-transparent my-2"
+                placeholder="Type your anonymous name here.."
+                {...register('title')}
+              />
+            </label>
+            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Experience
               <input
                 type="text"
                 className="input w-full bg-transparent my-2"
-                placeholder="What type of experience (eg. Harassment)"
-                {...register('experience')}
+                placeholder="What type of experience (e.g., Harassment)"
+                {...register('experience_type')}
               />
             </label>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
@@ -79,7 +96,7 @@ export const ForumModal = () => {
               <input
                 type="text"
                 className="input w-full bg-transparent my-2"
-                placeholder="Where did the experience happens..."
+                placeholder="Where did the experience happen..."
                 {...register('location')}
               />
             </label>

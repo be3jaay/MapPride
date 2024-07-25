@@ -31,7 +31,6 @@ export const AdminResourcesModal = () => {
   const { register, handleSubmit, reset, processing } = form;
 
   const onSubmit = data => {
-    console.log(data);
     reset();
     notify();
   };
