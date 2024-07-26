@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\TabsController;
 use App\Http\Controllers\ResourcesController;
+use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\FeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +31,9 @@ Route::get('/tabs', [TabsController::class, 'index']);
 
 Route::post('/resources', [ResourcesController::class, 'store']);
 Route::get('/resources', [ResourcesController::class, 'index']);
+
+Route::post('/training', [TrainingController::class, 'store']);
+Route::get('/training', [TrainingController::class, 'index']);
+
+Route::post('/feedback', [FeedbackController::class, 'store']);
+Route::get('/feedback', [FeedbackController::class, 'index']);

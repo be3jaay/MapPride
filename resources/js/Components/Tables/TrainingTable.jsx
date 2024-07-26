@@ -30,21 +30,21 @@ const tableStyle = {
   maxWidth: '200px',
 };
 
-export const ResourcesTable = () => {
-  const [resources, setResources] = useState([]);
-  const [selectedResource, setSelectedResource] = useState(null);
+export const TrainingTable = () => {
+  const [training, setTraining] = useState([]);
+  const [selectedTraining, setSelectedTraining] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const fetchResources = async (pageNumber = 1) => {
+  const fetchTraining = async (pageNumber = 1) => {
     try {
-      const response = await axios.get('/api/resources', {
+      const response = await axios.get('/api/training', {
         params: { page: pageNumber },
       });
 
       if (Array.isArray(response.data.data)) {
-        setResources(response.data.data);
+        setTraining(response.data.data);
         setTotalPages(response.data.last_page);
         setPage(response.data.current_page);
       } else {
@@ -56,22 +56,22 @@ export const ResourcesTable = () => {
   };
 
   useEffect(() => {
-    fetchResources(page);
+    fetchTraining(page);
   }, [page]);
 
   const handlePageChange = newPage => {
     setPage(newPage);
-    fetchResources(newPage);
+    fetchTraining(newPage);
   };
 
-  const handleViewClick = resource => {
-    setSelectedResource(resource);
+  const handleViewClick = training => {
+    setSelectedTraining(training);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedResource(null);
+    setSelectedTraining(null);
   };
 
   return (
@@ -88,16 +88,16 @@ export const ResourcesTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {Array.isArray(resources) && resources.length > 0 ? (
-              resources.map(resource => (
-                <tr key={resource.id}>
-                  <td style={tableStyle}>{resource.tabs_title}</td>
-                  <td style={tableStyle}>{resource.title}</td>
-                  <td style={tableStyle}>{resource.description}</td>
-                  <td style={tableStyle}>{resource.url_link}</td>
+            {Array.isArray(training) && training.length > 0 ? (
+              training.map(training => (
+                <tr key={training.id}>
+                  <td style={tableStyle}>{training.tabs_title}</td>
+                  <td style={tableStyle}>{training.title}</td>
+                  <td style={tableStyle}>{training.description}</td>
+                  <td style={tableStyle}>{training.url_link}</td>
                   <td style={tableStyle}>
                     <PrimaryButton
-                      onClick={() => handleViewClick(resource)}
+                      onClick={() => handleViewClick(training)}
                       className="flex items-center justify-center py-2"
                     >
                       Edit
@@ -134,8 +134,8 @@ export const ResourcesTable = () => {
           Next
         </PrimaryButton>
       </div>
-      {isModalOpen && selectedResource && (
-        <AdminModalExperience resource={selectedResource} isOpen={isModalOpen} onClose={closeModal} />
+      {isModalOpen && selectedTraining && (
+        <AdminModalExperience resource={selectedTraining} isOpen={isModalOpen} onClose={closeModal} />
       )}
     </div>
   );

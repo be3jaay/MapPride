@@ -14,7 +14,7 @@ export default function Training({ auth }) {
             <Alert
               type="info"
               message="Training Platform"
-              description="Help the application to grow, add a feedback on where/what can we improve, and if you found issues/bugs feel free to reach."
+              description="In this section, you will be able to see all the training resources that will help you to develop your skills / talent, thus becoming a better version of yourself."
             />
           </div>
           <div className="my-4">

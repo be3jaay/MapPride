@@ -6,9 +6,13 @@ import { feedbackSchema } from '../../../core/schema';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Alert } from '@/Components/Alert';
+import axios from 'axios';
 
 export default function Feedback({ auth }) {
   const notify = () => toast('Feedback Submitted');
+
+  const notifySuccess = () => toast.success('Your experience has been posted, thank you.');
+  const notifyError = () => toast.error('There was an error posting your experience.');
 
   const form = useForm({
     mode: 'all',
@@ -18,11 +22,17 @@ export default function Feedback({ auth }) {
 
   const { handleSubmit, register, reset } = form;
 
-  const onSubmit = data => {
-    notify();
-    reset();
+  const onSubmit = async data => {
+    try {
+      const response = await axios.post('/api/feedback', data);
+      console.log('API response:', response);
+      reset();
+      notifySuccess();
+    } catch (error) {
+      console.error('API error:', error);
+      notifyError();
+    }
   };
-
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Dashboard" />
@@ -44,33 +54,33 @@ export default function Feedback({ auth }) {
                 <div className="rating rating-lg flex items-center justify-center my-2">
                   <input
                     type="radio"
-                    value="1"
+                    value={1}
                     className="mask mask-star-2 bg-indigo-700"
-                    {...register('radioValue')}
+                    {...register('feedback_value')}
                   />
                   <input
                     type="radio"
-                    value="2"
+                    value={2}
                     className="mask mask-star-2 bg-indigo-700"
-                    {...register('radioValue')}
+                    {...register('feedback_value')}
                   />
                   <input
                     type="radio"
-                    value="3"
+                    value={3}
                     className="mask mask-star-2 bg-indigo-700"
-                    {...register('radioValue')}
+                    {...register('feedback_value')}
                   />
                   <input
                     type="radio"
-                    value="4"
+                    value={4}
                     className="mask mask-star-2 bg-indigo-700"
-                    {...register('radioValue')}
+                    {...register('feedback_value')}
                   />
                   <input
                     type="radio"
-                    value="5"
+                    value={5}
                     className="mask mask-star-2 bg-indigo-700"
-                    {...register('radioValue')}
+                    {...register('feedback_value')}
                   />
                 </div>
                 <textarea

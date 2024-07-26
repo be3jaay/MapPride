@@ -1,6 +1,6 @@
 import { Alert } from '@/Components/Alert';
 import { AdminResourcesModal } from '@/Components/Modal/AdminResourcesModal';
-import { ResourcesTable } from '@/Components/Tables/ResourcesTable';
+import { TrainingTable } from '@/Components/Tables/TrainingTable';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
 
@@ -25,7 +25,7 @@ export default function AdminTraining({ auth }) {
                 </div>
               </div>
             </div>
-            <ResourcesTable />
+            <TrainingTable />
           </div>
         </header>
       }

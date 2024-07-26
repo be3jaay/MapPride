@@ -16,4 +16,9 @@ export const DashboardOverviewData = [
     stats: 10,
     icon: <MdForum />,
   },
+  {
+    title: 'Posted Experience',
+    stats: 10,
+    icon: <MdForum />,
+  },
 ];

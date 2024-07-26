@@ -14,7 +14,7 @@ export default function Resources({ auth }) {
             <Alert
               type="info"
               message="Resources Module"
-              description="Help the application to grow, add a feedback on where/what can we improve, and if you found issues/bugs feel free to reach."
+              description="In this section, you will be able to see all the available resources that will help you develop and understand more about LGBTQ+."
             />
           </div>
           <div className="mt-4">

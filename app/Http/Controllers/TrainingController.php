@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Resources;
+use App\Models\Training;
 
-class ResourcesController extends Controller
+class TrainingController extends Controller
 {
     public function index()
     {
         $perPage = 10; 
-        $resources = Resources::orderBy('created_at', 'desc')->paginate($perPage);
-        return response()->json($resources);
+        $training = Training::orderBy('created_at', 'desc')->paginate($perPage);
+        return response()->json($training);
     }
 
     public function store(Request $request)
@@ -23,8 +23,8 @@ class ResourcesController extends Controller
             'url_link' => 'required|string|max:255',
         ]);
 
-        $resources = Resources::create($validatedData);
+        $training = Training::create($validatedData);
 
-        return response()->json($resources, 201);
+        return response()->json($training, 201);
     }
 }

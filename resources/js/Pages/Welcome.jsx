@@ -9,9 +9,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     <>
       <Head title="Welcome" />
 
-      <nav className="bg-white absolute px-36 py-6 flex items-center justify-between w-full drop-shadow-md">
+      <nav className="bg-white absolute px-36 py-3 flex items-center justify-between w-full drop-shadow-md">
         <div className="">
-          <img src={ally} alt="" className="w-14 h-14" />
+          <img src={ally} alt="" className="w-12 h-12" />
         </div>
         <ul className="text-indigo-700 flex items-center justify-center gap-12 font-bold">
           <li>Home</li>
