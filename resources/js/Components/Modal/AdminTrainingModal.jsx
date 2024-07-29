@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
-export const AdminResourcesModal = () => {
+export const AdminTrainingModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [tabs, setTabs] = useState([]);
 
@@ -35,7 +35,7 @@ export const AdminResourcesModal = () => {
 
   const onSubmit = async data => {
     try {
-      const response = await axios.post('/api/resources', data);
+      const response = await axios.post('/api/training', data);
       console.log('API response:', response);
       reset();
       notifySuccess();
@@ -48,7 +48,7 @@ export const AdminResourcesModal = () => {
   useEffect(() => {
     const fetchTabs = async () => {
       try {
-        const response = await axios.get('/api/tabs');
+        const response = await axios.get('/api/trainingTabs');
         const tabTitles = response.data.map(tab => tab.tabs_title);
         setTabs(tabTitles);
       } catch (error) {
@@ -63,8 +63,7 @@ export const AdminResourcesModal = () => {
     <>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
-        Create Resources Content
-        <MdForum className="ml-2" />
+        Create Training Content <MdForum className="ml-2" />
       </PrimaryButton>
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">

@@ -1,4 +1,5 @@
 import { Alert } from '@/Components/Alert';
+import { AdminCreateTabs } from '@/Components/Tabs/AdminCreateTabs';
 import { AdminResourcesModal } from '@/Components/Modal/AdminResourcesModal';
 import { ResourcesTable } from '@/Components/Tables/ResourcesTable';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
@@ -20,8 +21,10 @@ export default function AdminDashboard({ auth }) {
                   message="Resources Content Management"
                   description="In this section, the administrator will add/create resources that will be shown for user resources module."
                 />
-                <div className="my-4">
+                <div className="my-4 flex gap-1">
                   <AdminResourcesModal />
+                  <div></div>
+                  <AdminCreateTabs />
                 </div>
               </div>
             </div>

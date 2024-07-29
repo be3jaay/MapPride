@@ -1,7 +1,4 @@
 import { DashboardOverviewData } from '../../../core/constant/DashboardOverviewData/DashboardOverviewData';
-import { BarGraph } from '../Chart/Bar';
-import { LineGraph } from '../Chart/Line';
-import { PieGraph } from '../Chart/Pie';
 
 export const DashboardOverview = () => {
   return (
@@ -18,18 +15,6 @@ export const DashboardOverview = () => {
             </div>
           </article>
         ))}
-      </div>
-
-      <div class="grid grid-cols-12 gap-2 mt-4 w-full h-full">
-        <div className="col-span-6 bg-indigo-200 rounded-md  w-full h-full p-4">
-          <LineGraph />
-        </div>
-        <div className="col-span-6 bg-indigo-200 rounded-md  w-full h-full p-4">
-          <PieGraph />
-        </div>
-        <div className="col-span-12 bg-indigo-200 rounded-md  w-full h-full p-4">
-          <BarGraph />
-        </div>
       </div>
     </div>
   );
