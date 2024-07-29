@@ -1,8 +1,9 @@
 import { Alert } from '@/Components/Alert';
-import { AdminResourcesModal } from '@/Components/Modal/AdminResourcesModal';
 import { TrainingTable } from '@/Components/Tables/TrainingTable';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
+import { AdminTrainingTabs } from '@/Components/Tabs/AdminTrainingTabs';
+import { AdminTrainingModal } from '@/Components/Modal/AdminTrainingModal';
 
 export default function AdminTraining({ auth }) {
   const user = auth.user;
@@ -20,8 +21,11 @@ export default function AdminTraining({ auth }) {
                   message="Training Content Management"
                   description="In this section, the administrator will add/create training platform that will be shown for user training platform."
                 />
-                <div className="my-4">
-                  <AdminResourcesModal />
+                <div className="my-4 flex gap-1">
+                  <div>
+                    <AdminTrainingModal />
+                  </div>
+                  <AdminTrainingTabs />
                 </div>
               </div>
             </div>

@@ -1,5 +1,4 @@
 import Modal from '@/Components/Modal';
-import PrimaryButton from '../PrimaryButton';
 import { MdForum } from 'react-icons/md';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,13 +7,12 @@ import { resourcesForumSchema } from '../../../core/schema';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import PrimaryButton from '@/Components/PrimaryButton';
 
-export const AdminResourcesModal = () => {
+export const AdminCreateTraining = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [tabs, setTabs] = useState([]);
-
-  const notifySuccess = () => toast.success('Your experience has been posted, thank you.');
-  const notifyError = () => toast.error('There was an error posting your experience.');
+  const notify = () => toast('Your experience has been posted, Thank you.');
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -63,8 +61,7 @@ export const AdminResourcesModal = () => {
     <>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
-        Create Resources Content
-        <MdForum className="ml-2" />
+        Create Training <MdForum className="ml-2" />
       </PrimaryButton>
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
