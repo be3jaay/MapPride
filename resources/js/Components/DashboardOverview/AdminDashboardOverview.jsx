@@ -14,7 +14,7 @@ export const AdminDashboardOverview = () => {
                 <p className="text-lg font-bold text-indigo-700">{item.title}</p>
                 <p className="text-xl font-medium text-gray-900">{item.stats}</p>
               </div>
-              <span className="rounded-full bg-indigo-50 p-3 text-indigo-700 text-xl">{item.icon}</span>
+              <span className="rounded-full bg-indigo-50 p-3 text-black text-2xl">{item.icon}</span>
             </div>
           </article>
         ))}

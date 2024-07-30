@@ -43,7 +43,7 @@ export const AdminCreateTabs = () => {
   return (
     <>
       <ToastContainer />
-      <PrimaryButton onClick={handleOpen}>Create Resources Tab</PrimaryButton>
+      <PrimaryButton onClick={handleOpen}>Create Tabs</PrimaryButton>
 
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 max-w-7xl p-12">
@@ -58,6 +58,16 @@ export const AdminCreateTabs = () => {
             <h3 className="font-bold text-2xl text-indigo-800">
               How are you? This is a freedom wall, feel free to share your experience here.
             </h3>
+            <select
+              className="select select-bordered w-full bg-white border-black text-black font-bold my-4"
+              {...register('tabs_type')}
+            >
+              <option disabled selected>
+                Create a tab for...
+              </option>
+              <option>Resources</option>
+              <option>Training</option>
+            </select>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Title
               <input

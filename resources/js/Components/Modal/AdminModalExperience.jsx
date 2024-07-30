@@ -8,12 +8,10 @@ const AdminModalExperience = ({ experience, isOpen, onClose }) => {
   if (!experience) return null;
 
   const handleApprove = () => {
-    console.log('Approved:', experience);
     onClose();
   };
 
   const handleDecline = () => {
-    console.log('Declined:', experience);
     onClose();
   };
 

@@ -3,32 +3,7 @@ import axios from 'axios';
 import { Badge } from '../Badge';
 import PrimaryButton from '../PrimaryButton';
 import AdminModalExperience from '../Modal/AdminModalExperience';
-
-const tableHeaderStyle = {
-  whiteSpace: 'nowrap',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-  paddingTop: '0.5rem',
-  paddingBottom: '0.5rem',
-  color: 'indigo',
-  textAlign: 'center',
-  fontWeight: 'bold',
-  fontSize: '1rem',
-};
-
-const tableStyle = {
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-  paddingTop: '0.5rem',
-  paddingBottom: '0.5rem',
-  fontWeight: '500',
-  color: '#111827',
-  textAlign: 'center',
-  maxWidth: '200px',
-};
+import { tableHeaderStyle, tableStyle } from './TableStyle';
 
 export const ExperienceTable = () => {
   const [experiences, setExperiences] = useState([]);
@@ -124,7 +99,6 @@ export const ExperienceTable = () => {
           Next
         </PrimaryButton>
       </div>
-
       {isModalOpen && selectedExperience && (
         <AdminModalExperience experience={selectedExperience} isOpen={isModalOpen} onClose={closeModal} />
       )}

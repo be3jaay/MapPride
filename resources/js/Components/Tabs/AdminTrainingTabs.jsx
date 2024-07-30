@@ -7,6 +7,7 @@ import { trainingTabSchema } from '../../../core/schema';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import GhostButton from '../GhostButton';
 
 export const AdminTrainingTabs = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +44,7 @@ export const AdminTrainingTabs = () => {
   return (
     <>
       <ToastContainer />
-      <PrimaryButton onClick={handleOpen}>Create Training Tabs</PrimaryButton>
+      <GhostButton onClick={handleOpen}>Create Trainings Tab</GhostButton>
 
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 max-w-7xl p-12">
@@ -55,9 +56,7 @@ export const AdminTrainingTabs = () => {
             >
               ✕
             </button>
-            <h3 className="font-bold text-2xl text-indigo-800">
-              How are you? This is a freedom wall, feel free to share your experience here.
-            </h3>
+            <h3 className="font-bold text-3xl text-indigo-800 ">Create a tab for training platform.</h3>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Title
               <input

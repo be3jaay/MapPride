@@ -3,32 +3,8 @@ import axios from 'axios';
 import PrimaryButton from '../PrimaryButton';
 import AdminModalExperience from '../Modal/AdminModalExperience';
 import Loading from '../Loading';
-
-const tableHeaderStyle = {
-  whiteSpace: 'nowrap',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-  paddingTop: '0.5rem',
-  paddingBottom: '0.5rem',
-  color: 'indigo',
-  textAlign: 'center',
-  fontWeight: 'bold',
-  fontSize: '1rem',
-};
-
-const tableStyle = {
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-  paddingTop: '0.5rem',
-  paddingBottom: '0.5rem',
-  fontWeight: '500',
-  color: '#111827',
-  textAlign: 'center',
-  maxWidth: '200px',
-};
+import { tableHeaderStyle, tableStyle } from './TableStyle';
+import { AdminEditResources } from '../Modal/AdminEditResources';
 
 export const ResourcesTable = () => {
   const [resources, setResources] = useState([]);
@@ -135,7 +111,7 @@ export const ResourcesTable = () => {
         </PrimaryButton>
       </div>
       {isModalOpen && selectedResource && (
-        <AdminModalExperience resource={selectedResource} isOpen={isModalOpen} onClose={closeModal} />
+        <AdminEditResources resource={selectedResource} isOpen={isModalOpen} onClose={closeModal} />
       )}
     </div>
   );
