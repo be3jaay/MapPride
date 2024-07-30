@@ -1,5 +1,4 @@
 import Modal from '@/Components/Modal';
-import PrimaryButton from '../PrimaryButton';
 import { MdForum } from 'react-icons/md';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,13 +7,12 @@ import { resourcesForumSchema } from '../../../core/schema';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import PrimaryButton from '@/Components/PrimaryButton';
 
-export const AdminResourcesModal = () => {
+export const AdminCreateTraining = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [tabs, setTabs] = useState([]);
-
-  const notifySuccess = () => toast.success('Your experience has been posted, thank you.');
-  const notifyError = () => toast.error('There was an error posting your experience.');
+  const notify = () => toast('Your experience has been posted, Thank you.');
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -63,8 +61,7 @@ export const AdminResourcesModal = () => {
     <>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
-        Create Resources Content
-        <MdForum className="ml-2" />
+        Create Training <MdForum className="ml-2" />
       </PrimaryButton>
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
@@ -73,8 +70,12 @@ export const AdminResourcesModal = () => {
               How are you? This is a freedom wall, feel free to share your experience here.
             </h3>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Tab
-              <select className="select w-full bg-white text-black font-bold my-4" {...register('tabs_title')}>
+              Tab-Title
+              <select
+                className="select w-full bg-transparent border-transparent text-black font-bold my-4"
+                {...register('tabs_title')}
+              >
+                <option disabled>Create a tab for...</option>
                 {tabs.map((title, index) => (
                   <option key={index} value={title}>
                     {title}

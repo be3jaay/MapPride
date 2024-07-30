@@ -1,12 +1,9 @@
 import React from 'react';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
-<<<<<<< Updated upstream
-import { DashboardOverview } from '@/Components/DashboardOverview/DashboardOverview';
-import { AdminCreateTabs } from '@/Components/Modal/AdminCreateTabs';
-=======
->>>>>>> Stashed changes
+import { AdminCreateTabs } from '@/Components/Tabs/AdminCreateTabs';
 import { Alert } from '@/Components/Alert';
+import { AdminDashboardOverview } from '@/Components/DashboardOverview/AdminDashboardOverview';
 
 export default function AdminDashboard({ auth }) {
   const user = auth.user;
@@ -25,16 +22,14 @@ export default function AdminDashboard({ auth }) {
                   description="In this section, you will be able to see the data analytics of the web application"
                 />
               </div>
-              {/* <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                <AdminCreateTabs />
-              </div> */}
+              <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center"></div>
             </div>
           </div>
         </header>
       }
     >
       <Head title="Dashboard" />
-      <DashboardOverview />
+      <AdminDashboardOverview />
     </AdminAuthenticated>
   );
 }

@@ -1,4 +1,5 @@
 import Modal from '@/Components/Modal';
+import PrimaryButton from '../PrimaryButton';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -6,7 +7,6 @@ import { tabSchema } from '../../../core/schema';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import GhostButton from '../GhostButton';
 
 export const AdminCreateTabs = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,12 +43,8 @@ export const AdminCreateTabs = () => {
   return (
     <>
       <ToastContainer />
-<<<<<<< Updated upstream:resources/js/Components/Modal/AdminCreateTabs.jsx
       <PrimaryButton onClick={handleOpen}>Create Tabs</PrimaryButton>
 
-=======
-      <GhostButton onClick={handleOpen}>Create Resources Tab</GhostButton>
->>>>>>> Stashed changes:resources/js/Components/Tabs/AdminCreateTabs.jsx
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 max-w-7xl p-12">
           <form onSubmit={handleSubmit(onSubmit)}>
