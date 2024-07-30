@@ -27,4 +27,26 @@ class ResourcesController extends Controller
 
         return response()->json($resources, 201);
     }
+
+    public function update(Request $request, $id)
+    {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'tabs_title' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'url_link' => 'required|string|max:255',
+        ]);
+
+        // Find the training record
+        $resources = Resources::find($id);
+        if (!$resources) {
+            return response()->json(['message' => 'Training content not found'], 404);
+        }
+
+        // Update the training record with validated data
+        $resources->update($validatedData);
+
+        return response()->json(['message' => 'Training content updated successfully', 'training' => $resources], 200);
+    }
 }

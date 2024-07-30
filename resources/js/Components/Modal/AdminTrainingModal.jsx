@@ -9,10 +9,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
-export const AdminResourcesModal = () => {
+export const AdminTrainingModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [tabs, setTabs] = useState([]);
-  const notify = () => toast('Your experience has been posted, Thank you.');
+
+  const notifySuccess = () => toast.success('Your experience has been posted, thank you.');
+  const notifyError = () => toast.error('There was an error posting your experience.');
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -33,7 +35,7 @@ export const AdminResourcesModal = () => {
 
   const onSubmit = async data => {
     try {
-      const response = await axios.post('/api/resources', data);
+      const response = await axios.post('/api/training', data);
       console.log('API response:', response);
       reset();
       notifySuccess();
@@ -46,7 +48,7 @@ export const AdminResourcesModal = () => {
   useEffect(() => {
     const fetchTabs = async () => {
       try {
-        const response = await axios.get('/api/tabs');
+        const response = await axios.get('/api/trainingTabs');
         const tabTitles = response.data.map(tab => tab.tabs_title);
         setTabs(tabTitles);
       } catch (error) {
@@ -61,13 +63,13 @@ export const AdminResourcesModal = () => {
     <>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
-        Create Resources <MdForum className="ml-2" />
+        Create Training Content <MdForum className="ml-2" />
       </PrimaryButton>
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
-            <h3 className="font-bold text-2xl text-indigo-800">
-              How are you? This is a freedom wall, feel free to share your experience here.
+            <h3 className="font-bold text-2xl text-indigo-800 text-center">
+              This modal is used to create training content for users.
             </h3>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Tab

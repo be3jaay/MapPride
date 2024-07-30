@@ -1,8 +1,11 @@
 import React from 'react';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
+<<<<<<< Updated upstream
 import { DashboardOverview } from '@/Components/DashboardOverview/DashboardOverview';
 import { AdminCreateTabs } from '@/Components/Modal/AdminCreateTabs';
+=======
+>>>>>>> Stashed changes
 import { Alert } from '@/Components/Alert';
 
 export default function AdminDashboard({ auth }) {

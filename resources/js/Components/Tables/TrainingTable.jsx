@@ -1,34 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PrimaryButton from '../PrimaryButton';
-import AdminModalExperience from '../Modal/AdminModalExperience';
 import Loading from '../Loading';
-
-const tableHeaderStyle = {
-  whiteSpace: 'nowrap',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-  paddingTop: '0.5rem',
-  paddingBottom: '0.5rem',
-  color: 'indigo',
-  textAlign: 'center',
-  fontWeight: 'bold',
-  fontSize: '1rem',
-};
-
-const tableStyle = {
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-  paddingTop: '0.5rem',
-  paddingBottom: '0.5rem',
-  fontWeight: '500',
-  color: '#111827',
-  textAlign: 'center',
-  maxWidth: '200px',
-};
+import { tableHeaderStyle, tableStyle } from './TableStyle';
+import { AdminEditTraining } from '../Modal/AdminEditTraining';
 
 export const TrainingTable = () => {
   const [training, setTraining] = useState([]);
@@ -65,6 +40,7 @@ export const TrainingTable = () => {
   };
 
   const handleViewClick = training => {
+    console.log('Training selected:', training);
     setSelectedTraining(training);
     setIsModalOpen(true);
   };
@@ -135,7 +111,7 @@ export const TrainingTable = () => {
         </PrimaryButton>
       </div>
       {isModalOpen && selectedTraining && (
-        <AdminModalExperience resource={selectedTraining} isOpen={isModalOpen} onClose={closeModal} />
+        <AdminEditTraining training={selectedTraining} isOpen={isModalOpen} onClose={closeModal} />
       )}
     </div>
   );
