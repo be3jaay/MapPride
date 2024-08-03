@@ -19,6 +19,10 @@ export const AdminHeaderData = [
     title: 'Feedback Content',
     path: 'admin.feedback',
   },
+  {
+    title: 'Support Content',
+    path: 'admin.support',
+  },
   // {
   //   title: 'View Map',
   //   path: 'admin.map',

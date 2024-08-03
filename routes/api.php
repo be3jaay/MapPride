@@ -8,6 +8,7 @@ use App\Http\Controllers\TrainingTabsController;
 use App\Http\Controllers\ResourcesController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\SupportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,10 @@ Route::put('/resources/{id}', [ResourcesController::class, 'update']);
 Route::post('/training', [TrainingController::class, 'store']);
 Route::get('/training', [TrainingController::class, 'index']);
 Route::put('/training/{id}', [TrainingController::class, 'update']);
+
+Route::post('/support', [SupportController::class, 'store']);
+Route::get('/support', [SupportController::class, 'index']);
+Route::put('/support/{id}', [SupportController::class, 'update']);
 
 Route::post('/feedback', [FeedbackController::class, 'store']);
 Route::get('/feedback', [FeedbackController::class, 'index']);

@@ -71,6 +71,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return Inertia::render('AdminDashboard/AdminFeedback');
     })->name('admin.feedback');
 
+    Route::get('/admin/support', function () {
+        return Inertia::render('AdminDashboard/AdminSupport');
+    })->name('admin.support');
+
     // Add more admin routes as needed
 });
 
