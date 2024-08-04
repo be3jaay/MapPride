@@ -6,7 +6,6 @@ import { SupportOverview } from '@/Components/DashboardOverview/SupportOverview'
 export default function Support({ auth }) {
   const user = auth.user;
   return (
-    // for improvement
     <AuthenticatedLayout
       user={user}
       header={
