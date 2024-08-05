@@ -1,8 +1,8 @@
 import { Alert } from '@/Components/Alert';
-import { TrainingTable } from '@/Components/Tables/TrainingTable';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
 import { AdminSupportModal } from '@/Components/Modal/AdminSupportModal';
+import { SupportTable } from '@/Components/Tables/AdminSupportTable';
 
 export default function AdminSupport({ auth }) {
   const user = auth.user;
@@ -27,7 +27,7 @@ export default function AdminSupport({ auth }) {
                 </div>
               </div>
             </div>
-            <TrainingTable />
+            <SupportTable />
           </div>
         </header>
       }

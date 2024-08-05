@@ -69,35 +69,33 @@ export const AdminEditResources = ({ resource, isOpen, onClose }) => {
           </div>
           <form onSubmit={handleSubmit(handleUpdate)}>
             <div className="my-4">
-              <label className="block text-black font-bold mb-2">Tab Title</label>
-              <input
-                type="text"
-                className="input w-full bg-white border border-gray-300 p-2 text-black"
-                {...register('tabs_title')}
-              />
+              <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+                Title
+                <input
+                  type="text"
+                  className="input w-full bg-transparent my-2"
+                  placeholder="Title here..."
+                  {...register('title')}
+                />
+              </label>
             </div>
             <div className="my-4">
-              <label className="block text-black font-bold mb-2">Title</label>
-              <input
-                type="text"
-                className="input w-full bg-white border border-gray-300 p-2 text-black"
-                {...register('title')}
-              />
-            </div>
-            <div className="my-4">
-              <label className="block text-black font-bold mb-2">Description</label>
               <textarea
-                className="textarea w-full bg-white border border-gray-300 p-2 text-black"
+                placeholder="Description here..."
+                className="textarea border-black w-full h-64 bg-white font-bold text-black"
                 {...register('description')}
               ></textarea>
             </div>
             <div className="my-4">
-              <label className="block text-black font-bold mb-2">Link</label>
-              <input
-                type="text"
-                className="input w-full bg-white border border-gray-300 p-2 text-black"
-                {...register('url_link')}
-              />
+              <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+                Link
+                <input
+                  type="text"
+                  className="input w-full bg-transparent my-2"
+                  placeholder="Link here"
+                  {...register('url_link')}
+                />
+              </label>
             </div>
             <div className="flex justify-end mt-4 gap-2">
               <PrimaryButton

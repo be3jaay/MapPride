@@ -1,6 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { Alert } from '@/Components/Alert';
 import { SupportOverview } from '@/Components/DashboardOverview/SupportOverview';
 
 export default function Support({ auth }) {

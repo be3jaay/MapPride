@@ -42,6 +42,8 @@ Route::put('/resources/{id}', [ResourcesController::class, 'update']);
 
 Route::post('/support', [SupportController::class, 'store']);
 Route::get('/support', [SupportController::class, 'index']);
+Route::put('/support/{id}', [SupportController::class, 'update']);
+
 
 Route::post('/training', [TrainingController::class, 'store']);
 Route::get('/training', [TrainingController::class, 'index']);

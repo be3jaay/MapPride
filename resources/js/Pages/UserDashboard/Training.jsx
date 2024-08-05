@@ -41,7 +41,6 @@ export default function Training({ auth }) {
             </div>
           ),
         }));
-
         setTabs(formattedTabs);
       } catch (error) {
         console.error('Error fetching tabs:', error);

@@ -5,24 +5,23 @@ import SecondaryButton from '../SecondaryButton';
 import Modal from '../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { resourcesForumSchema } from '../../../core/schema';
+import { supportSchema } from '../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-export const AdminEditTraining = ({ training, isOpen, onClose }) => {
-  if (!training) return null;
+export const AdminEditSupport = ({ support, isOpen, onClose }) => {
+  if (!support) return null;
 
   const notifySuccess = () => toast.success('Training content updated successfully.');
   const notifyError = () => toast.error('There was an error updating the training content.');
 
   const form = useForm({
     mode: 'all',
-    resolver: yupResolver(resourcesForumSchema),
+    resolver: yupResolver(supportSchema),
     defaultValues: {
-      tabs_title: training.tabs_title,
-      title: training.title,
-      description: training.description,
-      url_link: training.url_link,
+      title: support.title,
+      description: support.description,
+      phoneNumber: support.phoneNumber,
     },
   });
 
@@ -35,7 +34,7 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
 
   const handleUpdate = async data => {
     try {
-      const response = await axios.put(`/api/training/${training.id}`, data);
+      const response = await axios.put(`/api/support/${support.id}`, data);
       console.log('API response:', response);
       reset();
       notifySuccess();
@@ -52,21 +51,17 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
 
   useEffect(() => {
     reset({
-      tabs_title: training.tabs_title,
-      title: training.title,
-      description: training.description,
-      url_link: training.url_link,
+      title: support.title,
+      description: support.description,
+      phoneNumber: support.phoneNumber,
     });
-  }, [training, reset]);
+  }, [support, reset]);
 
   return (
     <>
       <ToastContainer />
       <Modal show={isOpen} onClose={onClose}>
         <div className="modal-box bg-indigo-200 w-[60rem] p-12">
-          <div className="">
-            <h2 className="text-black text-2xl font-bold">Tab Title: {training.tabs_title}</h2>
-          </div>
           <form onSubmit={handleSubmit(handleUpdate)}>
             <div className="my-4">
               <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
@@ -79,27 +74,23 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
                 />
               </label>
             </div>
-            <div className="my-4">
-              <textarea
-                placeholder="Description here..."
-                className="textarea border-black w-full h-64 bg-white font-bold text-black"
-                {...register('description')}
-              ></textarea>
-            </div>
-            <div className="my-4">
-              <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-                Link
-                <input
-                  type="text"
-                  className="input w-full bg-transparent my-2"
-                  placeholder="Link here"
-                  {...register('url_link')}
-                />
-              </label>
-            </div>
+            <textarea
+              placeholder="Share your story here..."
+              className="textarea border-black w-full h-64 bg-white font-bold text-black"
+              {...register('description')}
+            ></textarea>
+            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+              Phone
+              <input
+                type="text"
+                className="input w-full bg-transparent my-2"
+                placeholder="Phone number here.."
+                {...register('phoneNumber')}
+              />
+            </label>
             <div className="flex justify-end mt-4 gap-2">
               <PrimaryButton
-                className="flex items-center justify-center py-2 text-white bg-green-600"
+                className="flex items-center justify-center py-4 text-white bg-green-600"
                 disabled={isSubmitting}
                 type="submit"
               >
