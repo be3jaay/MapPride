@@ -4,24 +4,28 @@ export const AdminHeaderData = [
     path: 'admin.dashboard',
   },
   {
-    title: 'Resource Content',
+    title: 'Resource Management',
     path: 'admin.resources',
   },
   {
-    title: 'Training Content',
+    title: 'Training Management',
     path: 'admin.training',
   },
   {
-    title: 'Experience Content',
+    title: 'Experience Management',
     path: 'admin.experience',
   },
   {
-    title: 'Feedback Content',
+    title: 'Feedback Management',
     path: 'admin.feedback',
   },
   {
-    title: 'Support Content',
+    title: 'Support Management',
     path: 'admin.support',
+  },
+  {
+    title: 'User Management',
+    path: 'admin.user',
   },
   // {
   //   title: 'View Map',

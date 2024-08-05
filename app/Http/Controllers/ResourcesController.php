@@ -41,12 +41,25 @@ class ResourcesController extends Controller
         // Find the training record
         $resources = Resources::find($id);
         if (!$resources) {
-            return response()->json(['message' => 'Training content not found'], 404);
+            return response()->json(['message' => 'Resources content not found'], 404);
         }
 
         // Update the training record with validated data
         $resources->update($validatedData);
 
-        return response()->json(['message' => 'Training content updated successfully', 'training' => $resources], 200);
+        return response()->json(['message' => 'Resources content updated successfully', 'resources' => $resources], 200);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $resources = Resources::find($id);
+        if (!$resources) {
+            return response()->json(['message' => 'Resources content not found', 'resources'], 404);
+        }
+
+        $resources->delete();
+
+        return response()->json(['message' => 'Resources content deleted successfully', 'resources' => $resources], 200);
+        
     }
 }

@@ -35,13 +35,11 @@ export const AdminEditResources = ({ resource, isOpen, onClose }) => {
 
   const handleUpdate = async data => {
     try {
-      const response = await axios.put(`/api/resources/${resource.id}`, data);
-      console.log('API response:', response);
+      await axios.put(`/api/resources/${resource.id}`, data);
       reset();
       notifySuccess();
       onClose();
     } catch (error) {
-      console.error('API error:', error);
       notifyError();
     }
   };

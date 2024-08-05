@@ -4,12 +4,13 @@ import { Badge } from '../Badge';
 import PrimaryButton from '../PrimaryButton';
 import AdminModalExperience from '../Modal/AdminModalExperience';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
+import Loading from '../Loading';
 
 export const ExperienceTable = () => {
   const [experiences, setExperiences] = useState([]);
+  const [selectedExperience, setSelectedExperience] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedExperience, setSelectedExperience] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchExperiences = async (pageNumber = 1) => {
@@ -17,11 +18,16 @@ export const ExperienceTable = () => {
       const response = await axios.get('/api/experience', {
         params: { page: pageNumber },
       });
-      setExperiences(response.data.data);
-      setTotalPages(response.data.last_page);
-      setPage(response.data.current_page);
+
+      if (Array.isArray(response.data.data)) {
+        setExperiences(response.data.data);
+        setTotalPages(response.data.last_page);
+        setPage(response.data.current_page);
+      } else {
+        console.error('Unexpected data structure', response.data);
+      }
     } catch (error) {
-      console.error('There was an error fetching the experiences!', error);
+      console.error('There was an error fetching the resources!', error);
     }
   };
 
@@ -34,8 +40,9 @@ export const ExperienceTable = () => {
     fetchExperiences(newPage);
   };
 
-  const handleViewClick = experience => {
-    setSelectedExperience(experience);
+  const handleViewClick = support => {
+    console.log('Training selected:', support);
+    setSelectedExperience(support);
     setIsModalOpen(true);
   };
 
@@ -56,27 +63,38 @@ export const ExperienceTable = () => {
               <th style={tableHeaderStyle}>Location</th>
               <th style={tableHeaderStyle}>Description</th>
               <th style={tableHeaderStyle}>Actions</th>
-              <th style={tableHeaderStyle}>Actions Taken</th>
+              <th style={tableHeaderStyle}>Status</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {experiences.map(exp => (
-              <tr key={exp.id}>
-                <td style={tableStyle}>{exp.username}</td>
-                <td style={tableStyle}>{exp.title}</td>
-                <td style={tableStyle}>{exp.experience_type}</td>
-                <td style={tableStyle}>{exp.location}</td>
-                <td style={tableStyle}>{exp.description}</td>
-                <td style={tableStyle}>
-                  <PrimaryButton onClick={() => handleViewClick(exp)} className="flex items-center justify-center py-2">
-                    View
-                  </PrimaryButton>
-                </td>
-                <td style={tableStyle}>
-                  <Badge type="success" message="Approved" />
+            {Array.isArray(experiences) && experiences.length > 0 ? (
+              experiences.map(exp => (
+                <tr key={exp.id}>
+                  <td style={tableStyle}>{exp.username}</td>
+                  <td style={tableStyle}>{exp.title}</td>
+                  <td style={tableStyle}>{exp.experience_type}</td>
+                  <td style={tableStyle}>{exp.location}</td>
+                  <td style={tableStyle}>{exp.description}</td>
+                  <td style={tableStyle}>
+                    <PrimaryButton
+                      onClick={() => handleViewClick(exp)}
+                      className="flex items-center justify-center py-2"
+                    >
+                      View
+                    </PrimaryButton>
+                  </td>
+                  <td style={tableStyle}>
+                    <Badge type="info" message="For Approval" />
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" style={tableStyle}>
+                  <Loading type={'primary'} />
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

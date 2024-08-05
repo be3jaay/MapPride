@@ -38,7 +38,7 @@ Route::get('/trainingTabs', [TrainingTabsController::class, 'index']);
 Route::post('/resources', [ResourcesController::class, 'store']);
 Route::get('/resources', [ResourcesController::class, 'index']);
 Route::put('/resources/{id}', [ResourcesController::class, 'update']);
-
+Route::delete('/resources/{id}', [ResourcesController::class, 'destroy']);
 
 Route::post('/support', [SupportController::class, 'store']);
 Route::get('/support', [SupportController::class, 'index']);
@@ -48,6 +48,7 @@ Route::put('/support/{id}', [SupportController::class, 'update']);
 Route::post('/training', [TrainingController::class, 'store']);
 Route::get('/training', [TrainingController::class, 'index']);
 Route::put('/training/{id}', [TrainingController::class, 'update']);
+Route::delete('/training/{id}', [TrainingController::class, 'destroy']);
 
 Route::post('/feedback', [FeedbackController::class, 'store']);
 Route::get('/feedback', [FeedbackController::class, 'index']);

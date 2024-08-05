@@ -5,6 +5,7 @@ import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import { AdminEditTraining } from '../Modal/AdminEditTraining';
 import { AdminEditSupport } from '../Modal/AdminEditSupport';
+import DangerButton from '../DangerButton';
 
 export const SupportTable = () => {
   const [support, setSupport] = useState([]);
@@ -53,14 +54,15 @@ export const SupportTable = () => {
 
   return (
     <div>
-      <div className="overflow-x-auto my-4 shadow-md">
-        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+      <div className="overflow-x-auto my-4 shadow-lg rounded-md p-4  ">
+        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-md">
           <thead className="ltr:text-left rtl:text-right">
             <tr>
               <th style={tableHeaderStyle}>Title</th>
               <th style={tableHeaderStyle}>Description</th>
               <th style={tableHeaderStyle}>Phone Number</th>
               <th style={tableHeaderStyle}>Edit</th>
+              <th style={tableHeaderStyle}>Delete</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -77,6 +79,14 @@ export const SupportTable = () => {
                     >
                       Edit
                     </PrimaryButton>
+                  </td>
+                  <td style={tableStyle}>
+                    <DangerButton
+                      onClick={() => handleViewClick(support)}
+                      className="flex items-center justify-center py-2"
+                    >
+                      Delete
+                    </DangerButton>
                   </td>
                 </tr>
               ))

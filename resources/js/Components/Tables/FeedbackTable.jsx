@@ -52,8 +52,8 @@ export const FeedbackTable = () => {
 
   return (
     <div>
-      <div className="overflow-x-auto my-4 shadow-md">
-        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+      <div className="overflow-x-auto my-4 shadow-lg rounded-md p-4 ">
+        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-md">
           <thead className="ltr:text-left rtl:text-right">
             <tr>
               <th style={tableHeaderStyle}>Ratings</th>
@@ -79,7 +79,7 @@ export const FeedbackTable = () => {
                     </PrimaryButton>
                   </td>
                   <td style={tableStyle}>
-                    <Badge type="success" message="Fixed" />
+                    <Badge type="warning" message="Under Observation" />
                   </td>
                 </tr>
               ))

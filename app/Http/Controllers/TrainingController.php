@@ -50,4 +50,15 @@ class TrainingController extends Controller
 
         return response()->json(['message' => 'Training content updated successfully', 'training' => $training], 200);
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $training = Training::find($id);
+        if (!$training) {
+            return response()->json(['message' => 'Training content not found'], 404);
+        }
+
+        $training->delete();
+        return response()->json(['message' => 'Successfully deleted'], 200);
+    }
 }
