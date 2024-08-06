@@ -11,7 +11,7 @@ export default function Resources({ auth }) {
   const [tabs, setTabs] = useState([]);
 
   useEffect(() => {
-    const fetchResoures = async () => {
+    const fetchResources = async () => {
       try {
         const response = await axios.get('/api/resources');
         const data = response.data.data;
@@ -35,7 +35,7 @@ export default function Resources({ auth }) {
                     <p className="text-black my-2 overflow-hidden">{item.description}</p>
                     <div className="card-actions justify-center">
                       <PrimaryButton className="w-full text-white justify-center py-4">
-                        {/* {item.button} */}Read More
+                        Read More
                         <FaArrowRightLong className="ml-2" />
                       </PrimaryButton>
                     </div>
@@ -51,7 +51,7 @@ export default function Resources({ auth }) {
       }
     };
 
-    fetchResoures();
+    fetchResources();
   }, []);
 
   return (

@@ -9,7 +9,7 @@ use App\Http\Controllers\ResourcesController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\SupportController;
-
+use App\Http\Controllers\HotlineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +43,13 @@ Route::delete('/resources/{id}', [ResourcesController::class, 'destroy']);
 Route::post('/support', [SupportController::class, 'store']);
 Route::get('/support', [SupportController::class, 'index']);
 Route::put('/support/{id}', [SupportController::class, 'update']);
+Route::delete('/support/{id}', [SupportController::class, 'destroy']);
 
+
+Route::post('/hotlines', [HotlineController::class, 'store']);
+Route::get('/hotlines', [HotlineController::class, 'index']);
+Route::put('/hotlines/{id}', [HotlineController::class, 'update']);
+Route::delete('/hotlines/{id}', [HotlineController::class, 'destroy']);
 
 Route::post('/training', [TrainingController::class, 'store']);
 Route::get('/training', [TrainingController::class, 'index']);

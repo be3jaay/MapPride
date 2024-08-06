@@ -49,4 +49,17 @@ class SupportController extends Controller
 
         return response()->json(['message' => 'Training content updated successfully', 'training' => $support], 200);
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $support = Support::find($id);
+
+        if (!$support) {
+            return response()->json(['message' => 'Training content not found'], 404);
+        }
+
+        $support->delete($support);
+
+        return response()->json($support, 200);
+    }
 }

@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 export const Badge = ({ message, type }) => {
   const badgeTypes = {
     error: 'border-red-500 bg-red-50 text-red-800',
@@ -13,9 +11,4 @@ export const Badge = ({ message, type }) => {
       <strong className="block text-center text-black">{message}</strong>
     </div>
   );
-};
-
-Badge.propTypes = {
-  message: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['error', 'warning', 'info', 'success']).isRequired,
 };

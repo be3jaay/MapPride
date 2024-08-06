@@ -5,7 +5,8 @@ import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import { AdminEditTraining } from '../Modal/AdminEditTraining';
 import DangerButton from '../DangerButton';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { useToastNotifications } from '../../../core/hooks';
 
 export const TrainingTable = () => {
   const [training, setTraining] = useState([]);
@@ -14,8 +15,7 @@ export const TrainingTable = () => {
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const notifySuccess = () => toast.success('Training content updated successfully.');
-  const notifyError = () => toast.error('There was an error updating the training content.');
+  const { notifyError, notifySuccess } = useToastNotifications();
 
   const fetchTraining = async (pageNumber = 1) => {
     try {
@@ -36,15 +36,12 @@ export const TrainingTable = () => {
   };
 
   const handleDelete = async training => {
-    try {
-      await axios.delete(`/api/training/${training.id}`, training);
-      reset();
-      notifySuccess();
-      onClose();
-    } catch (error) {
-      notifyError();
-    }
+    await axios.delete(`/api/training/${training.id}`, training);
+    reset();
+    notifySuccess('Training content updated successfully.');
+    onClose();
   };
+
   useEffect(() => {
     fetchTraining(page);
   }, [page]);

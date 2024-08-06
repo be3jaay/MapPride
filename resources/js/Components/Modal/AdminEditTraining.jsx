@@ -8,12 +8,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { resourcesForumSchema } from '../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import { useToastNotifications } from '../../../core/hooks';
 
 export const AdminEditTraining = ({ training, isOpen, onClose }) => {
   if (!training) return null;
 
-  const notifySuccess = () => toast.success('Training content updated successfully.');
-  const notifyError = () => toast.error('There was an error updating the training content.');
+  const { notifyError, notifySuccess } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
@@ -35,14 +36,12 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
 
   const handleUpdate = async data => {
     try {
-      const response = await axios.put(`/api/training/${training.id}`, data);
-      console.log('API response:', response);
-      reset();
-      notifySuccess();
+      await axios.put(`/api/training/${training.id}`, data);
+      notifySuccess('Training content updated successfully.');
       onClose();
+      reset();
     } catch (error) {
-      console.error('API error:', error);
-      notifyError();
+      notifyError('There was an error updating the training content.');
     }
   };
 
@@ -61,8 +60,8 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
 
   return (
     <>
-      <ToastContainer />
       <Modal show={isOpen} onClose={onClose}>
+        <ToastContainer />
         <div className="modal-box bg-indigo-200 w-[60rem] p-12">
           <div className="">
             <h2 className="text-black text-2xl font-bold">Tab Title: {training.tabs_title}</h2>

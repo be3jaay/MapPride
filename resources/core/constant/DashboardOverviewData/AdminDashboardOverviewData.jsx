@@ -1,7 +1,7 @@
 import { FaUsers } from 'react-icons/fa6';
 import { FaRegStar } from 'react-icons/fa';
-import { BsPostcard } from 'react-icons/bs';
 import { MdOutlinePinDrop } from 'react-icons/md';
+import { BsPostcardHeart } from 'react-icons/bs';
 
 export const AdminDashboardOverviewData = [
   {
@@ -17,7 +17,7 @@ export const AdminDashboardOverviewData = [
   {
     title: 'Experience Posted',
     stats: 10,
-    icon: <BsPostcard />,
+    icon: <BsPostcardHeart />,
   },
   {
     title: 'Most Liked Location',

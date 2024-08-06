@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { MdErrorOutline } from 'react-icons/md';
 import { IoWarningOutline } from 'react-icons/io5';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
@@ -28,14 +27,4 @@ export const Alert = ({ message, description, type }) => {
       <p className="mt-2 text-sm">{description}</p>
     </div>
   );
-};
-
-Alert.propTypes = {
-  message: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  type: PropTypes.oneOf(['error', 'warning', 'info', 'success']).isRequired,
-};
-
-Alert.defaultProps = {
-  description: '',
 };

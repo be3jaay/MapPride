@@ -3,9 +3,9 @@ import axios from 'axios';
 import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
-import { AdminEditTraining } from '../Modal/AdminEditTraining';
 import { AdminEditSupport } from '../Modal/AdminEditSupport';
 import DangerButton from '../DangerButton';
+import { useToastNotifications } from '../../../core/hooks';
 
 export const SupportTable = () => {
   const [support, setSupport] = useState([]);
@@ -14,6 +14,7 @@ export const SupportTable = () => {
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { notifySuccess } = useToastNotifications();
   const fetchSupport = async (pageNumber = 1) => {
     try {
       const response = await axios.get('/api/support', {
@@ -30,6 +31,12 @@ export const SupportTable = () => {
     } catch (error) {
       console.error('There was an error fetching the resources!', error);
     }
+  };
+
+  const handleDelete = async support => {
+    await axios.delete(`/api/support/${support.id}`, support);
+    notifySuccess('Support content deleted successfully.');
+    reset();
   };
 
   useEffect(() => {
@@ -82,7 +89,7 @@ export const SupportTable = () => {
                   </td>
                   <td style={tableStyle}>
                     <DangerButton
-                      onClick={() => handleViewClick(support)}
+                      onClick={() => handleDelete(support)}
                       className="flex items-center justify-center py-2"
                     >
                       Delete

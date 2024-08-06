@@ -1,26 +1,29 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Badge } from '../Badge';
 import PrimaryButton from '../PrimaryButton';
-import AdminModalExperience from '../Modal/AdminModalExperience';
-import { tableHeaderStyle, tableStyle } from './TableStyle';
 import Loading from '../Loading';
+import { tableHeaderStyle, tableStyle } from './TableStyle';
+import DangerButton from '../DangerButton';
+import { useToastNotifications } from '../../../core/hooks';
+import { AdminHotlineModal } from '../Modal/AdminHotlineModal';
 
-export const ExperienceTable = () => {
-  const [experiences, setExperiences] = useState([]);
-  const [selectedExperience, setSelectedExperience] = useState(null);
-  const [page, setPage] = useState(1);
+export const AdminHotlineTable = () => {
+  const [hotline, setHotline] = useState([]);
+  const [selectedHotline, setSelectedHotline] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
+  const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const fetchExperiences = async (pageNumber = 1) => {
+  const { notifySuccess } = useToastNotifications();
+
+  const fetchHotline = async (pageNumber = 1) => {
     try {
-      const response = await axios.get('/api/experience', {
+      const response = await axios.get('/api/hotlines', {
         params: { page: pageNumber },
       });
 
       if (Array.isArray(response.data.data)) {
-        setExperiences(response.data.data);
+        setHotline(response.data.data);
         setTotalPages(response.data.last_page);
         setPage(response.data.current_page);
       } else {
@@ -31,66 +34,72 @@ export const ExperienceTable = () => {
     }
   };
 
+  const handleDelete = async hotline => {
+    await axios.delete(`/api/hotline/${hotline.id}`, hotline);
+    notifySuccess('Hotline content deleted successfully.');
+    reset();
+  };
+
   useEffect(() => {
-    fetchExperiences(page);
+    fetchHotline(page);
   }, [page]);
 
   const handlePageChange = newPage => {
     setPage(newPage);
-    fetchExperiences(newPage);
+    fetchHotline(newPage);
   };
 
-  const handleViewClick = support => {
-    console.log('Training selected:', support);
-    setSelectedExperience(support);
+  const handleViewClick = hotline => {
+    setSelectedHotline(hotline);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedExperience(null);
+    setSelectedHotline(null);
   };
 
   return (
     <div>
-      <div className="overflow-x-auto my-4 shadow-lg border-md p-4">
+      <div className="overflow-x-auto my-4 shadow-lg rounded-md p-4  ">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-md">
           <thead className="ltr:text-left rtl:text-right">
             <tr>
-              <th style={tableHeaderStyle}>Username</th>
               <th style={tableHeaderStyle}>Title</th>
-              <th style={tableHeaderStyle}>Experience Type</th>
-              <th style={tableHeaderStyle}>Location</th>
               <th style={tableHeaderStyle}>Description</th>
-              <th style={tableHeaderStyle}>Actions</th>
-              <th style={tableHeaderStyle}>Status</th>
+              <th style={tableHeaderStyle}>Phone Number</th>
+              <th style={tableHeaderStyle}>Edit</th>
+              <th style={tableHeaderStyle}>Delete</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {Array.isArray(experiences) && experiences.length > 0 ? (
-              experiences.map(exp => (
-                <tr key={exp.id}>
-                  <td style={tableStyle}>{exp.username}</td>
-                  <td style={tableStyle}>{exp.title}</td>
-                  <td style={tableStyle}>{exp.experience_type}</td>
-                  <td style={tableStyle}>{exp.location}</td>
-                  <td style={tableStyle}>{exp.description}</td>
+            {Array.isArray(hotline) && hotline.length > 0 ? (
+              hotline.map(hotline => (
+                <tr key={hotline.id}>
+                  <td style={tableStyle}>{hotline.title}</td>
+                  <td style={tableStyle}>{hotline.description}</td>
+                  <td style={tableStyle}>{hotline.phoneNumber}</td>
                   <td style={tableStyle}>
                     <PrimaryButton
-                      onClick={() => handleViewClick(exp)}
+                      onClick={() => handleViewClick(hotline)}
                       className="flex items-center justify-center py-2"
                     >
-                      View
+                      Edit
                     </PrimaryButton>
                   </td>
                   <td style={tableStyle}>
-                    <Badge type="info" message="For Approval" />
+                    <DangerButton
+                      onClick={() => handleDelete(hotline)}
+                      className="flex items-center justify-center py-2"
+                    >
+                      Delete
+                    </DangerButton>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7" style={tableStyle}>
+                <td colSpan="5" style={tableStyle}>
                   <Loading type={'primary'} />
                 </td>
               </tr>
@@ -117,8 +126,8 @@ export const ExperienceTable = () => {
           Next
         </PrimaryButton>
       </div>
-      {isModalOpen && selectedExperience && (
-        <AdminModalExperience experience={selectedExperience} isOpen={isModalOpen} onClose={closeModal} />
+      {isModalOpen && selectedHotline && (
+        <AdminHotlineModal hotline={selectedHotline} isOpen={isModalOpen} onClose={closeModal} />
       )}
     </div>
   );

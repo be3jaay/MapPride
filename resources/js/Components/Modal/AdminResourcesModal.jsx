@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resourcesForumSchema } from '../../../core/schema';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 export const AdminResourcesModal = () => {

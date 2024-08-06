@@ -5,15 +5,13 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { forumSchema } from '../../../core/schema';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { useToastNotifications } from '../../../core/hooks';
 export const ForumModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const notifySuccess = () => toast.success('Your experience has been posted, thank you.');
-  const notifyError = () => toast.error('There was an error posting your experience.');
+  const { notifyError, notifySuccess } = useToastNotifications();
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -33,13 +31,11 @@ export const ForumModal = () => {
 
   const onSubmit = async data => {
     try {
-      const response = await axios.post('/api/experience', data);
-      console.log('API response:', response);
+      await axios.post('/api/experience', data);
       reset();
-      notifySuccess();
+      notifySuccess('Your experience has been posted, thank you.');
     } catch (error) {
-      console.error('API error:', error);
-      notifyError();
+      notifyError('There was an error posting your experience.');
     }
   };
 

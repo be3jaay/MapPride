@@ -54,12 +54,11 @@ class ResourcesController extends Controller
     {
         $resources = Resources::find($id);
         if (!$resources) {
-            return response()->json(['message' => 'Resources content not found', 'resources'], 404);
+            return response()->json(['message' => 'Resources content not found'], 404);
         }
 
         $resources->delete();
-
-        return response()->json(['message' => 'Resources content deleted successfully', 'resources' => $resources], 200);
-        
+        return response()->json($resources, 200);
     }
 }
+

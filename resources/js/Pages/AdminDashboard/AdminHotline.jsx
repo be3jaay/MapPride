@@ -1,11 +1,10 @@
 import { Alert } from '@/Components/Alert';
-import { AdminCreateTabs } from '@/Components/Tabs/AdminCreateTabs';
-import { AdminResourcesModal } from '@/Components/Modal/AdminResourcesModal';
-import { ResourcesTable } from '@/Components/Tables/ResourcesTable';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
+import { AdminHotlineTable } from '../../Components/Tables/AdminHotlineTable';
+import { AdminHotlineModal } from '../../Components/Modal/AdminHotlineModal';
 
-export default function AdminDashboard({ auth }) {
+export default function AdminHotline({ auth }) {
   const user = auth.user;
 
   return (
@@ -18,16 +17,17 @@ export default function AdminDashboard({ auth }) {
               <div className="w-full">
                 <Alert
                   type="info"
-                  message="Resources Content Management"
-                  description="In this section, the administrator will add/create resources that will be shown for user resources module."
+                  message="Support Content Management"
+                  description="In this section, the administrator will add/create training platform that will be shown for user training platform."
                 />
                 <div className="my-4 flex gap-1">
-                  <AdminResourcesModal />
-                  <AdminCreateTabs />
+                  <div>
+                    <AdminHotlineModal />
+                  </div>
                 </div>
               </div>
             </div>
-            <ResourcesTable />
+            <AdminHotlineTable />
           </div>
         </header>
       }

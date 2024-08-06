@@ -48,7 +48,7 @@ class TrainingController extends Controller
         // Update the training record with validated data
         $training->update($validatedData);
 
-        return response()->json(['message' => 'Training content updated successfully', 'training' => $training], 200);
+        return response()->json($training, 200);
     }
 
     public function destroy(Request $request, $id)
@@ -59,6 +59,6 @@ class TrainingController extends Controller
         }
 
         $training->delete();
-        return response()->json(['message' => 'Successfully deleted'], 200);
+        return response()->json($training, 200);
     }
 }

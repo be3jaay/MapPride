@@ -1,7 +1,6 @@
 import React from 'react';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
-import { AdminCreateTabs } from '@/Components/Tabs/AdminCreateTabs';
 import { Alert } from '@/Components/Alert';
 import { AdminDashboardOverview } from '@/Components/DashboardOverview/AdminDashboardOverview';
 

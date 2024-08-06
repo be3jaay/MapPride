@@ -4,7 +4,8 @@ import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import { AdminEditResources } from '../Modal/AdminEditResources';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { useToastNotifications } from '../../../core/hooks';
 import DangerButton from '../DangerButton';
 
 export const ResourcesTable = () => {
@@ -14,8 +15,7 @@ export const ResourcesTable = () => {
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const notifySuccess = () => toast.success('Resources content deleted successfully.');
-  const notifyError = () => toast.error('There was an error deleting the resources content.');
+  const { notifySuccess } = useToastNotifications();
 
   const fetchResources = async (pageNumber = 1) => {
     try {
@@ -35,14 +35,10 @@ export const ResourcesTable = () => {
     }
   };
 
-  const handleDelete = async resource => {
-    try {
-      await axios.delete(`/api/resources/${resource.id}`, resource);
-      reset();
-      notifySuccess();
-    } catch (error) {
-      notifyError();
-    }
+  const handleDelete = async resources => {
+    await axios.delete(`/api/resources/${resources.id}`, resources);
+    notifySuccess('Resources content deleted successfully.');
+    reset();
   };
 
   useEffect(() => {
@@ -54,8 +50,8 @@ export const ResourcesTable = () => {
     fetchResources(newPage);
   };
 
-  const handleViewClick = resource => {
-    setSelectedResource(resource);
+  const handleViewClick = resources => {
+    setSelectedResource(resources);
     setIsModalOpen(true);
   };
 
@@ -82,22 +78,25 @@ export const ResourcesTable = () => {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {Array.isArray(resources) && resources.length > 0 ? (
-                resources.map(resource => (
-                  <tr key={resource.id}>
-                    <td style={tableStyle}>{resource.tabs_title}</td>
-                    <td style={tableStyle}>{resource.title}</td>
-                    <td style={tableStyle}>{resource.description}</td>
-                    <td style={tableStyle}>{resource.url_link}</td>
+                resources.map(resources => (
+                  <tr key={resources.id}>
+                    <td style={tableStyle}>{resources.tabs_title}</td>
+                    <td style={tableStyle}>{resources.title}</td>
+                    <td style={tableStyle}>{resources.description}</td>
+                    <td style={tableStyle}>{resources.url_link}</td>
                     <td style={tableStyle}>
                       <PrimaryButton
-                        onClick={() => handleViewClick(resource)}
+                        onClick={() => handleViewClick(resources)}
                         className="flex items-center justify-center py-2"
                       >
                         Edit
                       </PrimaryButton>
                     </td>
                     <td style={tableStyle}>
-                      <DangerButton onClick={handleDelete} className="flex items-center justify-center py-2">
+                      <DangerButton
+                        onClick={() => handleDelete(resources)}
+                        className="flex items-center justify-center py-2"
+                      >
                         Delete
                       </DangerButton>
                     </td>
@@ -133,7 +132,7 @@ export const ResourcesTable = () => {
           </PrimaryButton>
         </div>
         {isModalOpen && selectedResource && (
-          <AdminEditResources resource={selectedResource} isOpen={isModalOpen} onClose={closeModal} />
+          <AdminEditResources resources={selectedResource} isOpen={isModalOpen} onClose={closeModal} />
         )}
       </div>
     </>

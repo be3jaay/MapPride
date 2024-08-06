@@ -24,30 +24,11 @@ export const AdminHeaderData = [
     path: 'admin.support',
   },
   {
+    title: 'Hotline Management',
+    path: 'admin.hotline',
+  },
+  {
     title: 'User Management',
     path: 'admin.user',
   },
-  // {
-  //   title: 'View Map',
-  //   path: 'admin.map',
-  // },
-  // {
-  //   title: 'View Resources',
-  //   path: 'admin.resources',
-  // },
-  // {
-  //   title: 'Training Platform',
-  //   path: 'admin.training',
-  // },
-  // {
-  //   title: 'Feedback',
-  //   path: 'admin.feedback',
-  // },
-  // {
-  //   title: 'Support Assistance',
-  //   path: 'admin.support',
-  // },
-  // {
-
-  // },
 ];
