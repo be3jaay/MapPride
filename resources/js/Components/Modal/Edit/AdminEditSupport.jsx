@@ -8,12 +8,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { supportSchema } from '../../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useToastNotifications } from '../../../../core/hooks';
 
 export const AdminEditSupport = ({ support, isOpen, onClose }) => {
   if (!support) return null;
 
-  const notifySuccess = () => toast.success('Training content updated successfully.');
-  const notifyError = () => toast.error('There was an error updating the training content.');
+  const { notifyError, notifySuccess } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
@@ -34,14 +34,12 @@ export const AdminEditSupport = ({ support, isOpen, onClose }) => {
 
   const handleUpdate = async data => {
     try {
-      const response = await axios.put(`/api/support/${support.id}`, data);
-      console.log('API response:', response);
+      await axios.put(`/api/support/${support.id}`, data);
       reset();
-      notifySuccess();
+      notifySuccess('Training content updated successfully.');
       onClose();
     } catch (error) {
-      console.error('API error:', error);
-      notifyError();
+      notifyError('There was an error updating the training content.');
     }
   };
 
@@ -94,7 +92,7 @@ export const AdminEditSupport = ({ support, isOpen, onClose }) => {
                 disabled={isSubmitting}
                 type="submit"
               >
-                <FaUserCheck /> Update
+                Update
               </PrimaryButton>
               <SecondaryButton
                 onClick={handleDecline}

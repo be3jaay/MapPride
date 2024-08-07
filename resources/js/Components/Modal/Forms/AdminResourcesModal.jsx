@@ -5,15 +5,15 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resourcesForumSchema } from '../../../../core/schema';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { useToastNotifications } from '../../../../core/hooks';
 import axios from 'axios';
 
 export const AdminResourcesModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [tabs, setTabs] = useState([]);
 
-  const notifySuccess = () => toast.success('Your experience has been posted, thank you.');
-  const notifyError = () => toast.error('There was an error posting your experience.');
+  const { notifyError, notifySuccess } = useToastNotifications();
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -34,13 +34,12 @@ export const AdminResourcesModal = () => {
 
   const onSubmit = async data => {
     try {
-      const response = await axios.post('/api/resources', data);
-      console.log('API response:', response);
+      await axios.post('/api/resources', data);
+      notifySuccess('Your resources has been created, thank you.');
+      closeModal();
       reset();
-      notifySuccess();
     } catch (error) {
-      console.error('API error:', error);
-      notifyError();
+      notifyError('There was an error posting your experience.');
     }
   };
 

@@ -1,4 +1,5 @@
 import { Alert } from '@/Components/Alert';
+import { AdminUserTable } from '@/Components/Tables/AdminUserTable';
 import { FeedbackTable } from '@/Components/Tables/FeedbackTable';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
@@ -21,7 +22,7 @@ export default function AdminFeedback({ auth }) {
                 />
               </div>
             </div>
-            <FeedbackTable />
+            <AdminUserTable />
           </div>
         </header>
       }

@@ -1,6 +1,6 @@
 import { FaUserCheck } from 'react-icons/fa';
 import PrimaryButton from '../../PrimaryButton';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import SecondaryButton from '../../SecondaryButton';
 import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
