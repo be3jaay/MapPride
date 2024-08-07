@@ -1,11 +1,11 @@
 import { FaUserCheck } from 'react-icons/fa';
-import PrimaryButton from '../PrimaryButton';
+import PrimaryButton from '../../PrimaryButton';
 import { ToastContainer, toast } from 'react-toastify';
-import SecondaryButton from '../SecondaryButton';
-import Modal from '../Modal';
+import SecondaryButton from '../../SecondaryButton';
+import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { supportSchema } from '../../../core/schema';
+import { supportSchema } from '../../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
 

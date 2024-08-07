@@ -1,13 +1,13 @@
 import Modal from '@/Components/Modal';
-import PrimaryButton from '../PrimaryButton';
+import PrimaryButton from '../../PrimaryButton';
 import { MdForum } from 'react-icons/md';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { forumSchema } from '../../../core/schema';
+import { forumSchema } from '../../../../core/schema';
 import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
-import { useToastNotifications } from '../../../core/hooks';
+import { useToastNotifications } from '../../../../core/hooks';
 export const ForumModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 

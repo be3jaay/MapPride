@@ -1,12 +1,12 @@
-import PrimaryButton from '../PrimaryButton';
+import PrimaryButton from '../../PrimaryButton';
 import { ToastContainer } from 'react-toastify';
-import Modal from '../Modal';
+import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { resourcesForumSchema } from '../../../core/schema';
+import { resourcesForumSchema } from '../../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useToastNotifications } from '../../../core/hooks';
+import { useToastNotifications } from '../../../../core/hooks';
 
 export const AdminEditResources = ({ resources, isOpen, onClose }) => {
   if (!resources) return null;

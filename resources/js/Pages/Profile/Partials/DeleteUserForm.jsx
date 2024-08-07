@@ -57,19 +57,17 @@ export default function DeleteUserForm({ className = '' }) {
       <DangerButton onClick={confirmUserDeletion}>Delete Account</DangerButton>
 
       <Modal show={confirmingUserDeletion} onClose={closeModal}>
-        <form onSubmit={deleteUser} className="p-6 bg-indigo-700">
-          <h2 className="text-lg font-medium text-gray-900 dark:text-gray-10">
-            Are you sure you want to delete your account?
-          </h2>
+        <form onSubmit={deleteUser} className="modal-box p-6 bg-indigo-200 w-[32rem] text-center ">
+          <h2 className="text-2xl font-bold text-red-600">Are you sure you want to delete your account?</h2>
 
-          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-1 text-lg text-gray-800 ">
             Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your
             password to confirm you would like to permanently delete your account.
           </p>
 
-          <div className="mt-6">
-            <InputLabel htmlFor="password" value="Password" className="sr-only" />
-
+          <div className="mt-6 ">
+            <InputLabel htmlFor="password" value="Password" className="sr-only " />
+            <span className="text-black text-start text-lg font-bold">Enter your Password</span>
             <TextInput
               id="password"
               type="password"
@@ -77,11 +75,9 @@ export default function DeleteUserForm({ className = '' }) {
               ref={passwordInput}
               value={data.password}
               onChange={e => setData('password', e.target.value)}
-              className="mt-1 block w-3/4"
+              className="mt-1 block w-full"
               isFocused
-              placeholder="Password"
             />
-
             <InputError message={errors.password} className="mt-2" />
           </div>
 

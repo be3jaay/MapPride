@@ -1,7 +1,7 @@
 import { Alert } from '@/Components/Alert';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
-import { AdminSupportModal } from '@/Components/Modal/AdminSupportModal';
+import { AdminSupportModal } from '@/Components/Modal/Forms/AdminSupportModal';
 import { SupportTable } from '@/Components/Tables/AdminSupportTable';
 
 export default function AdminSupport({ auth }) {

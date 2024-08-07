@@ -2,7 +2,7 @@ import { Alert } from '@/Components/Alert';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
 import { AdminHotlineTable } from '../../Components/Tables/AdminHotlineTable';
-import { AdminHotlineModal } from '../../Components/Modal/AdminHotlineModal';
+import { AdminHotlineModal } from '../../Components/Modal/Forms/AdminHotlineModal';
 
 export default function AdminHotline({ auth }) {
   const user = auth.user;

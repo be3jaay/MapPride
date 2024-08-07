@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { DashboardOverview } from '@/Components/DashboardOverview/DashboardOverview';
-import { ForumModal } from '@/Components/Modal/ForumModal';
+import { ForumModal } from '@/Components/Modal/Forms/ForumModal';
 
 export default function Dashboard({ auth }) {
   const user = auth.user;

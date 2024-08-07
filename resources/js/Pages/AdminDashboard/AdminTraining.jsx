@@ -3,7 +3,7 @@ import { TrainingTable } from '@/Components/Tables/TrainingTable';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
 import { AdminTrainingTabs } from '@/Components/Tabs/AdminTrainingTabs';
-import { AdminTrainingModal } from '@/Components/Modal/AdminTrainingModal';
+import { AdminTrainingModal } from '@/Components/Modal/Forms/AdminTrainingModal';
 
 export default function AdminTraining({ auth }) {
   const user = auth.user;

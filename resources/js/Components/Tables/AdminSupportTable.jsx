@@ -3,7 +3,7 @@ import axios from 'axios';
 import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
-import { AdminEditSupport } from '../Modal/AdminEditSupport';
+import { AdminEditSupport } from '../Modal/Edit/AdminEditSupport';
 import DangerButton from '../DangerButton';
 import { useToastNotifications } from '../../../core/hooks';
 

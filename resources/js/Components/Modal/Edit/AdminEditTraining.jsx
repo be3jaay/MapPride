@@ -1,15 +1,15 @@
 import { FaUserCheck } from 'react-icons/fa';
-import PrimaryButton from '../PrimaryButton';
+import PrimaryButton from '../../PrimaryButton';
 import { ToastContainer, toast } from 'react-toastify';
-import SecondaryButton from '../SecondaryButton';
-import Modal from '../Modal';
+import SecondaryButton from '../../SecondaryButton';
+import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { resourcesForumSchema } from '../../../core/schema';
+import { resourcesForumSchema } from '../../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import { useToastNotifications } from '../../../core/hooks';
+import { useToastNotifications } from '../../../../core/hooks';
 
 export const AdminEditTraining = ({ training, isOpen, onClose }) => {
   if (!training) return null;

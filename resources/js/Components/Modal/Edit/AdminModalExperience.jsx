@@ -1,8 +1,8 @@
 import { FaUserCheck } from 'react-icons/fa';
-import PrimaryButton from '../PrimaryButton';
+import PrimaryButton from '../../PrimaryButton';
 import { ToastContainer } from 'react-toastify';
-import SecondaryButton from '../SecondaryButton';
-import Modal from '../Modal';
+import SecondaryButton from '../../SecondaryButton';
+import Modal from '../../Modal';
 
 const AdminModalExperience = ({ experience, isOpen, onClose }) => {
   if (!experience) return null;
@@ -19,14 +19,14 @@ const AdminModalExperience = ({ experience, isOpen, onClose }) => {
     <>
       <ToastContainer />
       <Modal show={isOpen} onClose={onClose}>
-        <div className="modal-box bg-indigo-200 max-w-7xl p-12">
+        <div className="modal-box bg-indigo-200 w-[32rem] h-[40rem] p-12">
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-3xl font-bold text-indigo-800">{experience.location}</h3>
               <p className="bg-indigo-500 rounded-full text-white px-4 py-2">{experience.experience_type}</p>
             </div>
             <h3 className="text-2xl font-bold text-black">{experience.title}:</h3>
-            <p className="text-md text-black text-justify max-h-full overflow-y-auto">{experience.description}</p>
+            <p className="text-md text-black text-justify">{experience.description}</p>
             <div className="mt-2">
               <p className="text-gray-600 text-xl">
                 Posted by:

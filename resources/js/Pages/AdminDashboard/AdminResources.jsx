@@ -1,6 +1,6 @@
 import { Alert } from '@/Components/Alert';
 import { AdminCreateTabs } from '@/Components/Tabs/AdminCreateTabs';
-import { AdminResourcesModal } from '@/Components/Modal/AdminResourcesModal';
+import { AdminResourcesModal } from '@/Components/Modal/Forms/AdminResourcesModal';
 import { ResourcesTable } from '@/Components/Tables/ResourcesTable';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';

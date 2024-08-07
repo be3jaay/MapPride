@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PrimaryButton from '../PrimaryButton';
-import AdminModalExperience from '../Modal/AdminModalExperience';
+import AdminModalExperience from '../Modal/Edit/AdminModalExperience';
 import Loading from '../Loading';
 import { Badge } from '../Badge';
 import { tableHeaderStyle, tableStyle } from './TableStyle';

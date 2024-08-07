@@ -1,16 +1,16 @@
 import Modal from '@/Components/Modal';
-import PrimaryButton from '../PrimaryButton';
+import PrimaryButton from '../../PrimaryButton';
 import { MdForum } from 'react-icons/md';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { supportSchema } from '../../../core/schema';
+import { hotlineSchema, supportSchema } from '../../../../core/schema';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { useToastNotifications } from '../../../core/hooks';
+import { useToastNotifications } from '../../../../core/hooks';
 
-export const AdminSupportModal = () => {
+export const AdminHotlineModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { notifyError, notifySuccess } = useToastNotifications();
@@ -26,15 +26,15 @@ export const AdminSupportModal = () => {
 
   const form = useForm({
     mode: 'all',
-    resolver: yupResolver(supportSchema),
-    defaultValues: supportSchema.getDefault(),
+    resolver: yupResolver(hotlineSchema),
+    defaultValues: hotlineSchema.getDefault(),
   });
 
   const { register, handleSubmit, reset, processing } = form;
 
   const onSubmit = async data => {
     try {
-      await axios.post('/api/support', data);
+      await axios.post('/api/hotlines', data);
       reset();
       notifySuccess('Your experience has been posted, thank you.');
     } catch (error) {
@@ -46,7 +46,7 @@ export const AdminSupportModal = () => {
     <>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
-        Create Support Content <MdForum className="ml-2" />
+        Create Hotline Content <MdForum className="ml-2" />
       </PrimaryButton>
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">

@@ -1,9 +1,9 @@
-import PrimaryButton from '../PrimaryButton';
+import PrimaryButton from '../../PrimaryButton';
 import { ToastContainer, toast } from 'react-toastify';
-import Modal from '../Modal';
+import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { hotlineSchema } from '../../../core/schema';
+import { hotlineSchema } from '../../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
 

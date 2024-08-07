@@ -5,8 +5,8 @@ import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import DangerButton from '../DangerButton';
 import { useToastNotifications } from '../../../core/hooks';
-import { AdminHotlineModal } from '../Modal/AdminHotlineModal';
-import { AdminEditHotline } from '../Modal/AdminEditHotline';
+import { AdminHotlineModal } from '../Modal/Forms/AdminHotlineModal';
+import { AdminEditHotline } from '../Modal/Edit/AdminEditHotline';
 
 export const AdminHotlineTable = () => {
   const [hotline, setHotline] = useState([]);
