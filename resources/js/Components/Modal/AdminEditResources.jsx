@@ -1,28 +1,26 @@
-import { FaUserCheck } from 'react-icons/fa';
 import PrimaryButton from '../PrimaryButton';
-import { ToastContainer, toast } from 'react-toastify';
-import SecondaryButton from '../SecondaryButton';
+import { ToastContainer } from 'react-toastify';
 import Modal from '../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resourcesForumSchema } from '../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useToastNotifications } from '../../../core/hooks';
 
-export const AdminEditResources = ({ resource, isOpen, onClose }) => {
-  if (!resource) return null;
+export const AdminEditResources = ({ resources, isOpen, onClose }) => {
+  if (!resources) return null;
 
-  const notifySuccess = () => toast.success('Training content updated successfully.');
-  const notifyError = () => toast.error('There was an error updating the training content.');
+  const { notifyError, notifySuccess } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
     resolver: yupResolver(resourcesForumSchema),
     defaultValues: {
-      tabs_title: resource.tabs_title,
-      title: resource.title,
-      description: resource.description,
-      url_link: resource.url_link,
+      tabs_title: resources.tabs_title,
+      title: resources.title,
+      description: resources.description,
+      url_link: resources.url_link,
     },
   });
 
@@ -37,25 +35,21 @@ export const AdminEditResources = ({ resource, isOpen, onClose }) => {
     try {
       await axios.put(`/api/resources/${resource.id}`, data);
       reset();
-      notifySuccess();
+      notifySuccess('Training content updated successfully.');
       onClose();
     } catch (error) {
-      notifyError();
+      notifyError('There was an error updating the training content.');
     }
-  };
-
-  const handleDecline = () => {
-    onClose();
   };
 
   useEffect(() => {
     reset({
-      tabs_title: resource.tabs_title,
-      title: resource.title,
-      description: resource.description,
-      url_link: resource.url_link,
+      tabs_title: resources.tabs_title,
+      title: resources.title,
+      description: resources.description,
+      url_link: resources.url_link,
     });
-  }, [resource, reset]);
+  }, [resources, reset]);
 
   return (
     <>
@@ -63,7 +57,7 @@ export const AdminEditResources = ({ resource, isOpen, onClose }) => {
       <Modal show={isOpen} onClose={onClose}>
         <div className="modal-box bg-indigo-200 w-[60rem] p-12">
           <div className="">
-            <h2 className="text-black text-2xl">Edit Training: {resource.title}</h2>
+            <h2 className="text-black text-2xl">Edit Training: {resources.tabs_title}</h2>
           </div>
           <form onSubmit={handleSubmit(handleUpdate)}>
             <div className="my-4">
@@ -101,14 +95,8 @@ export const AdminEditResources = ({ resource, isOpen, onClose }) => {
                 disabled={isSubmitting}
                 type="submit"
               >
-                <FaUserCheck /> Update
+                Update
               </PrimaryButton>
-              <SecondaryButton
-                onClick={handleDecline}
-                className="flex bg-transparent items-center justify-center py-2 text-white border border-gray-300"
-              >
-                Close
-              </SecondaryButton>
             </div>
           </form>
         </div>

@@ -15,6 +15,7 @@ export const SupportTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { notifySuccess } = useToastNotifications();
+
   const fetchSupport = async (pageNumber = 1) => {
     try {
       const response = await axios.get('/api/support', {
@@ -49,7 +50,6 @@ export const SupportTable = () => {
   };
 
   const handleViewClick = support => {
-    console.log('Training selected:', support);
     setSelectedSupport(support);
     setIsModalOpen(true);
   };

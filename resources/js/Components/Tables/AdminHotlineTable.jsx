@@ -6,6 +6,7 @@ import { tableHeaderStyle, tableStyle } from './TableStyle';
 import DangerButton from '../DangerButton';
 import { useToastNotifications } from '../../../core/hooks';
 import { AdminHotlineModal } from '../Modal/AdminHotlineModal';
+import { AdminEditHotline } from '../Modal/AdminEditHotline';
 
 export const AdminHotlineTable = () => {
   const [hotline, setHotline] = useState([]);
@@ -127,7 +128,7 @@ export const AdminHotlineTable = () => {
         </PrimaryButton>
       </div>
       {isModalOpen && selectedHotline && (
-        <AdminHotlineModal hotline={selectedHotline} isOpen={isModalOpen} onClose={closeModal} />
+        <AdminEditHotline hotline={selectedHotline} isOpen={isModalOpen} onClose={closeModal} />
       )}
     </div>
   );
