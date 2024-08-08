@@ -8,21 +8,13 @@ import { resourcesForumSchema } from '../../../../core/schema';
 import { ToastContainer } from 'react-toastify';
 import { useToastNotifications } from '../../../../core/hooks';
 import axios from 'axios';
+import useModal from '../../../../core/hooks/use-modal';
 
 export const AdminResourcesModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [tabs, setTabs] = useState([]);
 
   const { notifyError, notifySuccess } = useToastNotifications();
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-    reset();
-  };
+  const { handleOpen, isOpen, closeModal } = useModal();
 
   const form = useForm({
     mode: 'all',

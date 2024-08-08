@@ -1,54 +1,21 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import PrimaryButton from '../PrimaryButton';
 import AdminModalExperience from '../Modal/Edit/AdminModalExperience';
 import Loading from '../Loading';
 import { Badge } from '../Badge';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
+import useTableData from '../../../core/hooks/use-table-data';
 
 export const FeedbackTable = () => {
-  const [feedback, setFeedback] = useState([]);
-  const [selectedFeedback, setSelectedFeedback] = useState(null);
-  const [totalPages, setTotalPages] = useState(1);
-  const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const fetchFeedback = async (pageNumber = 1) => {
-    try {
-      const response = await axios.get('/api/feedback', {
-        params: { page: pageNumber },
-      });
-
-      if (Array.isArray(response.data.data)) {
-        setFeedback(response.data.data);
-        setTotalPages(response.data.last_page);
-        setPage(response.data.current_page);
-      } else {
-        console.error('Unexpected data structure', response.data);
-      }
-    } catch (error) {
-      console.error('There was an error fetching the resources!', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchFeedback(page);
-  }, [page]);
-
-  const handlePageChange = newPage => {
-    setPage(newPage);
-    fetchFeedback(newPage);
-  };
-
-  const handleViewClick = feedback => {
-    setSelectedFeedback(feedback);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedFeedback(null);
-  };
+  const {
+    data: feedback,
+    selectedItem: selectedFeedback,
+    totalPages,
+    page,
+    isModalOpen,
+    handlePageChange,
+    handleViewClick,
+    closeModal,
+  } = useTableData('/api/feedback');
 
   return (
     <div>

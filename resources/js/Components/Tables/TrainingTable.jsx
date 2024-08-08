@@ -1,65 +1,22 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import DangerButton from '../DangerButton';
 import { ToastContainer } from 'react-toastify';
-import { useToastNotifications } from '../../../core/hooks';
 import { AdminEditTraining } from '../Modal/Edit/AdminEditTraining';
+import useTableData from '../../../core/hooks/use-table-data';
 
 export const TrainingTable = () => {
-  const [training, setTraining] = useState([]);
-  const [selectedTraining, setSelectedTraining] = useState(null);
-  const [totalPages, setTotalPages] = useState(1);
-  const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const { notifyError, notifySuccess } = useToastNotifications();
-
-  const fetchTraining = async (pageNumber = 1) => {
-    try {
-      const response = await axios.get('/api/training', {
-        params: { page: pageNumber },
-      });
-
-      if (Array.isArray(response.data.data)) {
-        setTraining(response.data.data);
-        setTotalPages(response.data.last_page);
-        setPage(response.data.current_page);
-      } else {
-        console.error('Unexpected data structure', response.data);
-      }
-    } catch (error) {
-      console.error('There was an error fetching the resources!', error);
-    }
-  };
-
-  const handleDelete = async training => {
-    await axios.delete(`/api/training/${training.id}`, training);
-    reset();
-    notifySuccess('Training content updated successfully.');
-    onClose();
-  };
-
-  useEffect(() => {
-    fetchTraining(page);
-  }, [page]);
-
-  const handlePageChange = newPage => {
-    setPage(newPage);
-    fetchTraining(newPage);
-  };
-
-  const handleViewClick = training => {
-    setSelectedTraining(training);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedTraining(null);
-  };
+  const {
+    data: training,
+    selectedItem: selectedTraining,
+    totalPages,
+    page,
+    isModalOpen,
+    handlePageChange,
+    handleViewClick,
+    closeModal,
+  } = useTableData('/api/training');
 
   return (
     <>

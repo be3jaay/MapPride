@@ -1,64 +1,22 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import { AdminEditResources } from '../Modal/Edit/AdminEditResources';
 import { ToastContainer } from 'react-toastify';
-import { useToastNotifications } from '../../../core/hooks';
 import DangerButton from '../DangerButton';
+import useTableData from '../../../core/hooks/use-table-data';
 
 export const ResourcesTable = () => {
-  const [resources, setResources] = useState([]);
-  const [selectedResource, setSelectedResource] = useState(null);
-  const [totalPages, setTotalPages] = useState(1);
-  const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const { notifySuccess } = useToastNotifications();
-
-  const fetchResources = async (pageNumber = 1) => {
-    try {
-      const response = await axios.get('/api/resources', {
-        params: { page: pageNumber },
-      });
-
-      if (Array.isArray(response.data.data)) {
-        setResources(response.data.data);
-        setTotalPages(response.data.last_page);
-        setPage(response.data.current_page);
-      } else {
-        console.error('Unexpected data structure', response.data);
-      }
-    } catch (error) {
-      console.error('There was an error fetching the resources!', error);
-    }
-  };
-
-  const handleDelete = async resources => {
-    await axios.delete(`/api/resources/${resources.id}`, resources);
-    notifySuccess('Resources content deleted successfully.');
-    reset();
-  };
-
-  useEffect(() => {
-    fetchResources(page);
-  }, [page]);
-
-  const handlePageChange = newPage => {
-    setPage(newPage);
-    fetchResources(newPage);
-  };
-
-  const handleViewClick = resources => {
-    setSelectedResource(resources);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedResource(null);
-  };
+  const {
+    data: resources,
+    selectedItem: selectedResource,
+    totalPages,
+    page,
+    isModalOpen,
+    handlePageChange,
+    handleViewClick,
+    closeModal,
+  } = useTableData('/api/resources');
 
   return (
     <>

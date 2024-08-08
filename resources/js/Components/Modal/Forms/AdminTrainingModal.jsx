@@ -5,25 +5,17 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resourcesForumSchema } from '../../../../core/schema';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import useModal from '../../../../core/hooks/use-modal';
+import { useToastNotifications } from '../../../../core/hooks';
 
 export const AdminTrainingModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [tabs, setTabs] = useState([]);
 
-  const notifySuccess = () => toast.success('Your experience has been posted, thank you.');
-  const notifyError = () => toast.error('There was an error posting your experience.');
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-    reset();
-  };
+  const { handleOpen, isOpen, closeModal } = useModal();
+  const { notifyError, notifySuccess } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
@@ -35,13 +27,11 @@ export const AdminTrainingModal = () => {
 
   const onSubmit = async data => {
     try {
-      const response = await axios.post('/api/training', data);
-      console.log('API response:', response);
+      await axios.post('/api/training', data);
       reset();
-      notifySuccess();
+      notifySuccess('Your training content has been posted, thank you.');
     } catch (error) {
-      console.error('API error:', error);
-      notifyError();
+      notifyError('There was an error posting your training.');
     }
   };
 

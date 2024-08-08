@@ -1,55 +1,21 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Badge } from '../Badge';
 import PrimaryButton from '../PrimaryButton';
 import AdminModalExperience from '../Modal/Edit/AdminModalExperience';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import Loading from '../Loading';
+import useTableData from '../../../core/hooks/use-table-data';
 
 export const ExperienceTable = () => {
-  const [experiences, setExperiences] = useState([]);
-  const [selectedExperience, setSelectedExperience] = useState(null);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const fetchExperiences = async (pageNumber = 1) => {
-    try {
-      const response = await axios.get('/api/experience', {
-        params: { page: pageNumber },
-      });
-
-      if (Array.isArray(response.data.data)) {
-        setExperiences(response.data.data);
-        setTotalPages(response.data.last_page);
-        setPage(response.data.current_page);
-      } else {
-        console.error('Unexpected data structure', response.data);
-      }
-    } catch (error) {
-      console.error('There was an error fetching the resources!', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchExperiences(page);
-  }, [page]);
-
-  const handlePageChange = newPage => {
-    setPage(newPage);
-    fetchExperiences(newPage);
-  };
-
-  const handleViewClick = support => {
-    console.log('Training selected:', support);
-    setSelectedExperience(support);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedExperience(null);
-  };
+  const {
+    data: experiences,
+    selectedItem: selectedExperience,
+    totalPages,
+    page,
+    isModalOpen,
+    handlePageChange,
+    handleViewClick,
+    closeModal,
+  } = useTableData('/api/experience');
 
   return (
     <div>

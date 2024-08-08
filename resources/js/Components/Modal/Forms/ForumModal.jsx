@@ -8,19 +8,11 @@ import { forumSchema } from '../../../../core/schema';
 import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useToastNotifications } from '../../../../core/hooks';
+import useModal from '../../../../core/hooks/use-modal';
+
 export const ForumModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+  const { handleOpen, isOpen, closeModal } = useModal();
   const { notifyError, notifySuccess } = useToastNotifications();
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-    reset();
-  };
 
   const form = useForm({
     mode: 'all',

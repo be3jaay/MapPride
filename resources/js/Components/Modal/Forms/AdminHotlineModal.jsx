@@ -1,28 +1,17 @@
 import Modal from '@/Components/Modal';
 import PrimaryButton from '../../PrimaryButton';
 import { MdForum } from 'react-icons/md';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { hotlineSchema } from '../../../../core/schema';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useToastNotifications } from '../../../../core/hooks';
+import useModal from '../../../../core/hooks/use-modal';
 
 export const AdminHotlineModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+  const { handleOpen, isOpen, closeModal } = useModal();
   const { notifyError, notifySuccess } = useToastNotifications();
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-    reset();
-  };
 
   const form = useForm({
     mode: 'all',
