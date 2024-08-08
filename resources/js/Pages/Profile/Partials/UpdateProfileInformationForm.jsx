@@ -11,6 +11,9 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
   const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
     name: user.name,
     email: user.email,
+    gender: user.gender,
+    preferences: user.preferences,
+    resume: user.resume,
   });
 
   const submit = e => {
@@ -40,6 +43,32 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
           <InputError className="mt-2" message={errors.name} />
         </div>
         <div>
+          <InputLabel htmlFor="gender" value="Gender" />
+          <TextInput
+            id="gender"
+            className="mt-1 block w-full"
+            value={data.gender}
+            onChange={e => setData('gender', e.target.value)}
+            required
+            isFocused
+            autoComplete="gender"
+          />
+          <InputError className="mt-2" message={errors.gender} />
+        </div>
+        <div>
+          <InputLabel htmlFor="preferences" value="Preferences" />
+          <TextInput
+            id="Preferences"
+            className="mt-1 block w-full"
+            value={data.preferences}
+            onChange={e => setData('preferences', e.target.value)}
+            required
+            isFocused
+            autoComplete="preferences"
+          />
+          <InputError className="mt-2" message={errors.preferences} />
+        </div>
+        <div>
           <InputLabel htmlFor="email" value="Email" />
           <TextInput
             id="email"
@@ -48,9 +77,22 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             value={data.email}
             onChange={e => setData('email', e.target.value)}
             required
-            autoComplete="username"
+            autoComplete="email"
           />
           <InputError className="mt-2" message={errors.email} />
+        </div>
+        <div>
+          <InputLabel htmlFor="resume" value="Resume/CV" />
+          <TextInput
+            id="resume"
+            type="resume"
+            className="mt-1 block w-full"
+            value={data.resume}
+            onChange={e => setData('resume', e.target.value)}
+            required
+            autoComplete="resume"
+          />
+          <InputError className="mt-2" message={errors.resume} />
         </div>
         {mustVerifyEmail && user.email_verified_at === null && (
           <div>
