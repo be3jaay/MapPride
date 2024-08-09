@@ -4,6 +4,10 @@ export const AdminHeaderData = [
     path: 'admin.dashboard',
   },
   {
+    title: 'Map Management',
+    path: 'admin.map',
+  },
+  {
     title: 'Resource Management',
     path: 'admin.resources',
   },

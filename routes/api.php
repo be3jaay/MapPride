@@ -10,6 +10,9 @@ use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\HotlineController;
+use App\Http\Controllers\MapSelectionController;
+use App\Http\Controllers\MarkerLocationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +61,9 @@ Route::delete('/training/{id}', [TrainingController::class, 'destroy']);
 
 Route::post('/feedback', [FeedbackController::class, 'store']);
 Route::get('/feedback', [FeedbackController::class, 'index']);
+
+Route::post('/map-selection', [MapSelectionController::class, 'store']);
+Route::get('/map-selection', [MapSelectionController::class, 'index']);
+
+Route::post('/marker-location', [MarkerLocationController::class, 'store']);
+Route::get('/marker-location', [MarkerLocationController::class, 'index']);

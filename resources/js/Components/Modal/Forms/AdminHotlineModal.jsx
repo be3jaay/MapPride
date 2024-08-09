@@ -19,7 +19,7 @@ export const AdminHotlineModal = () => {
     defaultValues: hotlineSchema.getDefault(),
   });
 
-  const { register, handleSubmit, reset, processing } = form;
+  const { register, handleSubmit, reset, processing, control } = form;
 
   const onSubmit = async data => {
     try {
@@ -50,12 +50,14 @@ export const AdminHotlineModal = () => {
                 className="input w-full bg-transparent my-2"
                 placeholder="Title"
                 {...register('title')}
+                control={control}
               />
             </label>
             <textarea
               placeholder="Enter description here..."
               className="textarea border-black w-full h-64 bg-white font-bold text-black"
               {...register('description')}
+              control={control}
             ></textarea>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Phone
@@ -64,6 +66,7 @@ export const AdminHotlineModal = () => {
                 className="input w-full bg-transparent my-2"
                 placeholder="Paste the url link"
                 {...register('phoneNumber')}
+                control={control}
               />
             </label>
             <PrimaryButton className="w-full justify-center py-4" disabled={processing} type="submit">
