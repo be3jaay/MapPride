@@ -6,7 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import Checkbox from '@/Components/Checkbox';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { FaRetweet } from 'react-icons/fa';
 
 export default function Register() {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -19,10 +19,10 @@ export default function Register() {
     password_confirmation: '',
   });
 
-  const [enable, setenable] = useState(true);
+  const [enable, setEnable] = useState(true);
 
   const handleCheckboxChange = () => {
-    setenable(!enable);
+    setEnable(!enable);
   };
   const [isOtherSelected, setIsOtherSelected] = useState(false);
 
@@ -96,7 +96,7 @@ export default function Register() {
               />
 
               <button className="relative bottom-10 left-[370px] " onClick={backToSelect}>
-                <ExpandLessIcon />
+                <FaRetweet />
               </button>
             </>
           ) : (

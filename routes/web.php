@@ -83,6 +83,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return Inertia::render('AdminDashboard/AdminUserManagement');
     })->name('admin.user');
 
+    Route::get('/admin/map', function () {
+        return Inertia::render('AdminDashboard/AdminMap');
+    })->name('admin.map');
+
     // Add more admin routes as needed
 });
 

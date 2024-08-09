@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('support', function (Blueprint $table) {
+        Schema::create('marker_location', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->integer('phoneNumber');
+            $table->string('location');
+            $table->float('longitude', 10, 6);
+            $table->float('latitude', 10, 6);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('support');
+        Schema::dropIfExists('marker_location');
     }
 };
