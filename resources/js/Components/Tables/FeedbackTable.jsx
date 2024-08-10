@@ -4,8 +4,11 @@ import Loading from '../Loading';
 import { Badge } from '../Badge';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import useTableData from '../../../core/hooks/use-table-data';
+import AdminViewFeedback from '../Modal/Edit/AdminViewFeedback';
+import { useState } from 'react';
 
 export const FeedbackTable = () => {
+  const [feedbackStatus, setFeedbackStatus] = useState({}); // Store feedback status
   const {
     data: feedback,
     selectedItem: selectedFeedback,
@@ -16,6 +19,10 @@ export const FeedbackTable = () => {
     handleViewClick,
     closeModal,
   } = useTableData('/api/feedback');
+
+  const handleStatusChange = (id, status) => {
+    setFeedbackStatus({ ...feedbackStatus, [id]: status });
+  };
 
   return (
     <div>
@@ -42,11 +49,14 @@ export const FeedbackTable = () => {
                       onClick={() => handleViewClick(feedback)}
                       className="flex items-center justify-center py-2"
                     >
-                      Edit
+                      View
                     </PrimaryButton>
                   </td>
                   <td style={tableStyle}>
-                    <Badge type="warning" message="Under Observation" />
+                    <Badge
+                      type={feedbackStatus[feedback.id] === 'Fixed' ? 'success' : 'warning'}
+                      message={feedbackStatus[feedback.id] === 'Fixed' ? 'Fixed' : 'Under Observation'}
+                    />
                   </td>
                 </tr>
               ))
@@ -80,7 +90,12 @@ export const FeedbackTable = () => {
         </PrimaryButton>
       </div>
       {isModalOpen && selectedFeedback && (
-        <AdminModalExperience resource={selectedFeedback} isOpen={isModalOpen} onClose={closeModal} />
+        <AdminViewFeedback
+          feedback={selectedFeedback}
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onStatusChange={handleStatusChange}
+        />
       )}
     </div>
   );

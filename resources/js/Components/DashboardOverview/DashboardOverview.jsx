@@ -4,8 +4,8 @@ export const DashboardOverview = () => {
   return (
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div className="flex items-center justify-between gap-2 mt-2">
-        {DashboardOverviewData.map(item => (
-          <article className="rounded-lg border border-gray-100 bg-indigo-200 p-6 w-full">
+        {DashboardOverviewData.map((item, index) => (
+          <article key={index} className="rounded-lg border border-gray-100 bg-indigo-200 p-6 w-full">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-black">{item.title}</p>

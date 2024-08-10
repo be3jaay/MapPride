@@ -51,22 +51,17 @@ export const SupportOverview = () => {
             supportData.map((support, index) => (
               <article
                 key={index}
-                className="rounded-lg border border-gray-100 bg-indigo-200 p-6 w-full shadow-md cursor-pointer hover:opacity-80"
+                className="w-full rounded-lg border border-gray-100 bg-white p-4 shadow-md transition hover:shadow-lg sm:p-6"
               >
-                <div className="p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-3xl text-indigo-700">
-                        <TfiSupport />
-                      </span>
-                      <p className="text-3xl text-indigo-700 font-bold">{support.title}</p>
-                    </div>
-                  </div>
-                  <div className="gap-2 flex flex-col">
-                    <span className="text-black text-md">{support.description}</span>
-                    <span className="text-black text-xl font-bold">{support.phoneNumber}</span>
-                  </div>
-                </div>
+                <span className="inline-block rounded bg-indigo-700 p-2 text-white text-2xl">
+                  <TfiSupport />
+                </span>
+                <h3 className="mt-0.5 text-lg font-medium text-gray-900">{support.title}</h3>
+                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">{support.description}</p>
+
+                <span href="#" className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600">
+                  +63 {support.phoneNumber}
+                </span>
               </article>
             ))
           ) : (
@@ -83,22 +78,17 @@ export const SupportOverview = () => {
             hotlineData.map((support, index) => (
               <article
                 key={index}
-                className="rounded-lg border border-gray-100 bg-indigo-200 p-6 w-full shadow-md cursor-pointer hover:opacity-80"
+                className="w-full rounded-lg border border-gray-100 bg-white p-4 shadow-md transition hover:shadow-lg sm:p-6"
               >
-                <div className="p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-3xl text-indigo-700">
-                        <BiSupport />
-                      </span>
-                      <p className="text-3xl text-indigo-700 font-bold">{support.title}</p>
-                    </div>
-                  </div>
-                  <div className="gap-2 flex flex-col">
-                    <span className="text-black text-md">{support.description}</span>
-                    <span className="text-black text-xl font-bold">{support.phoneNumber}</span>
-                  </div>
-                </div>
+                <span className="inline-block rounded bg-indigo-700 p-2 text-white text-2xl">
+                  <BiSupport />
+                </span>
+                <h3 className="mt-0.5 text-lg font-medium text-gray-900">{support.title}</h3>
+                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">{support.description}</p>
+
+                <span href="#" className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600">
+                  +63 {support.phoneNumber}
+                </span>
               </article>
             ))
           ) : (

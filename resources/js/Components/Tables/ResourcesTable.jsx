@@ -16,6 +16,7 @@ export const ResourcesTable = () => {
     handlePageChange,
     handleViewClick,
     closeModal,
+    handleDelete,
   } = useTableData('/api/resources');
 
   return (

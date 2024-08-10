@@ -3,16 +3,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Head } from '@inertiajs/react';
 import { useForm } from 'react-hook-form';
 import { feedbackSchema } from '../../../core/schema';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Alert } from '@/Components/Alert';
 import axios from 'axios';
+import { useToastNotifications } from '../../../core/hooks';
+import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function Feedback({ auth }) {
-  const notify = () => toast('Feedback Submitted');
-
-  const notifySuccess = () => toast.success('Your experience has been posted, thank you.');
-  const notifyError = () => toast.error('There was an error posting your experience.');
+  const { notifyError, notifySuccess } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
@@ -24,13 +23,11 @@ export default function Feedback({ auth }) {
 
   const onSubmit = async data => {
     try {
-      const response = await axios.post('/api/feedback', data);
-      console.log('API response:', response);
+      await axios.post('/api/feedback', data);
       reset();
-      notifySuccess();
+      notifySuccess('Your feedback has been posted, thank you.');
     } catch (error) {
-      console.error('API error:', error);
-      notifyError();
+      notifyError('There was an error posting your feedback.');
     }
   };
   return (
@@ -89,9 +86,9 @@ export default function Feedback({ auth }) {
                   {...register('description')}
                 ></textarea>
                 <div className="card-actions justify-center">
-                  <button className="btn btn-primary w-full text-white" type="submit">
+                  <PrimaryButton className="btn btn-primary w-full text-white" type="submit">
                     Submit
-                  </button>
+                  </PrimaryButton>
                 </div>
               </div>
             </div>

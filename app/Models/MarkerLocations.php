@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class MarkerLocations extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'location',
-        'latitude',
-        'longitude',
+        'location', 'longitude', 'latitude', 'location_image', 'location_title', 'location_description'
     ];
+
+    public function services()
+    {
+        return $this->hasMany(LocationServices::class, 'marker_location_id');
+    }
+    
 }
+
+

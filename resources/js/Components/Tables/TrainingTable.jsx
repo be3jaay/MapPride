@@ -16,6 +16,7 @@ export const TrainingTable = () => {
     handlePageChange,
     handleViewClick,
     closeModal,
+    handleDelete,
   } = useTableData('/api/training');
 
   return (
