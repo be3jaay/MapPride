@@ -4,8 +4,11 @@ import AdminModalExperience from '../Modal/Edit/AdminModalExperience';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import Loading from '../Loading';
 import useTableData from '../../../core/hooks/use-table-data';
+import { useState } from 'react';
 
 export const ExperienceTable = () => {
+  const [expStatus, setExpStatus] = useState({});
+
   const {
     data: experiences,
     selectedItem: selectedExperience,
@@ -16,6 +19,10 @@ export const ExperienceTable = () => {
     handleViewClick,
     closeModal,
   } = useTableData('/api/experience');
+
+  const handleStatusChange = (id, status) => {
+    setExpStatus({ ...expStatus, [id]: status });
+  };
 
   return (
     <div>
@@ -50,7 +57,22 @@ export const ExperienceTable = () => {
                     </PrimaryButton>
                   </td>
                   <td style={tableStyle}>
-                    <Badge type="info" message="For Approval" />
+                    <Badge
+                      type={
+                        expStatus[exp.id] === 'Approved'
+                          ? 'success'
+                          : expStatus[exp.id] === 'Declined'
+                          ? 'error'
+                          : 'warning'
+                      }
+                      message={
+                        expStatus[exp.id] === 'Approved'
+                          ? 'Approved'
+                          : expStatus[exp.id] === 'Declined'
+                          ? 'Declined'
+                          : 'Under Observation'
+                      }
+                    />
                   </td>
                 </tr>
               ))
@@ -84,7 +106,12 @@ export const ExperienceTable = () => {
         </PrimaryButton>
       </div>
       {isModalOpen && selectedExperience && (
-        <AdminModalExperience experience={selectedExperience} isOpen={isModalOpen} onClose={closeModal} />
+        <AdminModalExperience
+          experience={selectedExperience}
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onStatusChange={handleStatusChange}
+        />
       )}
     </div>
   );

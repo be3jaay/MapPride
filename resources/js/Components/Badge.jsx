@@ -1,4 +1,4 @@
-export const Badge = ({ message, type }) => {
+export const Badge = ({ message, type, children, className }) => {
   const badgeTypes = {
     error: 'border-red-500 bg-red-50 text-red-800',
     warning: 'border-yellow-500 bg-yellow-50 text-yellow-800',
@@ -7,8 +7,9 @@ export const Badge = ({ message, type }) => {
   };
 
   return (
-    <div role="badge" className={`badge ${badgeTypes[type]}`}>
+    <div role="badge" className={`badge ${badgeTypes[type]} ${className}`}>
       <strong className="block text-center text-black">{message}</strong>
+      {children}
     </div>
   );
 };

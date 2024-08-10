@@ -6,6 +6,7 @@ import axios from 'axios';
 import { CustomTabs } from '@/Components/Tabs/CustomTabs';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { FaArrowRightLong } from 'react-icons/fa6';
+import book from '../../../core/images/book.png';
 
 export default function Resources({ auth }) {
   const [tabs, setTabs] = useState([]);
@@ -28,17 +29,20 @@ export default function Resources({ auth }) {
           title,
           content: (
             <div className="grid grid-cols-2 gap-4 mt-4">
-              {groupedData[title].map(item => (
-                <div className="card bg-base-100 w-full shadow-md h-[32rem]">
-                  <div className="card-body bg-indigo-200 text-black">
-                    <h2 className="card-title text-indigo-700 text-2xl">{item.title}</h2>
-                    <p className="text-black my-2 overflow-hidden">{item.description}</p>
-                    <div className="card-actions justify-center">
-                      <PrimaryButton className="w-full text-white justify-center py-4">
-                        Read More
-                        <FaArrowRightLong className="ml-2" />
-                      </PrimaryButton>
+              {groupedData[title].map((item, index) => (
+                <div key={index} className="card bg-white w-full ">
+                  <div className="card-body shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all">
+                    <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                    <div className="sm:flex sm:justify-between sm:gap-4">
+                      <div className="flex items-center justify-between w-full">
+                        <h3 className="text-lg font-bold text-gray-900 sm:text-xl">{item.title}</h3>
+                        <img src={book} alt="" className="w-14 h-14" />
+                      </div>
                     </div>
+                    <div className="mt-4">
+                      <p className="text-pretty text-sm text-gray-500">{item.description}</p>
+                    </div>
+                    <PrimaryButton className="w-full text-white justify-center py-3 mt-6 ">Read More</PrimaryButton>
                   </div>
                 </div>
               ))}

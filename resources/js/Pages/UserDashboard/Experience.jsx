@@ -1,10 +1,24 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { ExperienceData } from '../../../core/constant/ExperienceData/ExperienceData';
-import { FaUserCheck } from 'react-icons/fa';
 import { Alert } from '@/Components/Alert';
+import anonymous from '../../../core/images/anonymous.png';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Loading from '@/Components/Loading';
+import { Badge } from '@/Components/Badge';
+import { RiMapPinUserFill } from 'react-icons/ri';
 
 export default function Experience({ auth }) {
+  const [experience, setExperience] = useState([]);
+
+  useEffect(() => {
+    const fetchFeedback = async () => {
+      const response = await axios.get('api/experience');
+      setExperience(response.data.data);
+    };
+    fetchFeedback();
+  }, []);
+
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Experience" />
@@ -19,34 +33,42 @@ export default function Experience({ auth }) {
             />
           </div>
           <div className="grid grid-cols-2 gap-4 mt-4">
-            {ExperienceData.map(item => (
-              <article className="rounded-xl border-2 border-gray-100 bg-indigo-200 cursor-pointer hover:opacity-90 hover:scale-90 transition-all">
-                <div className="flex items-start gap-4 p-4 sm:p-6 lg:p-8">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl text-indigo-800">{item.location}</h3>
-                      <p className="bg-indigo-500 rounded-full text-white px-4 py-2">{item.type}</p>
+            {experience && experience.length > 0 ? (
+              experience.map((item, index) => (
+                <div
+                  key={index}
+                  className="shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all"
+                >
+                  <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                  <div className="sm:flex sm:justify-between sm:gap-4">
+                    <div>
+                      <Badge type="info" message={item.location} className="text-lg p-4">
+                        <RiMapPinUserFill className="ml-2 text-2xl" />
+                      </Badge>
+                      <p className="mt-3 text-xs font-medium text-gray-600">Posted By: {item.username}</p>
                     </div>
-                    <p className="line-clamp-2 text-md text-gray-800">{item.description}</p>
-                    <div className="mt-2 sm:flex sm:items-center sm:gap-2">
-                      <p className="text-gray-600">
-                        Posted by:
-                        <a href="#" className="font-medium text-gray-600 underline hover:text-gray-700">
-                          {' '}
-                          John{' '}
-                        </a>
-                      </p>
+                    <div className="hidden sm:block sm:shrink-0">
+                      <img src={anonymous} alt="" className="w-14 h-14" />
                     </div>
                   </div>
+                  <div className="mt-4">
+                    <p className="text-pretty text-sm text-gray-500">{item.description}</p>
+                  </div>
+                  <dl className="mt-6 flex gap-4 sm:gap-6">
+                    <div className="flex flex-col-reverse">
+                      <dt className="text-sm font-medium text-gray-600">{item.created_at}</dt>
+                      <dd className="text-xs text-gray-500">Created At</dd>
+                    </div>
+                    <div className="flex flex-col-reverse">
+                      <dt className="text-sm font-medium text-gray-600">{item.experience_type}</dt>
+                      <dd className="text-xs text-gray-500">Type</dd>
+                    </div>
+                  </dl>
                 </div>
-                <div className="flex justify-end">
-                  <strong className="-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-green-600 px-3 py-1.5 text-white">
-                    <FaUserCheck />
-                    <span className="text-[10px] font-medium sm:text-xs">Posted!</span>
-                  </strong>
-                </div>
-              </article>
-            ))}
+              ))
+            ) : (
+              <Loading type="primary" />
+            )}
           </div>
         </div>
       </div>

@@ -4,6 +4,9 @@ import { Alert } from '@/Components/Alert';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CustomTabs } from '@/Components/Tabs/CustomTabs';
+import PrimaryButton from '@/Components/PrimaryButton';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import recruitment from '../../../core/images/recruitment.png';
 
 export default function Training({ auth }) {
   const [tabs, setTabs] = useState([]);
@@ -27,14 +30,19 @@ export default function Training({ auth }) {
           content: (
             <div className="grid grid-cols-2 gap-4 mt-4">
               {groupedData[title].map(item => (
-                <div key={item.id} className="cursor-pointer hover:opacity-90 hover:scale-90 transition-all">
-                  <div className="card bg-base-100 w-full shadow-md h-60">
-                    <div className="card-body bg-indigo-200 text-black text-center">
-                      <h2 className="card-title justify-center bg-indigo-600 text-white rounded-lg p-3 mb-2">
-                        {item.title}
-                      </h2>
-                      <p className="text-gray-500">{item.description}</p>
+                <div key={item.id} className="card bg-white w-full cursor-pointer hover:scale-90 transition-all">
+                  <div className="card-body shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">
+                    <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                    <div className="sm:flex sm:justify-between sm:gap-4">
+                      <div className="flex items-center justify-between w-full">
+                        <h3 className="text-lg font-bold text-gray-900 sm:text-xl">{item.title}</h3>
+                        <img src={recruitment} alt="" className="w-14 h-14" />
+                      </div>
                     </div>
+                    <div className="mt-4">
+                      <p className="text-pretty text-sm text-gray-500">{item.description}</p>
+                    </div>
+                    <PrimaryButton className="w-full text-white justify-center py-3 mt-6 ">View Here</PrimaryButton>
                   </div>
                 </div>
               ))}

@@ -6,12 +6,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { hotlineSchema } from '../../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useToastNotifications } from 'resources/core/hooks';
 
 export const AdminEditHotline = ({ hotline, isOpen, onClose }) => {
   if (!hotline) return null;
 
-  const notifySuccess = () => toast.success('Training content updated successfully.');
-  const notifyError = () => toast.error('There was an error updating the training content.');
+  const { notifySuccess, notifyError } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
@@ -34,10 +34,10 @@ export const AdminEditHotline = ({ hotline, isOpen, onClose }) => {
     try {
       await axios.put(`/api/hotlines/${hotline.id}`, data);
       reset();
-      notifySuccess();
+      notifySuccess('Hotline content updated successfully.');
       onClose();
     } catch (error) {
-      notifyError();
+      notifyError('There was an error updating the hotline content.');
     }
   };
 
