@@ -5,6 +5,7 @@ import { useToastNotifications } from '../../../core/hooks';
 import { BiSupport } from 'react-icons/bi';
 import { TfiSupport } from 'react-icons/tfi';
 import Loading from '../Loading';
+import { Badge } from '../Badge';
 
 export const SupportOverview = () => {
   const [supportData, setSupportData] = useState([]);
@@ -49,20 +50,29 @@ export const SupportOverview = () => {
         <div className="flex items-center justify-center gap-2">
           {supportData && supportData.length > 0 ? (
             supportData.map((support, index) => (
-              <article
+              <div
                 key={index}
-                className="w-full rounded-lg border border-gray-100 bg-white p-4 shadow-md transition hover:shadow-lg sm:p-6"
+                className="w-full shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all"
               >
-                <span className="inline-block rounded bg-indigo-700 p-2 text-white text-2xl">
-                  <TfiSupport />
-                </span>
-                <h3 className="mt-0.5 text-lg font-medium text-gray-900">{support.title}</h3>
-                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">{support.description}</p>
-
-                <span href="#" className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600">
-                  +63 {support.phoneNumber}
-                </span>
-              </article>
+                <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                <div className="sm:flex sm:justify-between sm:gap-4">
+                  <div>
+                    <Badge type="info" message={support.title} className="text-lg p-4"></Badge>
+                  </div>
+                  <div className="hidden sm:block sm:shrink-0 text-3xl text-indigo-700">
+                    <TfiSupport />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-pretty text-sm text-gray-500">{support.description}</p>
+                </div>
+                <dl className="mt-6 flex gap-4 sm:gap-6">
+                  <div className="flex flex-col-reverse">
+                    <dt className="text-sm font-medium text-gray-600">+63 {support.phoneNumber}</dt>
+                    <dd className="text-md text-black font-bold">Contact Number</dd>
+                  </div>
+                </dl>
+              </div>
             ))
           ) : (
             <Loading type="primary" />
@@ -76,20 +86,29 @@ export const SupportOverview = () => {
         <div className="flex items-center justify-center gap-2">
           {hotlineData && hotlineData.length > 0 ? (
             hotlineData.map((support, index) => (
-              <article
+              <div
                 key={index}
-                className="w-full rounded-lg border border-gray-100 bg-white p-4 shadow-md transition hover:shadow-lg sm:p-6"
+                className="w-full shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all"
               >
-                <span className="inline-block rounded bg-indigo-700 p-2 text-white text-2xl">
-                  <BiSupport />
-                </span>
-                <h3 className="mt-0.5 text-lg font-medium text-gray-900">{support.title}</h3>
-                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">{support.description}</p>
-
-                <span href="#" className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600">
-                  +63 {support.phoneNumber}
-                </span>
-              </article>
+                <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                <div className="sm:flex sm:justify-between sm:gap-4">
+                  <div>
+                    <Badge type="info" message={support.title} className="text-lg p-4"></Badge>
+                  </div>
+                  <div className="hidden sm:block sm:shrink-0 text-3xl text-indigo-700">
+                    <BiSupport />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-pretty text-sm text-gray-500">{support.description}</p>
+                </div>
+                <dl className="mt-6 flex gap-4 sm:gap-6">
+                  <div className="flex flex-col-reverse">
+                    <dt className="text-sm font-medium text-gray-600">+63 {support.phoneNumber}</dt>
+                    <dd className="text-md text-black font-bold">Contact Number</dd>
+                  </div>
+                </dl>
+              </div>
             ))
           ) : (
             <Loading type="primary" />

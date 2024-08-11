@@ -19,7 +19,7 @@ export default function AdminMap({ auth }) {
                   message="Map Content Management"
                   description="In this section, the administrator will add/create map that will be shown for user map content."
                 />
-                <div className="my-4 gap-1">
+                <div className="w-full mt-4">
                   <AdminModalMap />
                 </div>
               </div>

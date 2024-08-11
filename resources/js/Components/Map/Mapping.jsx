@@ -3,14 +3,19 @@ import 'leaflet/dist/leaflet.css';
 import { healthIcon, governmentIcon, safeSpaceIcon, supportIcon } from '../../../core/icons/marker-icons';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { RiCustomerService2Fill } from 'react-icons/ri';
+import { FaPhone } from 'react-icons/fa6';
+import { Badge } from '../Badge';
 
 export const Mapping = () => {
   const [selectMarker, setSelectMarker] = useState([]);
 
   useEffect(() => {
     const fetchLayer = async () => {
-      const markerResponse = await axios.get('/api/marker-location');
-      const markerLocation = markerResponse.data.data;
+      const response = await axios.get('/api/map');
+      console.log(response);
+      const markerLocation = response.data ?? [];
       setSelectMarker(markerLocation);
     };
     fetchLayer();
@@ -23,50 +28,38 @@ export const Mapping = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       <LayersControl position="topright">
-        {selectMarker.map((item, index) => (
+        {selectMarker?.map((item, index) => (
           <LayersControl.Overlay key={index} name={item.location} checked>
             <LayerGroup>
               <Marker position={[item.longitude, item.latitude]} icon={safeSpaceIcon}>
-                <Popup>
-                  <a href="#" className="block rounded-lg p-4 shadow-sm shadow-indigo-100">
-                    <img src={item.location_image} alt="no-image" />
-                    <div className="mt-2">
-                      <dl>
-                        <div>
-                          <dt className="sr-only">Price</dt>
-                          <dd className="text-sm text-gray-500">{item.location_title}</dd>
-                        </div>
-                        <div>
-                          <dt className="sr-only">Address</dt>
-                          <dd className="font-medium">{item.location_description}</dd>
-                        </div>
-                      </dl>
-                      <div className="mt-6 flex items-center gap-8 text-xs">
-                        <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
-                          <svg
-                            className="size-4 text-indigo-700"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"
-                            />
-                          </svg>
-
-                          <div className="mt-1.5 sm:mt-0">
-                            <p className="text-gray-500">Services Available</p>
-
-                            <p className="font-medium">{item.location_services}</p>
-                          </div>
+                <Popup className="w-full">
+                  <div key={index} className="card bg-white w-[24rem] flex items-center justify-center ">
+                    <div className="">
+                      <img src={`/storage/${item.image}`} alt="No image" className=" h-auto" />
+                    </div>
+                    <div className="w-full card-body shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">
+                      <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                      <div className="sm:flex sm:justify-between sm:gap-4">
+                        <div className="w-full">
+                          <Badge type="info" message={item.location} className="text-md mb-2 " />
+                          <h3 className="text-xl font-bold text-indigo-700 sm:text-xl">{item.title}</h3>
+                          <p className="text-md">{item.description}</p>
+                          <hr className="w-full mb-4" />
                         </div>
                       </div>
+                      <div className="">
+                        <span className="mb-2 text-pretty text-sm text-indigo-700 flex items-center">
+                          <FaMapMarkerAlt className="mr-3" /> {item.address}
+                        </span>
+                        <span className="mb-2 text-pretty text-sm text-indigo-700 flex items-center">
+                          <RiCustomerService2Fill className="mr-3" /> {item.services}
+                        </span>
+                        <span className="mb-2 text-pretty text-sm text-indigo-700 flex items-center">
+                          <FaPhone className="mr-3" /> +63 {item.phone}
+                        </span>
+                      </div>
                     </div>
-                  </a>
+                  </div>
                 </Popup>
               </Marker>
             </LayerGroup>

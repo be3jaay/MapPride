@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { hotlineSchema } from '../../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useToastNotifications } from 'resources/core/hooks';
+import { useToastNotifications } from '../../../../core/hooks';
 
 export const AdminEditHotline = ({ hotline, isOpen, onClose }) => {
   if (!hotline) return null;

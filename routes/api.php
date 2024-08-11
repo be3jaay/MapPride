@@ -12,6 +12,7 @@ use App\Http\Controllers\SupportController;
 use App\Http\Controllers\HotlineController;
 use App\Http\Controllers\MapSelectionController;
 use App\Http\Controllers\MarkerLocationController;
+use App\Http\Controllers\MapController;
 
 
 /*
@@ -67,3 +68,6 @@ Route::get('/map-selection', [MapSelectionController::class, 'index']);
 
 Route::post('/marker-location', [MarkerLocationController::class, 'store']);
 Route::get('/marker-location', [MarkerLocationController::class, 'index']);
+
+Route::post('/map', [MapController::class, 'store']);
+Route::get('/map', [MapController::class, 'index']);
