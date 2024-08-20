@@ -1,27 +1,27 @@
-import { Icon } from 'leaflet';
+import L from 'leaflet';
 
-export const healthIcon = new Icon({
+export const healthIcon = L.icon({
   iconUrl: 'https://img.icons8.com/doodle/48/heart-with-pulse.png',
   iconSize: [35, 35],
   iconAnchor: [22, 94],
   popupAnchor: [-3, -76],
 });
 
-export const safeSpaceIcon = new Icon({
+export const safeSpaceIcon = L.icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/10703/10703039.png',
   iconSize: [35, 35],
   iconAnchor: [22, 94],
   popupAnchor: [-3, -76],
 });
 
-export const supportIcon = new Icon({
+export const supportIcon = L.icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/8898/8898827.png',
   iconSize: [35, 35],
   iconAnchor: [22, 94],
   popupAnchor: [-3, -76],
 });
 
-export const governmentIcon = new Icon({
+export const governmentIcon = L.icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/17297/17297015.png',
   iconSize: [35, 35],
   iconAnchor: [22, 94],

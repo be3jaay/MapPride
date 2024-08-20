@@ -19,27 +19,25 @@ class MapController extends Controller
 
 
     public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'location' => 'required|string',
-        'longitude' => 'required|numeric',
-        'latitude' => 'required|numeric',
-        'image' => 'nullable|file|mimes:jpeg,png,gif|max:2048',
-        'title' => 'required|string',
-        'description' => 'required|string',
-        'address' => 'required|string',
-        'phone' => 'nullable|string',
-        'services' => 'nullable|array',
-    ]);
-
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('public/images');
-        $validatedData['image'] = basename($imagePath);
+    {
+        // Log the incoming request data for debugging
+        $validatedData = $request->validate([
+            'location' => 'required|string',
+            'longitude' => 'required|numeric',
+            'latitude' => 'required|numeric',
+            'image' => 'nullable|file|mimes:jpeg,png,gif|max:2048',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'address' => 'required|string',
+            'phone' => 'nullable|string',
+            'services' => 'nullable|string', // Temporarily treat as string for debugging
+        ]);
+        
+        $validatedData['services'] = json_decode($validatedData['services'], true); // Convert back to array if needed
+        
+        $map = Map::create($validatedData);
+        return response()->json($map, 201);
     }
-
-    $map = Map::create($validatedData);
-    return response()->json($map, 201);
-}
 
     /**
      * Display the specified resource.

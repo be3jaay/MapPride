@@ -1,70 +1,55 @@
-import Modal from '@/Components/Modal';
-import PrimaryButton from '../../PrimaryButton';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { markerSchema } from '../../../../core/schema';
 import { ToastContainer } from 'react-toastify';
 import { useToastNotifications } from '../../../../core/hooks';
 import axios from 'axios';
 import useModal from '../../../../core/hooks/use-modal';
+import Modal from '@/Components/Modal';
+import PrimaryButton from '../../PrimaryButton';
 
 export const AdminModalMap = () => {
   const [selection, setSelection] = useState([]);
-  const [services, setServices] = useState(['']);
 
   const { notifyError, notifySuccess } = useToastNotifications();
   const { handleOpen, isOpen, closeModal } = useModal();
 
   const form = useForm({
-    mode: 'all',
-    resolver: yupResolver(markerSchema),
-    defaultValues: markerSchema.getDefault(),
+    mode: 'all', 
   });
 
-  const { register, handleSubmit, reset, processing } = form;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = form;
 
   const onSubmit = async data => {
-    const formData = new FormData();
-    formData.append('longitude', data.longitude);
-    formData.append('latitude', data.latitude);
-    formData.append('location_image', data.location_image[0]);
-    formData.append('location_title', data.location_title);
-    formData.append('location_description', data.location_description);
-
-    services.forEach((service, index) => {
-      formData.append(`location_services[${index}]`, service);
-    });
-
     try {
-      await axios.post('/api/marker-location', formData, {
+      const formData = new FormData();
+      formData.append('location', data.location);
+      formData.append('longitude', data.longitude);
+      formData.append('latitude', data.latitude);
+      formData.append('image', data.image[0]);
+      formData.append('title', data.title);
+      formData.append('description', data.description);
+      formData.append('address', data.address);
+      formData.append('phone', data.phone);
+      formData.append('services', JSON.stringify(data.services)); 
+
+      await axios.post('/api/map', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      notifySuccess('Your resources have been created, thank you.');
+
+      notifySuccess('Your marker has been created, thank you.');
       closeModal();
       reset();
-      setServices(['']);
     } catch (error) {
+      console.error('Submission Error:', error);
       notifyError('There was an error posting your experience.');
     }
-  };
-
-  const handleAddService = () => {
-    setServices([...services, '']);
-  };
-
-  const handleRemoveService = index => {
-    const newServices = [...services];
-    newServices.splice(index, 1);
-    setServices(newServices);
-  };
-
-  const handleServiceChange = (index, value) => {
-    const newServices = [...services];
-    newServices[index] = value;
-    setServices(newServices);
   };
 
   useEffect(() => {
@@ -92,13 +77,15 @@ export const AdminModalMap = () => {
       </div>
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 p-12 w-[32rem]">
-          <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-2xl text-indigo-800">Create a marker:</h3>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Selection
               <select className="select w-full bg-white text-black font-bold my-4" {...register('location')}>
                 {selection.map((item, index) => (
-                  <option key={index}>{item.location}</option>
+                  <option key={index} value={item.location}>
+                    {item.location}
+                  </option>
                 ))}
               </select>
             </label>
@@ -123,7 +110,7 @@ export const AdminModalMap = () => {
             <input
               type="file"
               className="file-input file-input-bordered file-input-primary w-full bg-white"
-              {...register('location_image')}
+              {...register('image')}
             />
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Title
@@ -131,40 +118,42 @@ export const AdminModalMap = () => {
                 type="text"
                 className="input w-full bg-transparent my-2"
                 placeholder="Title"
-                {...register('location_title')}
+                {...register('title')}
               />
             </label>
             <textarea
               placeholder="Enter description here..."
               className="textarea border-black w-full h-40 bg-white font-bold text-black"
-              {...register('location_description')}
+              {...register('description')}
             ></textarea>
-
-            {services.map((service, index) => (
-              <div key={index} className="flex items-center gap-2 my-2">
-                <input
-                  type="text"
-                  className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold"
-                  placeholder="Service"
-                  {...register(`location_services.${index}`)} // Integrating with react-hook-form
-                  value={service}
-                  onChange={e => handleServiceChange(index, e.target.value)}
-                />
-                {index > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveService(index)}
-                    className="text-red-500 font-bold block"
-                  >
-                    Remove
-                  </button>
-                )}
-              </div>
-            ))}
-            <button type="button" onClick={handleAddService} className="text-indigo-800 font-bold">
-              + Add another service
-            </button>
-            <PrimaryButton className="w-full justify-center py-4" disabled={processing} type="submit">
+            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+              Address
+              <input
+                type="text"
+                className="input w-full bg-transparent my-2"
+                placeholder="Address"
+                {...register('address')}
+              />
+            </label>
+            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+              Phone
+              <input
+                type="text"
+                className="input w-full bg-transparent my-2"
+                placeholder="Phone"
+                {...register('phone')}
+              />
+            </label>
+            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+              Services
+              <input
+                type="text"
+                className="input w-full bg-transparent my-2"
+                placeholder="Services"
+                {...register('services')}
+              />
+            </label>
+            <PrimaryButton className="w-full justify-center py-4" disabled={isSubmitting} type="submit">
               Submit
             </PrimaryButton>
           </form>
