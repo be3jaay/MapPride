@@ -22,16 +22,6 @@ class Map extends Model
     ];
 
     protected $casts = [
-        'services' => 'array', 
+        'services' => 'array', // Casts 'services' field as an array
     ];
-
-    public function setServicesAttribute($value)
-    {
-        // Check if value is a string, if so convert to array
-        if (is_string($value)) {
-            $value = explode(',', $value); // Assuming comma-separated values
-        }
-
-        $this->attributes['services'] = json_encode($value);
-    }
 }

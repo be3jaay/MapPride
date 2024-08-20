@@ -14,12 +14,24 @@ export const Mapping = () => {
   useEffect(() => {
     const fetchLayer = async () => {
       const response = await axios.get('/api/map');
-      console.log(response);
       const markerLocation = response.data ?? [];
       setSelectMarker(markerLocation);
     };
     fetchLayer();
   }, []);
+
+  const getIcon = iconType => {
+    switch (iconType) {
+      case 'Healthcare Facilities':
+        return healthIcon;
+      case 'Government Services':
+        return governmentIcon;
+      case 'Support Services':
+        return supportIcon;
+      default:
+        return safeSpaceIcon;
+    }
+  };
 
   return (
     <MapContainer center={[14.2127, 121.1639]} zoom={16} scrollWheelZoom={false} className="h-full">
@@ -31,11 +43,11 @@ export const Mapping = () => {
         {selectMarker?.map((item, index) => (
           <LayersControl.Overlay key={index} name={item.location} checked>
             <LayerGroup>
-              <Marker position={[item.longitude, item.latitude]} icon={safeSpaceIcon}>
+              <Marker position={[item.longitude, item.latitude]} icon={getIcon(item.location)}>
                 <Popup className="w-full">
                   <div key={index} className="card bg-white w-[24rem] flex items-center justify-center ">
                     <div className="">
-                      <img src={`/storage/${item.image}`} alt="No image" className=" h-auto" />
+                      <img src={`/storage/${item.image}`} alt="No image" className="h-auto" />
                     </div>
                     <div className="w-full card-body shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">
                       <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
