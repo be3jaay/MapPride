@@ -22,6 +22,6 @@ class Map extends Model
     ];
 
     protected $casts = [
-        'services' => 'array', // Casts 'services' field as an array
+        'services' => 'array', 
     ];
 }

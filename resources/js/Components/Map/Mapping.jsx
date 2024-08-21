@@ -15,8 +15,22 @@ export const Mapping = () => {
     const fetchLayer = async () => {
       const response = await axios.get('/api/map');
       const markerLocation = response.data ?? [];
-      setSelectMarker(markerLocation);
+
+      // Group markers by location (or any other unique property) to avoid duplicates
+      const groupedMarkers = markerLocation.reduce((acc, marker) => {
+        const locationKey = `${marker.longitude}-${marker.latitude}`; // Unique key for grouping
+
+        if (!acc[locationKey]) {
+          acc[locationKey] = [];
+        }
+        acc[locationKey].push(marker);
+        return acc;
+      }, {});
+
+      // Convert grouped data to an array for rendering
+      setSelectMarker(groupedMarkers);
     };
+
     fetchLayer();
   }, []);
 
@@ -40,40 +54,42 @@ export const Mapping = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       <LayersControl position="topright">
-        {selectMarker?.map((item, index) => (
-          <LayersControl.Overlay key={index} name={item.location} checked>
+        {Object.keys(selectMarker).map((locationKey, index) => (
+          <LayersControl.Overlay key={index} name={selectMarker[locationKey][0].location} checked>
             <LayerGroup>
-              <Marker position={[item.longitude, item.latitude]} icon={getIcon(item.location)}>
-                <Popup className="w-full">
-                  <div key={index} className="card bg-white w-[24rem] flex items-center justify-center ">
-                    <div className="">
-                      <img src={`/storage/${item.image}`} alt="No image" className="h-auto" />
-                    </div>
-                    <div className="w-full card-body shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">
-                      <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
-                      <div className="sm:flex sm:justify-between sm:gap-4">
-                        <div className="w-full">
-                          <Badge type="info" message={item.location} className="text-md mb-2 " />
-                          <h3 className="text-xl font-bold text-indigo-700 sm:text-xl">{item.title}</h3>
-                          <p className="text-md">{item.description}</p>
-                          <hr className="w-full mb-4" />
+              {selectMarker[locationKey].map((item, idx) => (
+                <Marker key={idx} position={[item.longitude, item.latitude]} icon={getIcon(item.location)}>
+                  <Popup className="w-full">
+                    <div key={idx} className="card bg-white w-[24rem] flex items-center justify-center">
+                      <div>
+                        <img src={`/storage/${item.image}`} alt="No image" className="h-auto" />
+                      </div>
+                      <div className="w-full card-body shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">
+                        <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                        <div className="sm:flex sm:justify-between sm:gap-4">
+                          <div className="w-full">
+                            <Badge type="info" message={item.location} className="text-md mb-2 " />
+                            <h3 className="text-xl font-bold text-indigo-700 sm:text-xl">{item.title}</h3>
+                            <p className="text-md">{item.description}</p>
+                            <hr className="w-full mb-4" />
+                          </div>
+                        </div>
+                        <div>
+                          <span className="mb-2 text-pretty text-sm text-indigo-700 flex items-center">
+                            <FaMapMarkerAlt className="mr-3" /> {item.address}
+                          </span>
+                          <span className="mb-2 text-pretty text-sm text-indigo-700 flex items-center">
+                            <RiCustomerService2Fill className="mr-3" /> {item.services}
+                          </span>
+                          <span className="mb-2 text-pretty text-sm text-indigo-700 flex items-center">
+                            <FaPhone className="mr-3" /> +63 {item.phone}
+                          </span>
                         </div>
                       </div>
-                      <div className="">
-                        <span className="mb-2 text-pretty text-sm text-indigo-700 flex items-center">
-                          <FaMapMarkerAlt className="mr-3" /> {item.address}
-                        </span>
-                        <span className="mb-2 text-pretty text-sm text-indigo-700 flex items-center">
-                          <RiCustomerService2Fill className="mr-3" /> {item.services}
-                        </span>
-                        <span className="mb-2 text-pretty text-sm text-indigo-700 flex items-center">
-                          <FaPhone className="mr-3" /> +63 {item.phone}
-                        </span>
-                      </div>
                     </div>
-                  </div>
-                </Popup>
-              </Marker>
+                  </Popup>
+                </Marker>
+              ))}
             </LayerGroup>
           </LayersControl.Overlay>
         ))}
