@@ -3,7 +3,7 @@ import { IoWarningOutline } from 'react-icons/io5';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 
-export const Alert = ({ message, description, type }) => {
+export const Alert = ({ message, description, type, icon }) => {
   const alertStyles = {
     error: 'border-red-500 bg-red-50 text-red-800',
     warning: 'border-yellow-500 bg-yellow-50 text-yellow-800',
@@ -23,6 +23,7 @@ export const Alert = ({ message, description, type }) => {
       <div className="flex items-center gap-2">
         {iconPaths[type]}
         <strong className="block font-bold">{message}</strong>
+        {icon}
       </div>
       <p className="mt-2 text-sm">{description}</p>
     </div>
