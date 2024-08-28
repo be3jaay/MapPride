@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CustomTabs } from '@/Components/Tabs/CustomTabs';
 import PrimaryButton from '@/Components/PrimaryButton';
-import { FaArrowRightLong } from 'react-icons/fa6';
 import book from '../../../core/images/book.png';
 
 export default function Resources({ auth }) {
@@ -30,21 +29,23 @@ export default function Resources({ auth }) {
           content: (
             <div className="grid grid-cols-2 gap-4 mt-4">
               {groupedData[title].map((item, index) => (
-                <div key={index} className="card bg-white w-full ">
-                  <div className="card-body shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all">
-                    <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
-                    <div className="sm:flex sm:justify-between sm:gap-4">
-                      <div className="flex items-center justify-between w-full">
-                        <h3 className="text-lg font-bold text-gray-900 sm:text-xl">{item.title}</h3>
-                        <img src={book} alt="" className="w-14 h-14" />
+                <a href={item.url_link} target="_blank">
+                  <div key={index} className="card bg-white w-full ">
+                    <div className="card-body shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all">
+                      <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                      <div className="sm:flex sm:justify-between sm:gap-4">
+                        <div className="flex items-center justify-between w-full">
+                          <h3 className="text-lg font-bold text-gray-900 sm:text-xl">{item.title}</h3>
+                          <img src={book} alt="" className="w-14 h-14" />
+                        </div>
                       </div>
+                      <div className="mt-4">
+                        <p className="text-pretty text-sm text-gray-500">{item.description}</p>
+                      </div>
+                      <PrimaryButton className="w-full text-white justify-center py-3 mt-6 ">Read More</PrimaryButton>
                     </div>
-                    <div className="mt-4">
-                      <p className="text-pretty text-sm text-gray-500">{item.description}</p>
-                    </div>
-                    <PrimaryButton className="w-full text-white justify-center py-3 mt-6 ">Read More</PrimaryButton>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           ),

@@ -14,7 +14,7 @@ export const AdminModalMap = () => {
   const { handleOpen, isOpen, closeModal } = useModal();
 
   const form = useForm({
-    mode: 'all', 
+    mode: 'all',
   });
 
   const {
@@ -35,7 +35,7 @@ export const AdminModalMap = () => {
       formData.append('description', data.description);
       formData.append('address', data.address);
       formData.append('phone', data.phone);
-      formData.append('services', JSON.stringify(data.services)); 
+      formData.append('services', JSON.stringify(data.services));
 
       await axios.post('/api/map', formData, {
         headers: {
@@ -69,12 +69,7 @@ export const AdminModalMap = () => {
   return (
     <>
       <ToastContainer />
-      <div
-        onClick={handleOpen}
-        className="flex items-center justify-center bg-white shadow-lg text-black font-bold text-2xl cursor-pointer"
-      >
-        Create Marker
-      </div>
+      <PrimaryButton onClick={handleOpen}>Create Marker</PrimaryButton>
       <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 p-12 w-[32rem]">
           <form onSubmit={handleSubmit(onSubmit)}>

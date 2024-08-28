@@ -71,3 +71,5 @@ Route::get('/marker-location', [MarkerLocationController::class, 'index']);
 
 Route::post('/map', [MapController::class, 'store']);
 Route::get('/map', [MapController::class, 'index']);
+Route::put('/map/{id}', [MapController::class, 'update']);
+Route::delete('/map/{id}', [MapController::class, 'destroy']);

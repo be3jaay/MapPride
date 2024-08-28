@@ -33,7 +33,7 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
 
   const handleUpdate = async data => {
     try {
-      await axios.put(`/api/resources/${resource.id}`, data);
+      await axios.put(`/api/resources/${resources.id}`, data);
       reset();
       notifySuccess('Training content updated successfully.');
       onClose();
