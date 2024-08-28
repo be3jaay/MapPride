@@ -16,15 +16,15 @@ export const UserHeaderData = [
     path: 'training',
   },
   {
-    title: 'Feedback',
-    path: 'feedback',
-  },
-  {
     title: 'Support Assistance',
     path: 'support',
   },
   {
     title: 'Experience',
     path: 'experience',
+  },
+  {
+    title: 'Feedback',
+    path: 'feedback',
   },
 ];

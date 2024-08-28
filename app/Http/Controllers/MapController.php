@@ -13,31 +13,40 @@ class MapController extends Controller
      */
     public function index()
     {
-        $maps = Map::all();
+        $perPage = 10; // Number of items per page
+        $maps = Map::orderBy('created_at', 'desc')->paginate($perPage); // Pass $perPage to paginate
         return response()->json($maps);
     }
+    
 
 
     public function store(Request $request)
-    {
-        // Log the incoming request data for debugging
-        $validatedData = $request->validate([
-            'location' => 'required|string',
-            'longitude' => 'required|numeric',
-            'latitude' => 'required|numeric',
-            'image' => 'nullable|file|mimes:jpeg,png,gif|max:2048',
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'address' => 'required|string',
-            'phone' => 'nullable|string',
-            'services' => 'nullable|string', // Temporarily treat as string for debugging
-        ]);
-        
-        $validatedData['services'] = json_decode($validatedData['services'], true); // Convert back to array if needed
-        
-        $map = Map::create($validatedData);
-        return response()->json($map, 201);
+{
+    $validatedData = $request->validate([
+        'location' => 'required|string',
+        'longitude' => 'required|numeric',
+        'latitude' => 'required|numeric',
+        'image' => 'nullable|file|mimes:jpeg,png,gif|max:2048',
+        'title' => 'required|string',
+        'description' => 'required|string',
+        'address' => 'required|string',
+        'phone' => 'nullable|string',
+        'services' => 'nullable|string',
+    ]);
+
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        // Save the file in the 'images' directory within 'public'
+        $imagePath = $image->store('images', 'public');
+        $validatedData['image'] = $imagePath;
     }
+
+    $validatedData['services'] = json_decode($validatedData['services'], true);
+
+    $map = Map::create($validatedData);
+
+    return response()->json($map, 201);
+}
 
     /**
      * Display the specified resource.
