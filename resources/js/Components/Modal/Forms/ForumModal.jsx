@@ -19,7 +19,7 @@ export const ForumModal = () => {
     resolver: yupResolver(forumSchema),
   });
 
-  const { register, handleSubmit, reset } = form;
+  const { register, handleSubmit, reset, control } = form;
 
   const onSubmit = async data => {
     try {
@@ -54,6 +54,7 @@ export const ForumModal = () => {
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Username
               <input
+                control={control}
                 type="text"
                 className="input w-full bg-transparent my-2"
                 placeholder="Type your anonymous name here.."
@@ -63,6 +64,7 @@ export const ForumModal = () => {
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Title
               <input
+                control={control}
                 type="text"
                 className="input w-full bg-transparent my-2"
                 placeholder="Type your anonymous name here.."
@@ -72,6 +74,7 @@ export const ForumModal = () => {
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Experience
               <input
+                control={control}
                 type="text"
                 className="input w-full bg-transparent my-2"
                 placeholder="What type of experience (e.g., Harassment)"
@@ -81,6 +84,7 @@ export const ForumModal = () => {
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Location
               <input
+                control={control}
                 type="text"
                 className="input w-full bg-transparent my-2"
                 placeholder="Where did the experience happen..."
@@ -88,6 +92,7 @@ export const ForumModal = () => {
               />
             </label>
             <textarea
+              control={control}
               placeholder="Share your story here..."
               className="textarea border-black w-full h-64 bg-white font-bold text-black"
               {...register('description')}

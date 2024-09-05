@@ -7,7 +7,7 @@ import DangerButton from '../DangerButton';
 import { useToastNotifications } from '../../../core/hooks';
 import { AdminEditHotline } from '../Modal/Edit/AdminEditHotline';
 
-export const AdminUserTable = () => {
+export default function AdminUserTable({ auth }) {
   const [user, setUser] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
@@ -122,4 +122,4 @@ export const AdminUserTable = () => {
       )}
     </div>
   );
-};
+}

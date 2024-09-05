@@ -23,7 +23,6 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
     formState: { isSubmitting },
   } = form;
 
-  // Handle form submission
   const handleUpdate = async data => {
     try {
       const formData = new FormData();
@@ -45,7 +44,6 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
     }
   };
 
-  // Reset form with map data
   useEffect(() => {
     reset({
       title: map.title,

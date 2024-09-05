@@ -30,3 +30,7 @@ return new class extends Migration
         Schema::dropIfExists('experiences');
     }
 };
+
+Schema::table('experiences', function (Blueprint $table) {
+    $table->boolean('approved')->default(false);
+});

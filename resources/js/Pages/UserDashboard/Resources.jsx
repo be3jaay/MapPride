@@ -6,9 +6,15 @@ import axios from 'axios';
 import { CustomTabs } from '@/Components/Tabs/CustomTabs';
 import PrimaryButton from '@/Components/PrimaryButton';
 import book from '../../../core/images/book.png';
+import { useDateFormat } from '../../../core/hooks';
 
 export default function Resources({ auth }) {
   const [tabs, setTabs] = useState([]);
+  const { getFormattedDate } = useDateFormat();
+
+  const formatDate = dateString => {
+    return getFormattedDate(dateString);
+  };
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -39,9 +45,10 @@ export default function Resources({ auth }) {
                           <img src={book} alt="" className="w-14 h-14" />
                         </div>
                       </div>
-                      <div className="mt-4">
+                      <div className="my-4">
                         <p className="text-pretty text-sm text-gray-500">{item.description}</p>
                       </div>
+                      <span>Updated at: {formatDate(item.updated_at)}</span>
                       <PrimaryButton className="w-full text-white justify-center py-3 mt-6 ">Read More</PrimaryButton>
                     </div>
                   </div>

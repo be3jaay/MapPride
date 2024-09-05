@@ -5,12 +5,16 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CustomTabs } from '@/Components/Tabs/CustomTabs';
 import PrimaryButton from '@/Components/PrimaryButton';
-import { FaArrowRightLong } from 'react-icons/fa6';
 import recruitment from '../../../core/images/recruitment.png';
+import { useDateFormat } from '../../../core/hooks';
 
 export default function Training({ auth }) {
   const [tabs, setTabs] = useState([]);
+  const { getFormattedDate } = useDateFormat();
 
+  const formattedDate = dateString => {
+    return getFormattedDate(dateString);
+  };
   useEffect(() => {
     const fetchTraining = async () => {
       try {
@@ -39,9 +43,10 @@ export default function Training({ auth }) {
                         <img src={recruitment} alt="" className="w-14 h-14" />
                       </div>
                     </div>
-                    <div className="mt-4">
+                    <div className="my-4">
                       <p className="text-pretty text-sm text-gray-500">{item.description}</p>
                     </div>
+                    <span>Updated at: {formattedDate(item.updated_at)}</span>
                     <PrimaryButton className="w-full text-white justify-center py-3 mt-6 ">View Here</PrimaryButton>
                   </div>
                 </div>

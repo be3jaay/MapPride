@@ -15,6 +15,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+// User Routes
 
 Route::get('/dashboard', function () {
     return Inertia::render('UserDashboard/Dashboard');
@@ -50,6 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+// Admin Routes
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return Inertia::render('AdminDashboard/AdminDashboard');
@@ -87,7 +90,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return Inertia::render('AdminDashboard/AdminMap');
     })->name('admin.map');
 
-    // Add more admin routes as needed
 });
 
 require __DIR__.'/auth.php';

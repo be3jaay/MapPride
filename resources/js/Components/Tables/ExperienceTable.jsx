@@ -4,11 +4,9 @@ import AdminModalExperience from '../Modal/Edit/AdminModalExperience';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import Loading from '../Loading';
 import useTableData from '../../../core/hooks/use-table-data';
-import { useState } from 'react';
+import { useDateFormat } from '../../../core/hooks';
 
 export const ExperienceTable = () => {
-  const [expStatus, setExpStatus] = useState({});
-
   const {
     data: experiences,
     selectedItem: selectedExperience,
@@ -20,10 +18,11 @@ export const ExperienceTable = () => {
     closeModal,
   } = useTableData('/api/experience');
 
-  const handleStatusChange = (id, status) => {
-    setExpStatus({ ...expStatus, [id]: status });
-  };
+  const { getFormattedDate } = useDateFormat();
 
+  const formatDate = dateString => {
+    return getFormattedDate(dateString);
+  };
   return (
     <div>
       <div className="overflow-x-auto my-4 shadow-lg border-md p-4">
@@ -35,6 +34,7 @@ export const ExperienceTable = () => {
               <th style={tableHeaderStyle}>Experience Type</th>
               <th style={tableHeaderStyle}>Location</th>
               <th style={tableHeaderStyle}>Description</th>
+              <th style={tableHeaderStyle}>Created At</th>
               <th style={tableHeaderStyle}>Actions</th>
               <th style={tableHeaderStyle}>Status</th>
             </tr>
@@ -48,6 +48,7 @@ export const ExperienceTable = () => {
                   <td style={tableStyle}>{exp.experience_type}</td>
                   <td style={tableStyle}>{exp.location}</td>
                   <td style={tableStyle}>{exp.description}</td>
+                  <td style={tableStyle}>{formatDate(exp.updated_at)}</td>
                   <td style={tableStyle}>
                     <PrimaryButton
                       onClick={() => handleViewClick(exp)}
@@ -57,22 +58,7 @@ export const ExperienceTable = () => {
                     </PrimaryButton>
                   </td>
                   <td style={tableStyle}>
-                    <Badge
-                      type={
-                        expStatus[exp.id] === 'Approved'
-                          ? 'success'
-                          : expStatus[exp.id] === 'Declined'
-                          ? 'error'
-                          : 'warning'
-                      }
-                      message={
-                        expStatus[exp.id] === 'Approved'
-                          ? 'Approved'
-                          : expStatus[exp.id] === 'Declined'
-                          ? 'Declined'
-                          : 'Under Observation'
-                      }
-                    />
+                    <Badge type="warning" message="For approval" />
                   </td>
                 </tr>
               ))
@@ -106,12 +92,7 @@ export const ExperienceTable = () => {
         </PrimaryButton>
       </div>
       {isModalOpen && selectedExperience && (
-        <AdminModalExperience
-          experience={selectedExperience}
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          onStatusChange={handleStatusChange}
-        />
+        <AdminModalExperience experience={selectedExperience} isOpen={isModalOpen} onClose={closeModal} />
       )}
     </div>
   );

@@ -36,7 +36,7 @@ const useTableData = apiEndpoint => {
   const handleDelete = async item => {
     await axios.delete(`${apiEndpoint}/${item.id}`, item);
     notifySuccess('The content was successfully deleted.');
-    fetchData(page); // Refresh data after deletion
+    fetchData(page);
   };
 
   const handlePageChange = newPage => {

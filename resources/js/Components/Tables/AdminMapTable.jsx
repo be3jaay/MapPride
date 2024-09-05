@@ -70,8 +70,6 @@ export const AdminMapTable = () => {
               <th style={tableHeaderStyle}>Title</th>
               <th style={tableHeaderStyle}>Description</th>
               <th style={tableHeaderStyle}>Location</th>
-              <th style={tableHeaderStyle}>Latitude</th>
-              <th style={tableHeaderStyle}>Longitude</th>
               <th style={tableHeaderStyle}>Address</th>
               <th style={tableHeaderStyle}>Phone</th>
               <th style={tableHeaderStyle}>Services</th>
@@ -86,22 +84,20 @@ export const AdminMapTable = () => {
                   <td style={tableStyle}>{item.title}</td>
                   <td style={tableStyle}>{item.description}</td>
                   <td style={tableStyle}>{item.location}</td>
-                  <td style={tableStyle}>{item.latitude}</td>
-                  <td style={tableStyle}>{item.longitude}</td>
                   <td style={tableStyle}>{item.address}</td>
                   <td style={tableStyle}>{item.phone}</td>
                   <td style={tableStyle}>{item.services}</td>
                   <td style={tableStyle}>
-                    <WarningButton
+                    <PrimaryButton
                       onClick={() => handleViewClick(item)}
                       className="flex items-center justify-center py-2"
                     >
-                      <FaEdit className="text-md" />
-                    </WarningButton>
+                      Edit
+                    </PrimaryButton>
                   </td>
                   <td style={tableStyle}>
                     <DangerButton onClick={() => handleDelete(item)} className="flex items-center justify-center py-2">
-                      <MdDelete className="text-md" />
+                      Delete
                     </DangerButton>
                   </td>
                 </tr>

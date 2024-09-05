@@ -14,7 +14,6 @@ use App\Http\Controllers\MapSelectionController;
 use App\Http\Controllers\MarkerLocationController;
 use App\Http\Controllers\MapController;
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,46 +29,38 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/experience', [ExperienceController::class, 'store']);
-Route::get('/experience', [ExperienceController::class, 'index']);
+// Experience routes
+Route::apiResource('experience', ExperienceController::class);
+Route::put('/experience/{id}/approve', [ExperienceController::class, 'approve']);
+Route::put('/experience/{id}/decline', [ExperienceController::class, 'decline']);
+Route::get('/experience/approved', [ExperienceController::class, 'getApproved']);
 
-Route::post('/tabs', [TabsController::class, 'store']);
-Route::get('/tabs', [TabsController::class, 'index']);
+// Tabs routes
+Route::apiResource('tabs', TabsController::class);
 
-Route::post('/trainingTabs', [TrainingTabsController::class, 'store']);
-Route::get('/trainingTabs', [TrainingTabsController::class, 'index']);
+// Training Tabs routes
+Route::apiResource('training-tabs', TrainingTabsController::class);
 
-Route::post('/resources', [ResourcesController::class, 'store']);
-Route::get('/resources', [ResourcesController::class, 'index']);
-Route::put('/resources/{id}', [ResourcesController::class, 'update']);
-Route::delete('/resources/{id}', [ResourcesController::class, 'destroy']);
+// Resources routes
+Route::apiResource('resources', ResourcesController::class);
 
-Route::post('/support', [SupportController::class, 'store']);
-Route::get('/support', [SupportController::class, 'index']);
-Route::put('/support/{id}', [SupportController::class, 'update']);
-Route::delete('/support/{id}', [SupportController::class, 'destroy']);
+// Support routes
+Route::apiResource('support', SupportController::class);
 
+// Hotlines routes
+Route::apiResource('hotlines', HotlineController::class);
 
-Route::post('/hotlines', [HotlineController::class, 'store']);
-Route::get('/hotlines', [HotlineController::class, 'index']);
-Route::put('/hotlines/{id}', [HotlineController::class, 'update']);
-Route::delete('/hotlines/{id}', [HotlineController::class, 'destroy']);
+// Training routes
+Route::apiResource('training', TrainingController::class);
 
-Route::post('/training', [TrainingController::class, 'store']);
-Route::get('/training', [TrainingController::class, 'index']);
-Route::put('/training/{id}', [TrainingController::class, 'update']);
-Route::delete('/training/{id}', [TrainingController::class, 'destroy']);
+// Feedback routes
+Route::apiResource('feedback', FeedbackController::class)->except(['update']);
 
-Route::post('/feedback', [FeedbackController::class, 'store']);
-Route::get('/feedback', [FeedbackController::class, 'index']);
+// Map Selection routes
+Route::apiResource('map-selection', MapSelectionController::class)->only(['index', 'store']);
 
-Route::post('/map-selection', [MapSelectionController::class, 'store']);
-Route::get('/map-selection', [MapSelectionController::class, 'index']);
+// Marker Location routes
+Route::apiResource('marker-location', MarkerLocationController::class)->only(['index', 'store']);
 
-Route::post('/marker-location', [MarkerLocationController::class, 'store']);
-Route::get('/marker-location', [MarkerLocationController::class, 'index']);
-
-Route::post('/map', [MapController::class, 'store']);
-Route::get('/map', [MapController::class, 'index']);
-Route::put('/map/{id}', [MapController::class, 'update']);
-Route::delete('/map/{id}', [MapController::class, 'destroy']);
+// Map routes
+Route::apiResource('map', MapController::class);
