@@ -7,26 +7,22 @@ export default function AdminExperience({ auth }) {
   const user = auth.user;
 
   return (
-    <AdminAuthenticated
-      user={user}
-      header={
-        <header>
-          <div className="mx-auto max-w-screen-xl">
-            <div className="sm:flex sm:items-center sm:justify-between">
-              <div className="w-full mb-4">
-                <Alert
-                  type="info"
-                  message="Experience Content Management"
-                  description="In this section, the administrator will approve/decline user's experience that will be shown for experience module."
-                />
-              </div>
-            </div>
+    <AdminAuthenticated user={user}>
+      <div className="py-12 px-8">
+        <div className="w-full">
+          <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <Alert
+              type="info"
+              message="Experience Content Management"
+              description="In this section, the administrator will approve/decline user's experience that will be shown for experience module."
+            />
+          </div>
+          <div className="w-full mb-4">
             <ExperienceTable />
           </div>
-        </header>
-      }
-    >
-      <Head title="Dashboard" />
+        </div>
+      </div>
+      <Head title="Experience" />
     </AdminAuthenticated>
   );
 }

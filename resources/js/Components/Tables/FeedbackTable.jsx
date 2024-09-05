@@ -1,14 +1,14 @@
 import PrimaryButton from '../PrimaryButton';
-import AdminModalExperience from '../Modal/Edit/AdminModalExperience';
 import Loading from '../Loading';
 import { Badge } from '../Badge';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import useTableData from '../../../core/hooks/use-table-data';
 import AdminViewFeedback from '../Modal/Edit/AdminViewFeedback';
 import { useState } from 'react';
+import { useDateFormat } from '../../../core/hooks';
 
 export const FeedbackTable = () => {
-  const [feedbackStatus, setFeedbackStatus] = useState({}); // Store feedback status
+  const [feedbackStatus, setFeedbackStatus] = useState({});
   const {
     data: feedback,
     selectedItem: selectedFeedback,
@@ -20,8 +20,14 @@ export const FeedbackTable = () => {
     closeModal,
   } = useTableData('/api/feedback');
 
+  const { getFormattedDate } = useDateFormat();
+
   const handleStatusChange = (id, status) => {
     setFeedbackStatus({ ...feedbackStatus, [id]: status });
+  };
+
+  const formatDate = dateString => {
+    return getFormattedDate(dateString);
   };
 
   return (
@@ -43,7 +49,7 @@ export const FeedbackTable = () => {
                 <tr key={feedback.id}>
                   <td style={tableStyle}>{feedback.feedback_value} stars</td>
                   <td style={tableStyle}>{feedback.description}</td>
-                  <td style={tableStyle}>{feedback.created_at}</td>
+                  <td style={tableStyle}>{formatDate(feedback.created_at)}</td>
                   <td style={tableStyle}>
                     <PrimaryButton
                       onClick={() => handleViewClick(feedback)}
@@ -53,10 +59,7 @@ export const FeedbackTable = () => {
                     </PrimaryButton>
                   </td>
                   <td style={tableStyle}>
-                    <Badge
-                      type={feedbackStatus[feedback.id] === 'Fixed' ? 'success' : 'warning'}
-                      message={feedbackStatus[feedback.id] === 'Fixed' ? 'Fixed' : 'Under Observation'}
-                    />
+                    <Badge type="warning" message="Under Observation" />
                   </td>
                 </tr>
               ))

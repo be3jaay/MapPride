@@ -7,7 +7,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 import.meta.glob(['../images/**', '../fonts/**']);
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = 'Map-Pride';
 
 createInertiaApp({
   title: title => `${title} - ${appName}`,

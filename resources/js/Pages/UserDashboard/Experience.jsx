@@ -7,17 +7,33 @@ import axios from 'axios';
 import Loading from '@/Components/Loading';
 import { Badge } from '@/Components/Badge';
 import { RiMapPinUserFill } from 'react-icons/ri';
+import { useDateFormat } from '../../../core/hooks';
 
 export default function Experience({ auth }) {
   const [experience, setExperience] = useState([]);
+  const { getFormattedDate } = useDateFormat();
 
   useEffect(() => {
-    const fetchFeedback = async () => {
-      const response = await axios.get('api/experience');
-      setExperience(response.data.data);
+    const fetchApprovedExperiences = async () => {
+      try {
+        const response = await axios.get('api/experience/approved');
+        setExperience(response.data.data);
+      } catch (error) {
+        console.error('Error fetching approved experiences:', error);
+      }
     };
-    fetchFeedback();
+    fetchApprovedExperiences();
   }, []);
+
+  const formatDate = dateString => {
+    if (!dateString) return '';
+    try {
+      return getFormattedDate(dateString);
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return dateString;
+    }
+  };
 
   return (
     <AuthenticatedLayout user={auth.user}>
@@ -29,7 +45,7 @@ export default function Experience({ auth }) {
             <Alert
               type="info"
               message="Map-Pride Freedom Wall"
-              description="This is a freedom wall - These posted below are the shared experiences of the user."
+              description="This is a freedom wall - These posted below are the approved shared experiences of users."
             />
           </div>
           <div className="grid grid-cols-2 gap-4 mt-4">
@@ -56,7 +72,7 @@ export default function Experience({ auth }) {
                   </div>
                   <dl className="mt-6 flex gap-4 sm:gap-6">
                     <div className="flex flex-col-reverse">
-                      <dt className="text-sm font-medium text-gray-600">{item.created_at}</dt>
+                      <dt className="text-sm font-medium text-gray-600">{formatDate(item.created_at)}</dt>
                       <dd className="text-xs text-gray-500">Created At</dd>
                     </div>
                     <div className="flex flex-col-reverse">

@@ -9,29 +9,25 @@ export default function AdminDashboard({ auth }) {
   const user = auth.user;
 
   return (
-    <AdminAuthenticated
-      user={user}
-      header={
-        <header>
-          <div className="mx-auto max-w-screen-xl">
-            <div className="sm:flex sm:items-center sm:justify-between">
-              <div className="w-full">
-                <Alert
-                  type="info"
-                  message="Resources Content Management"
-                  description="In this section, the administrator will add/create resources that will be shown for user resources module."
-                />
-                <div className="my-4 flex gap-1">
-                  <AdminResourcesModal />
-                  <AdminCreateTabs />
-                </div>
-              </div>
-            </div>
+    <AdminAuthenticated user={user}>
+      <div className="py-12 px-8">
+        <div className="w-full">
+          <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <Alert
+              type="info"
+              message="Experience Content Management"
+              description="In this section, the administrator will approve/decline user's experience that will be shown for experience module."
+            />
+          </div>
+          <div className="my-4 flex gap-1">
+            <AdminResourcesModal />
+            <AdminCreateTabs />
+          </div>
+          <div className="w-full mb-4">
             <ResourcesTable />
           </div>
-        </header>
-      }
-    >
+        </div>
+      </div>
       <Head title="Dashboard" />
     </AdminAuthenticated>
   );

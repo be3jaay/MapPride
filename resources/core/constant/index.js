@@ -1,5 +1,6 @@
 export * from './HeaderData/UserHeaderData';
 export * from './HeaderData/AdminHeaderData';
+export * from './ServicesData/ServicesData';
 
 export * from './TrainingData/TrainingData';
 export * from './DashboardOverviewData/DashboardOverviewData';

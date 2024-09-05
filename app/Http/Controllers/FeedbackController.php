@@ -25,4 +25,17 @@ class FeedbackController extends Controller
 
         return response()->json($feedback, 201);
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $feedback = Feedback::find($id);
+        if (!$feedback) {
+            return response()->json(['message' => 'Feedback content not found'], 404);
+        }
+
+        $feedback->delete();
+        
+        return response()->json($feedback, 200);
+    }
+
 }

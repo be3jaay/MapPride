@@ -3,18 +3,36 @@ import PrimaryButton from '../../PrimaryButton';
 import { ToastContainer } from 'react-toastify';
 import Modal from '../../Modal';
 import DangerButton from '@/Components/DangerButton';
+import axios from 'axios';
+import { useToastNotifications } from '../../../../core/hooks';
 
 const AdminModalExperience = ({ experience, isOpen, onClose, onStatusChange }) => {
+  const { notifySuccess, notifyError } = useToastNotifications();
+
   if (!experience) return null;
 
-  const handleApprove = () => {
-    onStatusChange(experience.id, 'Approved');
-    onClose();
+  const handleApprove = async () => {
+    try {
+      await axios.put(`/api/experience/${experience.id}/approve`);
+      onStatusChange(experience.id, 'Approved');
+      notifySuccess('Experience approved successfully');
+      onClose();
+    } catch (error) {
+      notifyError('Error approving experience');
+      console.error('Error approving experience:', error);
+    }
   };
 
-  const handleDecline = () => {
-    onStatusChange(experience.id, 'Declined');
-    onClose();
+  const handleDecline = async () => {
+    try {
+      await axios.put(`/api/experience/${experience.id}/decline`);
+      onStatusChange(experience.id, 'Declined');
+      notifySuccess('Experience declined successfully');
+      onClose();
+    } catch (error) {
+      notifyError('Error declining experience');
+      console.error('Error declining experience:', error);
+    }
   };
 
   return (

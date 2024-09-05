@@ -9,31 +9,25 @@ export default function AdminTraining({ auth }) {
   const user = auth.user;
 
   return (
-    <AdminAuthenticated
-      user={user}
-      header={
-        <header>
-          <div className="mx-auto max-w-screen-xl">
-            <div className="sm:flex sm:items-center sm:justify-between">
-              <div className="w-full">
-                <Alert
-                  type="info"
-                  message="Training Content Management"
-                  description="In this section, the administrator will add/create training platform that will be shown for user training platform."
-                />
-                <div className="my-4 flex gap-1">
-                  <div>
-                    <AdminTrainingModal />
-                  </div>
-                  <AdminTrainingTabs />
-                </div>
-              </div>
-            </div>
+    <AdminAuthenticated user={user}>
+      <div className="py-12 px-8">
+        <div className="w-full">
+          <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <Alert
+              type="info"
+              message="Training Content Management"
+              description="In this section, the administrator will add/create training platform that will be shown for user training platform."
+            />
+          </div>
+          <div className="my-4 flex gap-1">
+            <AdminTrainingModal />
+            <AdminTrainingTabs />
+          </div>
+          <div className="w-full mb-4">
             <TrainingTable />
           </div>
-        </header>
-      }
-    >
+        </div>
+      </div>
       <Head title="Dashboard" />
     </AdminAuthenticated>
   );
