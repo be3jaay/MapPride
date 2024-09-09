@@ -1,6 +1,5 @@
 import { FaArrowRightLong } from 'react-icons/fa6';
 import PrimaryButton from '@/Components/PrimaryButton';
-import bghero from '../../../core/images/bghero.png';
 import { Link, Head } from '@inertiajs/react';
 import { Hero } from '../../../core/icons/hero-bg';
 import { RoughNotation, RoughNotationGroup } from 'react-rough-notation';

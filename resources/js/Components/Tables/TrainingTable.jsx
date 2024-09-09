@@ -19,6 +19,9 @@ export const TrainingTable = () => {
     handleDelete,
   } = useTableData('/api/training');
 
+  console.log(data);
+  // if(training)
+
   return (
     <>
       <ToastContainer />

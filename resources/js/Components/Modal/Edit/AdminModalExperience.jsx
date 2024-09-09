@@ -12,27 +12,13 @@ const AdminModalExperience = ({ experience, isOpen, onClose, onStatusChange }) =
   if (!experience) return null;
 
   const handleApprove = async () => {
-    try {
-      await axios.put(`/api/experience/${experience.id}/approve`);
-      onStatusChange(experience.id, 'Approved');
-      notifySuccess('Experience approved successfully');
-      onClose();
-    } catch (error) {
-      notifyError('Error approving experience');
-      console.error('Error approving experience:', error);
-    }
+    await axios.put(`/api/experience/${experience.id}/approve`);
+    notifySuccess('Experience approved successfully');
+    onClose();
   };
-
-  const handleDecline = async () => {
-    try {
-      await axios.put(`/api/experience/${experience.id}/decline`);
-      onStatusChange(experience.id, 'Declined');
-      notifySuccess('Experience declined successfully');
-      onClose();
-    } catch (error) {
-      notifyError('Error declining experience');
-      console.error('Error declining experience:', error);
-    }
+  const handleDelete = async experience => {
+    await axios.delete(`/api/experience/${experience.id}`, experience);
+    notifySuccess('The content was successfully fixed.');
   };
 
   return (
@@ -54,20 +40,35 @@ const AdminModalExperience = ({ experience, isOpen, onClose, onStatusChange }) =
               </p>
             </div>
           </div>
-          <div className="flex justify-end mt-4 gap-2">
-            <PrimaryButton
-              onClick={handleApprove}
-              className="flex items-center justify-center py-2 text-white bg-green-600"
-            >
-              <FaUserCheck /> Approve
-            </PrimaryButton>
-            <DangerButton
-              onClick={handleDecline}
-              className="flex items-center justify-center py-2 text-white bg-red-600"
-            >
-              Decline
-            </DangerButton>
-          </div>
+          {experience.approved ? (
+            <div className="flex justify-end mt-4 gap-2">
+              <DangerButton
+                onClick={() => {
+                  handleDelete(experience);
+                }}
+                className="flex items-center justify-center py-2 text-white bg-red-600"
+              >
+                Delete
+              </DangerButton>
+            </div>
+          ) : (
+            <div className="flex justify-end mt-4 gap-2">
+              <PrimaryButton
+                onClick={handleApprove}
+                className="flex items-center justify-center py-2 text-white bg-green-600"
+              >
+                <FaUserCheck /> Approve
+              </PrimaryButton>
+              <DangerButton
+                onClick={() => {
+                  handleDelete(experience);
+                }}
+                className="flex items-center justify-center py-2 text-white bg-red-600"
+              >
+                Decline
+              </DangerButton>
+            </div>
+          )}
         </div>
       </Modal>
     </>

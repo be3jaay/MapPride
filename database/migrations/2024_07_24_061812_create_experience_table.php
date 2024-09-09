@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('experience_type');
             $table->string('location');
             $table->text('description');
+            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
     }
@@ -30,7 +31,3 @@ return new class extends Migration
         Schema::dropIfExists('experiences');
     }
 };
-
-Schema::table('experiences', function (Blueprint $table) {
-    $table->boolean('approved')->default(false);
-});

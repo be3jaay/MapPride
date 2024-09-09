@@ -23,6 +23,7 @@ export const ExperienceTable = () => {
   const formatDate = dateString => {
     return getFormattedDate(dateString);
   };
+
   return (
     <div>
       <div className="overflow-x-auto my-4 shadow-lg border-md p-4">
@@ -58,7 +59,11 @@ export const ExperienceTable = () => {
                     </PrimaryButton>
                   </td>
                   <td style={tableStyle}>
-                    <Badge type="warning" message="For approval" />
+                    {exp.approved ? (
+                      <Badge type="success" message="Approved" />
+                    ) : (
+                      <Badge type="warning" message="For approval" />
+                    )}
                   </td>
                 </tr>
               ))
