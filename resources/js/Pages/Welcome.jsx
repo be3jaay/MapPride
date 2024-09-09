@@ -5,6 +5,7 @@ import { AboutSection } from '@/Components/AboutSection/AboutSection';
 import { ContactSection } from '@/Components/ContactSection/ContactSection';
 import { Services } from '@/Components/ServicesSection/Services';
 import Footer from '@/Components/FooterSection/Footer';
+import { NavigationData } from '../../core/constant/NavigationData/NavigationData';
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
   return (
@@ -16,11 +17,13 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
           <img src={ally} alt="" className="w-12 h-12" />
         </div>
         <ul className="text-indigo-700 flex items-center justify-center gap-12 font-bold">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#contact"> Contact</a>
-          <a href="#services">Services</a>
+          {NavigationData.map((item, index) => (
+            <a key={index} href={item.path}>
+              {item.title}
+            </a>
+          ))}
         </ul>
+
         <div className="">
           {auth.user ? (
             <Link

@@ -16,7 +16,7 @@ export default function Experience({ auth }) {
   useEffect(() => {
     const fetchApprovedExperiences = async () => {
       try {
-        const response = await axios.get('api/experience/approved');
+        const response = await axios.get(`/api/experience`);
         setExperience(response.data.data);
       } catch (error) {
         console.error('Error fetching approved experiences:', error);
@@ -49,8 +49,8 @@ export default function Experience({ auth }) {
             />
           </div>
           <div className="grid grid-cols-2 gap-4 mt-4">
-            {experience && experience.length > 0 ? (
-              experience.map((item, index) => (
+            {experience.map((item, index) =>
+              item.approved ? (
                 <div
                   key={index}
                   className="shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all"
@@ -81,9 +81,7 @@ export default function Experience({ auth }) {
                     </div>
                   </dl>
                 </div>
-              ))
-            ) : (
-              <Loading type="primary" />
+              ) : null,
             )}
           </div>
         </div>

@@ -14,6 +14,12 @@ class ExperienceController extends Controller
         return response()->json($experiences);
     }
 
+    public function show($id)
+    {
+        $experience = Experience::findOrFail($id);
+        return response()->json($experience);
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -52,6 +58,14 @@ class ExperienceController extends Controller
         ]);
 
         $experience->update($validatedData);
+
+        return response()->json($experience, 200);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $experience = Experience::findOrFail($id);
+        $experience->delete();
 
         return response()->json($experience, 200);
     }
