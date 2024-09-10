@@ -18,7 +18,7 @@ export default function AdminUserTable({ auth }) {
 
   const fetchUser = async (pageNumber = 1) => {
     try {
-      const response = await axios.get('/api/user', {
+      const response = await axios.get('/api/users', {
         params: { page: pageNumber },
       });
 
@@ -33,6 +33,7 @@ export default function AdminUserTable({ auth }) {
       console.error('There was an error fetching the resources!', error);
     }
   };
+  console.log(user);
 
   useEffect(() => {
     fetchUser(page);
@@ -61,8 +62,9 @@ export default function AdminUserTable({ auth }) {
             <tr>
               <th style={tableHeaderStyle}>Username</th>
               <th style={tableHeaderStyle}>Email</th>
+              <th style={tableHeaderStyle}>Gender</th>
               <th style={tableHeaderStyle}>Created At</th>
-              <th style={tableHeaderStyle}>Edit</th>
+              <th style={tableHeaderStyle}>User Type</th>
               <th style={tableHeaderStyle}>Delete</th>
             </tr>
           </thead>
@@ -72,15 +74,9 @@ export default function AdminUserTable({ auth }) {
                 <tr key={user.id}>
                   <td style={tableStyle}>{user.name}</td>
                   <td style={tableStyle}>{user.email}</td>
+                  <td style={tableStyle}>{user.gender}</td>
                   <td style={tableStyle}>{user.created_at}</td>
-                  <td style={tableStyle}>
-                    <PrimaryButton
-                      onClick={() => handleViewClick(user)}
-                      className="flex items-center justify-center py-2"
-                    >
-                      Edit
-                    </PrimaryButton>
-                  </td>
+                  <td style={tableStyle}>{user.usertype}</td>
                   <td style={tableStyle}>
                     <DangerButton onClick={() => handleDelete(user)} className="flex items-center justify-center py-2">
                       Delete

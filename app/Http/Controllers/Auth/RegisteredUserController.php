@@ -19,6 +19,13 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
+    public function index()
+    {
+        $perPage = 10;
+        $user = User::orderBy('created_at', 'desc')->paginate($perPage);
+        return response()->json($user);
+    }
+
     public function create(): Response
     {
         return Inertia::render('Auth/Register');
@@ -55,4 +62,13 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $user = Experience::findOrFail($id);
+        $user->delete();
+
+        return response()->json($user, 200);
+    }
+
 }
