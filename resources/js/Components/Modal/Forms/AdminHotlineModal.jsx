@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
+import InputError from '@/Components/InputError';
 
 export const AdminHotlineModal = () => {
   const { handleOpen, isOpen, closeModal } = useModal();
@@ -19,7 +20,13 @@ export const AdminHotlineModal = () => {
     defaultValues: hotlineSchema.getDefault(),
   });
 
-  const { register, handleSubmit, reset, processing, control } = form;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    processing,
+    formState: { errors },
+  } = form;
 
   const onSubmit = async data => {
     try {
@@ -31,13 +38,18 @@ export const AdminHotlineModal = () => {
     }
   };
 
+  const handleClose = () => {
+    reset();
+    closeModal();
+  };
+
   return (
     <>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
         Create Hotline Content <MdForum className="ml-2" />
       </PrimaryButton>
-      <Modal show={isOpen} onClose={closeModal}>
+      <Modal show={isOpen} onClose={handleClose}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-2xl text-indigo-800 text-center">
@@ -50,15 +62,15 @@ export const AdminHotlineModal = () => {
                 className="input w-full bg-transparent my-2"
                 placeholder="Title"
                 {...register('title')}
-                control={control}
               />
             </label>
+            <InputError message={errors.title?.message} />
             <textarea
               placeholder="Enter description here..."
               className="textarea border-black w-full h-64 bg-white font-bold text-black"
               {...register('description')}
-              control={control}
             ></textarea>
+            <InputError message={errors.description?.message} />
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Phone
               <input
@@ -66,9 +78,9 @@ export const AdminHotlineModal = () => {
                 className="input w-full bg-transparent my-2"
                 placeholder="Paste the url link"
                 {...register('phoneNumber')}
-                control={control}
               />
             </label>
+            <InputError message={errors.phoneNumber?.message} />
             <PrimaryButton className="w-full justify-center py-4" disabled={processing} type="submit">
               Submit
             </PrimaryButton>

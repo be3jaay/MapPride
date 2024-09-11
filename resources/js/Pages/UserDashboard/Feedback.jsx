@@ -9,6 +9,7 @@ import { Alert } from '@/Components/Alert';
 import axios from 'axios';
 import { useToastNotifications } from '../../../core/hooks';
 import PrimaryButton from '@/Components/PrimaryButton';
+import InputError from '@/Components/InputError';
 
 export default function Feedback({ auth }) {
   const { notifyError, notifySuccess } = useToastNotifications();
@@ -19,7 +20,12 @@ export default function Feedback({ auth }) {
     defaultValues: feedbackSchema.getDefault(),
   });
 
-  const { handleSubmit, register, reset } = form;
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = form;
 
   const onSubmit = async data => {
     try {
@@ -85,6 +91,8 @@ export default function Feedback({ auth }) {
                   placeholder="Encountered any bugs or issues, send a report here..."
                   {...register('description')}
                 ></textarea>
+                <InputError message={errors.description?.message} />
+
                 <div className="card-actions justify-center">
                   <PrimaryButton className="btn btn-primary w-full text-white" type="submit">
                     Submit

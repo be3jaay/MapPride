@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
+import InputError from '@/Components/InputError';
 
 export const AdminSupportModal = () => {
   const { handleOpen, isOpen, closeModal } = useModal();
@@ -20,16 +21,27 @@ export const AdminSupportModal = () => {
     defaultValues: supportSchema.getDefault(),
   });
 
-  const { register, handleSubmit, reset, processing } = form;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    processing,
+    formState: { errors },
+  } = form;
 
   const onSubmit = async data => {
     try {
       await axios.post('/api/support', data);
       reset();
-      notifySuccess('Your support content has been posted, thank you.');
+      notifySuccess('Your support content has been added, thank you.');
     } catch (error) {
       notifyError('There was an error posting your experience.');
     }
+  };
+
+  const handleClose = () => {
+    reset();
+    closeModal();
   };
 
   return (
@@ -38,7 +50,7 @@ export const AdminSupportModal = () => {
       <PrimaryButton onClick={handleOpen}>
         Create Support Content <MdForum className="ml-2" />
       </PrimaryButton>
-      <Modal show={isOpen} onClose={closeModal}>
+      <Modal show={isOpen} onClose={handleClose}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-2xl text-indigo-800 text-center">
@@ -53,11 +65,13 @@ export const AdminSupportModal = () => {
                 {...register('title')}
               />
             </label>
+            <InputError message={errors.title?.message} />
             <textarea
               placeholder="Enter description here..."
               className="textarea border-black w-full h-64 bg-white font-bold text-black"
               {...register('description')}
             ></textarea>
+            <InputError message={errors.description?.message} />
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Phone
               <input
@@ -67,6 +81,7 @@ export const AdminSupportModal = () => {
                 {...register('phoneNumber')}
               />
             </label>
+            <InputError message={errors.phoneNumber?.message} />
             <PrimaryButton className="w-full justify-center py-4" disabled={processing} type="submit">
               Submit
             </PrimaryButton>

@@ -5,15 +5,13 @@ import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import DangerButton from '../DangerButton';
 import { useToastNotifications } from '../../../core/hooks';
-import { AdminEditHotline } from '../Modal/Edit/AdminEditHotline';
+import { useDateFormat } from '../../../core/hooks';
 
-export default function AdminUserTable({ auth }) {
+export default function AdminUserTable() {
   const [user, setUser] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { getFormattedDate } = useDateFormat();
   const { notifySuccess } = useToastNotifications();
 
   const fetchUser = async (pageNumber = 1) => {
@@ -33,8 +31,6 @@ export default function AdminUserTable({ auth }) {
       console.error('There was an error fetching the resources!', error);
     }
   };
-  console.log(user);
-
   useEffect(() => {
     fetchUser(page);
   }, [page]);
@@ -44,14 +40,13 @@ export default function AdminUserTable({ auth }) {
     fetchUser(newPage);
   };
 
-  const handleViewClick = hotline => {
-    setSelectedUser(hotline);
-    setIsModalOpen(true);
+  const handleDelete = async user => {
+    await axios.delete(`/api/users/${user.id}`, user);
+    notifySuccess('The content was successfully deleted.');
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedUser(null);
+  const formattedDate = dateString => {
+    return getFormattedDate(dateString);
   };
 
   return (
@@ -75,10 +70,15 @@ export default function AdminUserTable({ auth }) {
                   <td style={tableStyle}>{user.name}</td>
                   <td style={tableStyle}>{user.email}</td>
                   <td style={tableStyle}>{user.gender}</td>
-                  <td style={tableStyle}>{user.created_at}</td>
+                  <td style={tableStyle}>{formattedDate(user.created_at)}</td>
                   <td style={tableStyle}>{user.usertype}</td>
                   <td style={tableStyle}>
-                    <DangerButton onClick={() => handleDelete(user)} className="flex items-center justify-center py-2">
+                    <DangerButton
+                      onClick={() => {
+                        handleDelete(user);
+                      }}
+                      className="flex items-center justify-center py-2"
+                    >
                       Delete
                     </DangerButton>
                   </td>
@@ -113,9 +113,6 @@ export default function AdminUserTable({ auth }) {
           Next
         </PrimaryButton>
       </div>
-      {isModalOpen && selectedUser && (
-        <AdminEditHotline user={selectedUser} isOpen={isModalOpen} onClose={closeModal} />
-      )}
     </div>
   );
 }

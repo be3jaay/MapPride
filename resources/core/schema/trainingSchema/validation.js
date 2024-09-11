@@ -6,8 +6,8 @@ export const trainingTabSchema = yup.object().shape({
 });
 
 export const trainingSchema = yup.object().shape({
-  tabs_title: yup.string().required('Title is required').default(''),
+  tabs_title: yup.string().required('Tab Title is required').default(''),
   title: yup.string().required('Title is required').default(''),
   description: yup.string().required('Title is required').default(''),
-  urllink: yup.string().required('Title is required').default(''),
+  url_link: yup.string().required('Title is required').default(''),
 });

@@ -65,7 +65,7 @@ class RegisteredUserController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $user = Experience::findOrFail($id);
+        $user = User::findOrFail($id);
         $user->delete();
 
         return response()->json($user, 200);

@@ -15,6 +15,5 @@ class Experience extends Model
         'experience_type',
         'location',
         'description',
-        
     ];
 }
