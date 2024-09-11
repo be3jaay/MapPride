@@ -9,7 +9,6 @@ import PrimaryButton from '../../PrimaryButton';
 
 export const AdminModalMap = () => {
   const [selection, setSelection] = useState([]);
-
   const { notifyError, notifySuccess } = useToastNotifications();
   const { handleOpen, isOpen, closeModal } = useModal();
 
@@ -71,9 +70,9 @@ export const AdminModalMap = () => {
       <ToastContainer />
       <PrimaryButton onClick={handleOpen}>Create Marker</PrimaryButton>
       <Modal show={isOpen} onClose={closeModal}>
-        <div className="modal-box bg-indigo-200 p-12 w-[32rem]">
+        <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h3 className="font-bold text-2xl text-indigo-800">Create a marker:</h3>
+            <h3 className="font-bold text-2xl text-indigo-800 ">Create a marker: This will be posted in user's map.</h3>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Selection
               <select className="select w-full bg-white text-black font-bold my-4" {...register('location')}>

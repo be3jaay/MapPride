@@ -6,7 +6,6 @@ import { ForumModal } from '@/Components/Modal/Forms/ForumModal';
 export default function Dashboard({ auth }) {
   const user = auth.user;
   return (
-    // for improvement
     <AuthenticatedLayout
       user={user}
       header={
@@ -26,7 +25,13 @@ export default function Dashboard({ auth }) {
       }
     >
       <Head title="Dashboard" />
-      <DashboardOverview />
+      <DashboardOverview
+        cards={[
+          { title: 'Shared Experiences', value: user.sharedExperiences || 0, description: 'Total experiences shared' },
+          { title: 'Feedback Given', value: user.feedbackCount || 0, description: 'Number of feedbacks provided' },
+          { title: 'Community Impact', value: user.impactScore || 0, description: 'Your contribution score' },
+        ]}
+      />
     </AuthenticatedLayout>
   );
 }

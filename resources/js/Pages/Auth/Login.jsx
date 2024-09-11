@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useToastNotifications } from '../../../core/hooks';
 
 export default function Login({ status, canResetPassword }) {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -14,6 +15,8 @@ export default function Login({ status, canResetPassword }) {
     remember: false,
   });
 
+  const { notifyError, notifySuccess } = useToastNotifications();
+
   useEffect(() => {
     return () => {
       reset('password');
@@ -21,14 +24,14 @@ export default function Login({ status, canResetPassword }) {
   }, []);
 
   const submit = e => {
+    notifySuccess('Success');
     e.preventDefault();
-
     post(route('login'));
   };
 
   return (
     <GuestLayout>
-      <Head title="Log in" />
+      <Head title="Login" />
       {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
       <form onSubmit={submit}>
         <div>

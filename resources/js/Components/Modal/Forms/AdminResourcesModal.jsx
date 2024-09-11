@@ -9,10 +9,10 @@ import { ToastContainer } from 'react-toastify';
 import { useToastNotifications } from '../../../../core/hooks';
 import axios from 'axios';
 import useModal from '../../../../core/hooks/use-modal';
+import InputError from '@/Components/InputError';
 
 export const AdminResourcesModal = () => {
   const [tabs, setTabs] = useState([]);
-
   const { notifyError, notifySuccess } = useToastNotifications();
   const { handleOpen, isOpen, closeModal } = useModal();
 
@@ -22,7 +22,13 @@ export const AdminResourcesModal = () => {
     defaultValues: resourcesForumSchema.getDefault(),
   });
 
-  const { register, handleSubmit, reset, processing } = form;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    processing,
+    formState: { errors },
+  } = form;
 
   const onSubmit = async data => {
     try {
@@ -33,6 +39,11 @@ export const AdminResourcesModal = () => {
     } catch (error) {
       notifyError('There was an error posting your experience.');
     }
+  };
+
+  const handleClose = () => {
+    reset();
+    closeModal();
   };
 
   useEffect(() => {
@@ -56,7 +67,7 @@ export const AdminResourcesModal = () => {
         Create Resources Content
         <MdForum className="ml-2" />
       </PrimaryButton>
-      <Modal show={isOpen} onClose={closeModal}>
+      <Modal show={isOpen} onClose={handleClose}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-2xl text-indigo-800">
@@ -72,6 +83,8 @@ export const AdminResourcesModal = () => {
                 ))}
               </select>
             </label>
+            <InputError message={errors.tabs_title?.message} />
+
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Title
               <input
@@ -81,11 +94,15 @@ export const AdminResourcesModal = () => {
                 {...register('title')}
               />
             </label>
+            <InputError message={errors.title?.message} />
+
             <textarea
               placeholder="Enter description here..."
               className="textarea border-black w-full h-64 bg-white font-bold text-black"
               {...register('description')}
             ></textarea>
+            <InputError message={errors.description?.message} />
+
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Link
               <input
@@ -95,6 +112,8 @@ export const AdminResourcesModal = () => {
                 {...register('url_link')}
               />
             </label>
+            <InputError message={errors.url_link?.message} />
+
             <PrimaryButton className="w-full justify-center py-4" disabled={processing} type="submit">
               Submit
             </PrimaryButton>

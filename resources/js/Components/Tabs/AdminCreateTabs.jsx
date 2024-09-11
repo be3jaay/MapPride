@@ -4,16 +4,17 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { tabSchema } from '../../../core/schema';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import GhostButton from '../GhostButton';
+import { useToastNotifications } from '../../../core/hooks';
+import InputError from '../InputError';
 
 export const AdminCreateTabs = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const notifySuccess = () => toast.success('Your experience has been posted, thank you.');
-  const notifyError = () => toast.error('There was an error posting your experience.');
+  const { notifySuccess, notifyError } = useToastNotifications();
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -29,15 +30,20 @@ export const AdminCreateTabs = () => {
     resolver: yupResolver(tabSchema),
   });
 
-  const { register, handleSubmit, reset } = form;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = form;
 
   const onSubmit = async data => {
     try {
       await axios.post('/api/tabs', data);
       reset();
-      notifySuccess();
+      notifySuccess('Tabs created successfully.');
     } catch (error) {
-      notifyError();
+      notifyError('Tabs was not created successfully.');
     }
   };
 
@@ -66,6 +72,7 @@ export const AdminCreateTabs = () => {
                 {...register('tabs_title')}
               />
             </label>
+            <InputError message={errors.tabs_title?.message} />
             <button className="btn btn-primary w-full text-white mt-2" type="submit">
               Submit
             </button>
