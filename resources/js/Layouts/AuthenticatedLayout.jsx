@@ -1,14 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { UserHeaderData } from '../../core/constant';
 import { FaChevronDown } from 'react-icons/fa6';
 import ally from '../../core/images/ally.png';
+import about from '../../core/images/ally.png';
 
-export default function Authenticated({ user, header, children }) {
+export default function Authenticated({ header, children }) {
+  const { auth } = usePage().props;
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+
+  const getProfilePictureUrl = () => {
+    if (auth.user.profile_picture) {
+      return `/storage/${auth.user.profile_picture}`;
+    }
+    return '../../core/images/about.png';
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -32,7 +41,14 @@ export default function Authenticated({ user, header, children }) {
             </div>
 
             <div className="hidden sm:flex sm:items-center sm:ms-6">
-              <div className="ms-3 relative">
+              <div className="ms-3 relative flex items-center">
+                <div className="avatar online">
+                  <div className="w-10 rounded-full">
+                    <Link href={route('profile.edit')}>
+                      <img src={getProfilePictureUrl()} alt="No-PFP" />
+                    </Link>
+                  </div>
+                </div>
                 <Dropdown>
                   <Dropdown.Trigger>
                     <span className="inline-flex rounded-md">
@@ -40,7 +56,7 @@ export default function Authenticated({ user, header, children }) {
                         type="button"
                         className="inline-flex text-indigo-700 items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md bg-white hover:text-gray-400 focus:outline-none transition ease-in-out duration-150"
                       >
-                        {user.name}
+                        {auth.user.name}
                         <FaChevronDown className="ms-2 -me-0.5 h-4 w-3" />
                       </button>
                     </span>
@@ -91,8 +107,8 @@ export default function Authenticated({ user, header, children }) {
 
           <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div className="px-4">
-              <div className="font-medium text-base text-gray-800 dark:text-gray-200">{user.name}</div>
-              <div className="font-medium text-sm text-gray-500">{user.email}</div>
+              <div className="font-medium text-base text-gray-800 dark:text-gray-200">{auth.user.name}</div>
+              <div className="font-medium text-sm text-gray-500">{auth.user.email}</div>
             </div>
 
             <div className="mt-3 space-y-1">

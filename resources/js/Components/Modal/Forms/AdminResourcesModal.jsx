@@ -27,7 +27,7 @@ export const AdminResourcesModal = () => {
     handleSubmit,
     reset,
     processing,
-    formState: { errors },
+    formState: { isSubmitting, errors },
   } = form;
 
   const onSubmit = async data => {
@@ -114,8 +114,8 @@ export const AdminResourcesModal = () => {
             </label>
             <InputError message={errors.url_link?.message} />
 
-            <PrimaryButton className="w-full justify-center py-4" disabled={processing} type="submit">
-              Submit
+            <PrimaryButton className="w-full justify-center py-4" disabled={isSubmitting} type="submit">
+              {isSubmitting ? 'Processing...' : 'Submit'}
             </PrimaryButton>
           </form>
         </div>

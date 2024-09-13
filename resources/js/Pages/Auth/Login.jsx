@@ -6,16 +6,13 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { useToastNotifications } from '../../../core/hooks';
 
 export default function Login({ status, canResetPassword }) {
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post, processing, errors, reset, wasSuccessful } = useForm({
     email: '',
     password: '',
     remember: false,
   });
-
-  const { notifyError, notifySuccess } = useToastNotifications();
 
   useEffect(() => {
     return () => {
@@ -24,7 +21,6 @@ export default function Login({ status, canResetPassword }) {
   }, []);
 
   const submit = e => {
-    notifySuccess('Success');
     e.preventDefault();
     post(route('login'));
   };
@@ -85,10 +81,10 @@ export default function Login({ status, canResetPassword }) {
               Register here
             </span>
           </Link>
-          <PrimaryButton className="ms-4" disabled={processing}>
-            Login
-          </PrimaryButton>
         </div>
+        <PrimaryButton className="w-full py-4 justify-center my-2" disabled={processing}>
+          {processing ? 'Logging in...' : 'Login'}
+        </PrimaryButton>
       </form>
     </GuestLayout>
   );

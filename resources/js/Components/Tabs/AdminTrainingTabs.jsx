@@ -34,7 +34,7 @@ export const AdminTrainingTabs = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = form;
 
   const onSubmit = async data => {
@@ -73,9 +73,9 @@ export const AdminTrainingTabs = () => {
               />
             </label>
             <InputError message={errors.tabs_title?.message} />
-            <button className="btn btn-primary w-full text-white mt-2" type="submit">
-              Submit
-            </button>
+            <PrimaryButton className="w-full justify-center py-4" disabled={isSubmitting}>
+              {isSubmitting ? 'Processing...' : 'Submit'}
+            </PrimaryButton>
           </form>
         </div>
       </Modal>

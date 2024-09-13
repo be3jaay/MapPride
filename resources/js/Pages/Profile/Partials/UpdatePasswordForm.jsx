@@ -84,8 +84,10 @@ export default function UpdatePasswordForm({ className = '' }) {
           />
           <InputError message={errors.password_confirmation} className="mt-2" />
         </div>
-        <div className="flex items-center gap-4">
-          <PrimaryButton disabled={processing}>Save</PrimaryButton>
+        <div className="flex items-center gap-4 w-full ">
+          <PrimaryButton className="w-[10rem] py-4 justify-center" disabled={processing}>
+            {processing ? 'Updating' : 'Update'}
+          </PrimaryButton>
           <Transition
             show={recentlySuccessful}
             enter="transition ease-in-out"
