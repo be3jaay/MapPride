@@ -3,97 +3,170 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
-import { Transition } from '@headlessui/react';
+import { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import { Alert } from '@/Components/Alert';
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
   const user = usePage().props.auth.user;
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const fileInputRef = useRef(null);
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+  const { data, setData, errors, setError, clearErrors, processing, recentlySuccessful } = useForm({
     name: user.name,
     email: user.email,
     gender: user.gender,
     preferences: user.preferences,
-    resume: user.resume,
+    profile_picture: null,
   });
+
+  useEffect(() => {
+    setData({
+      name: user.name,
+      email: user.email,
+      gender: user.gender,
+      preferences: user.preferences,
+      profile_picture: null,
+    });
+  }, [user]);
 
   const submit = e => {
     e.preventDefault();
 
-    patch(route('profile.update'));
+    const formData = new FormData();
+    formData.append('_method', 'PATCH');
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('preferences', data.preferences);
+    formData.append('gender', data.gender);
+
+    if (data.profile_picture) {
+      formData.append('profile_picture', data.profile_picture);
+    }
+
+    axios
+      .post(route('profile.update'), formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(() => {
+        clearErrors();
+        setSuccessMessage('Profile updated successfully');
+        setTimeout(() => setSuccessMessage(''), 3000); // Clear message after 3 seconds
+      })
+      .catch(error => {
+        if (error.response && error.response.data && error.response.data.errors) {
+          Object.keys(error.response.data.errors).forEach(key => {
+            setError(key, error.response.data.errors[key][0]);
+          });
+        } else {
+          console.error('Error updating profile:', error);
+        }
+      });
+  };
+
+  const handleFileChange = e => {
+    const file = e.target.files[0];
+    if (file) {
+      setData('profile_picture', file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
-    <section className={className}>
+    <section className={`w-full `}>
       <header>
         <h2 className="text-xl font-bold text-indigo-700">Profile Information</h2>
-        <p className="mt-1 text-sm text-black ">Update your account's profile information and email address.</p>
+        <p className="mt-1 text-sm text-black">Update your account's profile information and email address.</p>
       </header>
       <form onSubmit={submit} className="mt-6 space-y-6">
-        <div>
-          <InputLabel htmlFor="name" value="Name" />
-          <TextInput
-            id="name"
-            className="mt-1 block w-full"
-            value={data.name}
-            onChange={e => setData('name', e.target.value)}
-            required
-            isFocused
-            autoComplete="name"
-          />
-          <InputError className="mt-2" message={errors.name} />
+        <div className="w-full flex items-center justify-between gap-2">
+          <div className="w-full">
+            <InputLabel htmlFor="name" value="Name" />
+            <TextInput
+              id="name"
+              className="mt-1 w-full"
+              value={data.name}
+              onChange={e => setData('name', e.target.value)}
+              required
+              isFocused
+              autoComplete="name"
+            />
+            <InputError className="mt-2" message={errors.name} />
+          </div>
+          <div className="w-full">
+            <InputLabel htmlFor="gender" value="Gender" />
+            <TextInput
+              id="gender"
+              className="mt-1 w-full"
+              value={data.gender}
+              onChange={e => setData('gender', e.target.value)}
+              required
+              autoComplete="gender"
+            />
+            <InputError className="mt-2" message={errors.gender} />
+          </div>
         </div>
-        <div>
-          <InputLabel htmlFor="gender" value="Gender" />
-          <TextInput
-            id="gender"
-            className="mt-1 block w-full"
-            value={data.gender}
-            onChange={e => setData('gender', e.target.value)}
-            required
-            isFocused
-            autoComplete="gender"
-          />
-          <InputError className="mt-2" message={errors.gender} />
+        <div className="w-full flex items-center justify-between gap-2">
+          <div className="w-full">
+            <InputLabel htmlFor="preferences" value="Preferences" />
+            <TextInput
+              id="preferences"
+              className="mt-1 block w-full"
+              value={data.preferences}
+              onChange={e => setData('preferences', e.target.value)}
+              required
+              autoComplete="preferences"
+            />
+            <InputError className="mt-2" message={errors.preferences} />
+          </div>
+          <div className="w-full">
+            <InputLabel htmlFor="email" value="Email" />
+            <TextInput
+              id="email"
+              type="email"
+              className="mt-1 block w-full"
+              value={data.email}
+              onChange={e => setData('email', e.target.value)}
+              required
+              autoComplete="email"
+            />
+          </div>
         </div>
-        <div>
-          <InputLabel htmlFor="preferences" value="Preferences" />
-          <TextInput
-            id="Preferences"
-            className="mt-1 block w-full"
-            value={data.preferences}
-            onChange={e => setData('preferences', e.target.value)}
-            required
-            isFocused
-            autoComplete="preferences"
-          />
-          <InputError className="mt-2" message={errors.preferences} />
+
+        <div className="flex items-center space-x-6">
+          <div className="shrink-0">
+            <img
+              className="h-16 w-16 object-cover rounded-full"
+              src={previewUrl || (user.profile_picture ? `/storage/${user.profile_picture}` : '/default-avatar.png')}
+              alt="Profile picture"
+            />
+          </div>
+          <label className="block">
+            <span className="sr-only">Choose profile photo</span>
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="block w-full text-sm text-slate-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-full file:border-0
+                file:text-sm file:font-semibold
+                file:bg-violet-50 file:text-violet-700
+                hover:file:bg-violet-100
+              "
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </label>
         </div>
-        <div>
-          <InputLabel htmlFor="email" value="Email" />
-          <TextInput
-            id="email"
-            type="email"
-            className="mt-1 block w-full"
-            value={data.email}
-            onChange={e => setData('email', e.target.value)}
-            required
-            autoComplete="email"
-          />
-          <InputError className="mt-2" message={errors.email} />
-        </div>
-        <div>
-          <InputLabel htmlFor="resume" value="Resume/CV" />
-          <TextInput
-            id="resume"
-            type="resume"
-            className="mt-1 block w-full"
-            value={data.resume}
-            onChange={e => setData('resume', e.target.value)}
-            required
-            autoComplete="resume"
-          />
-          <InputError className="mt-2" message={errors.resume} />
-        </div>
+        <InputError className="mt-2" message={errors.profile_picture} />
+
         {mustVerifyEmail && user.email_verified_at === null && (
           <div>
             <p className="text-sm mt-2 text-gray-800 dark:text-gray-200">
@@ -115,18 +188,12 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             )}
           </div>
         )}
-        <div className="flex items-center gap-4">
-          <PrimaryButton disabled={processing}>Save</PrimaryButton>
-          <Transition
-            show={recentlySuccessful}
-            enter="transition ease-in-out"
-            enterFrom="opacity-0"
-            leave="transition ease-in-out"
-            leaveTo="opacity-0"
-          >
-            <p className="text-sm text-gray-600 dark:text-gray-400">Saved.</p>
-          </Transition>
+        <div className="flex items-center gap-4 w-full">
+          <PrimaryButton className="w-[10rem] py-4 justify-center" disabled={processing}>
+            {processing ? 'Updating...' : 'Update'}
+          </PrimaryButton>
         </div>
+        {successMessage && <Alert message={successMessage} type="success" />}
       </form>
     </section>
   );

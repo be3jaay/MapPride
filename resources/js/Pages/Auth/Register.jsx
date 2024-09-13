@@ -192,26 +192,6 @@ export default function Register() {
           <InputError message={errors.password_confirmation} className="mt-2" />
         </div>
 
-        <div>
-          <InputLabel htmlFor="resume" value="Resume/CV" />
-
-          <TextInput
-            id="resume"
-            name="resume"
-            value={data.resume}
-            className="mt-1 block w-full"
-            autoComplete="resume"
-            isFocused={true}
-            onChange={e => setData('resume', e.target.value)}
-            type="file"
-            disabled={!enable}
-            option
-          />
-          <InputError message={errors.resume} className="mt-2" />
-          <Checkbox name="Optional" checked={!enable} onChange={handleCheckboxChange} />
-          <span className="ms-2 text-md text-black">Optional</span>
-        </div>
-
         <div className="flex items-center justify-end mt-4">
           <Link
             href={route('login')}

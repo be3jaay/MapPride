@@ -39,7 +39,6 @@ export default function DeleteUserForm({ className = '' }) {
 
   const closeModal = () => {
     setConfirmingUserDeletion(false);
-
     reset();
   };
 
@@ -85,7 +84,7 @@ export default function DeleteUserForm({ className = '' }) {
             <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
 
             <DangerButton className="ms-3" disabled={processing}>
-              Delete Account
+              {processing ? 'Deleting Account...' : 'Delete Account'}
             </DangerButton>
           </div>
         </form>

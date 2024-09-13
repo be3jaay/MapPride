@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('preferences');
             $table->string('gender');
             $table->string('email')->unique();
+            $table->string('image')->nullable();
             $table->string('usertype')->default('user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('resume')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
