@@ -5,6 +5,7 @@ import Modal from '../../Modal';
 import DangerButton from '@/Components/DangerButton';
 import axios from 'axios';
 import { useToastNotifications } from '../../../../core/hooks';
+import { useForm } from 'react-hook-form';
 
 const AdminModalExperience = ({ experience, isOpen, onClose, onStatusChange }) => {
   const { notifySuccess, notifyError } = useToastNotifications();
@@ -52,21 +53,23 @@ const AdminModalExperience = ({ experience, isOpen, onClose, onStatusChange }) =
               </DangerButton>
             </div>
           ) : (
-            <div className="flex justify-end mt-4 gap-2">
-              <PrimaryButton
-                onClick={handleApprove}
-                className="flex items-center justify-center py-2 text-white bg-green-600"
-              >
-                <FaUserCheck /> Approve
-              </PrimaryButton>
+            <div className="flex justify-end mt-4 gap-2 ">
               <DangerButton
                 onClick={() => {
                   handleDelete(experience);
                 }}
-                className="flex items-center justify-center py-2 text-white bg-red-600"
+                className="flex items-center justify-center  py-4 px-6 text-white bg-red-600"
               >
                 Decline
               </DangerButton>
+              <PrimaryButton
+                onClick={() => {
+                  handleApprove(experience);
+                }}
+                className="flex items-center justify-center py-4 px-6 text-white bg-green-600"
+              >
+                <FaUserCheck className="mr-2" /> Approve
+              </PrimaryButton>
             </div>
           )}
         </div>

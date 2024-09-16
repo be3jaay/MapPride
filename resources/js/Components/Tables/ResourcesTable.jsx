@@ -5,6 +5,7 @@ import { AdminEditResources } from '../Modal/Edit/AdminEditResources';
 import { ToastContainer } from 'react-toastify';
 import DangerButton from '../DangerButton';
 import useTableData from '../../../core/hooks/use-table-data';
+import { useDateFormat } from '../../../core/hooks';
 
 export const ResourcesTable = () => {
   const {
@@ -19,6 +20,12 @@ export const ResourcesTable = () => {
     handleDelete,
   } = useTableData('/api/resources');
 
+  const { getFormattedDate } = useDateFormat();
+
+  const formattedDate = dateString => {
+    return getFormattedDate(dateString);
+  };
+
   return (
     <>
       <ToastContainer />
@@ -31,6 +38,7 @@ export const ResourcesTable = () => {
                 <th style={tableHeaderStyle}>Title</th>
                 <th style={tableHeaderStyle}>Description</th>
                 <th style={tableHeaderStyle}>Link</th>
+                <th style={tableHeaderStyle}>Updated At</th>
                 <th style={tableHeaderStyle}>Edit</th>
                 <th style={tableHeaderStyle}>Delete</th>
               </tr>
@@ -43,6 +51,7 @@ export const ResourcesTable = () => {
                     <td style={tableStyle}>{resources.title}</td>
                     <td style={tableStyle}>{resources.description}</td>
                     <td style={tableStyle}>{resources.url_link}</td>
+                    <td style={tableStyle}>{formattedDate(resources.updated_at)}</td>
                     <td style={tableStyle}>
                       <PrimaryButton
                         onClick={() => handleViewClick(resources)}

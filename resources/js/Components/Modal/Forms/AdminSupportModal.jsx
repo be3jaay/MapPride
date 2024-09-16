@@ -26,13 +26,14 @@ export const AdminSupportModal = () => {
     handleSubmit,
     reset,
     processing,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = form;
 
   const onSubmit = async data => {
     try {
       await axios.post('/api/support', data);
       reset();
+      closeModal();
       notifySuccess('Your support content has been added, thank you.');
     } catch (error) {
       notifyError('There was an error posting your experience.');
@@ -83,7 +84,7 @@ export const AdminSupportModal = () => {
             </label>
             <InputError message={errors.phoneNumber?.message} />
             <PrimaryButton className="w-full justify-center py-4" disabled={processing} type="submit">
-              Submit
+              {isSubmitting ? 'Submitting...' : 'Submit'}
             </PrimaryButton>
           </form>
         </div>

@@ -4,6 +4,7 @@ import { tableHeaderStyle, tableStyle } from './TableStyle';
 import { AdminEditSupport } from '../Modal/Edit/AdminEditSupport';
 import DangerButton from '../DangerButton';
 import useTableData from '../../../core/hooks/use-table-data';
+import { useDateFormat } from '../../../core/hooks';
 
 export const SupportTable = () => {
   const {
@@ -18,6 +19,12 @@ export const SupportTable = () => {
     closeModal,
   } = useTableData('/api/support');
 
+  const { getFormattedDate } = useDateFormat();
+
+  const formattedDate = dateString => {
+    return getFormattedDate(dateString);
+  };
+
   return (
     <div>
       <div className="overflow-x-auto my-4 shadow-lg rounded-md p-4  ">
@@ -27,6 +34,8 @@ export const SupportTable = () => {
               <th style={tableHeaderStyle}>Title</th>
               <th style={tableHeaderStyle}>Description</th>
               <th style={tableHeaderStyle}>Phone Number</th>
+              <th style={tableHeaderStyle}>Created At: </th>
+              <th style={tableHeaderStyle}>Updated At: </th>
               <th style={tableHeaderStyle}>Edit</th>
               <th style={tableHeaderStyle}>Delete</th>
             </tr>
@@ -38,6 +47,8 @@ export const SupportTable = () => {
                   <td style={tableStyle}>{support.title}</td>
                   <td style={tableStyle}>{support.description}</td>
                   <td style={tableStyle}>{support.phoneNumber}</td>
+                  <td style={tableStyle}>{formattedDate(support.created_at)}</td>
+                  <td style={tableStyle}>{formattedDate(support.updated_at)}</td>
                   <td style={tableStyle}>
                     <PrimaryButton
                       onClick={() => handleViewClick(support)}

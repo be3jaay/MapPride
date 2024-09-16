@@ -6,6 +6,7 @@ import { tableHeaderStyle, tableStyle } from './TableStyle';
 import DangerButton from '../DangerButton';
 import { useToastNotifications } from '../../../core/hooks';
 import { useDateFormat } from '../../../core/hooks';
+import { Badge } from '../Badge';
 
 export default function AdminUserTable() {
   const [user, setUser] = useState([]);
@@ -71,7 +72,9 @@ export default function AdminUserTable() {
                   <td style={tableStyle}>{user.email}</td>
                   <td style={tableStyle}>{user.gender}</td>
                   <td style={tableStyle}>{formattedDate(user.created_at)}</td>
-                  <td style={tableStyle}>{user.usertype}</td>
+                  <td style={tableStyle}>
+                    <Badge message={user.usertype} type={user.usertype === 'admin' ? 'info' : 'success'} />
+                  </td>
                   <td style={tableStyle}>
                     <DangerButton
                       onClick={() => {

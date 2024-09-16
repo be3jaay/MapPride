@@ -36,6 +36,7 @@ export const ExperienceTable = () => {
               <th style={tableHeaderStyle}>Location</th>
               <th style={tableHeaderStyle}>Description</th>
               <th style={tableHeaderStyle}>Created At</th>
+              <th style={tableHeaderStyle}>Approved Date</th>
               <th style={tableHeaderStyle}>Actions</th>
               <th style={tableHeaderStyle}>Status</th>
             </tr>
@@ -49,6 +50,7 @@ export const ExperienceTable = () => {
                   <td style={tableStyle}>{exp.experience_type}</td>
                   <td style={tableStyle}>{exp.location}</td>
                   <td style={tableStyle}>{exp.description}</td>
+                  <td style={tableStyle}>{formatDate(exp.created_at)}</td>
                   <td style={tableStyle}>{formatDate(exp.updated_at)}</td>
                   <td style={tableStyle}>
                     <PrimaryButton

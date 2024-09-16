@@ -3,9 +3,9 @@ import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import DangerButton from '../DangerButton';
 import { ToastContainer } from 'react-toastify';
-import { AdminEditTraining } from '../Modal/Edit/AdminEditTraining';
 import useTableData from '../../../core/hooks/use-table-data';
-
+import { AdminEditTraining } from '../Modal/Edit/AdminEditTraining';
+import { useDateFormat } from '../../../core/hooks';
 export const TrainingTable = () => {
   const {
     data: training,
@@ -19,6 +19,12 @@ export const TrainingTable = () => {
     handleDelete,
   } = useTableData('/api/training');
 
+  const { getFormattedDate } = useDateFormat();
+
+  const formattedDate = dateString => {
+    return getFormattedDate(dateString);
+  };
+
   return (
     <>
       <ToastContainer />
@@ -31,6 +37,7 @@ export const TrainingTable = () => {
                 <th style={tableHeaderStyle}>Title</th>
                 <th style={tableHeaderStyle}>Description</th>
                 <th style={tableHeaderStyle}>Link</th>
+                <th style={tableHeaderStyle}>Updated At: </th>
                 <th style={tableHeaderStyle}>Edit</th>
                 <th style={tableHeaderStyle}>Delete</th>
               </tr>
@@ -43,6 +50,7 @@ export const TrainingTable = () => {
                     <td style={tableStyle}>{training.title}</td>
                     <td style={tableStyle}>{training.description}</td>
                     <td style={tableStyle}>{training.url_link}</td>
+                    <td style={tableStyle}>{formattedDate(training.updated_at)}</td>
                     <td style={tableStyle}>
                       <PrimaryButton
                         onClick={() => handleViewClick(training)}

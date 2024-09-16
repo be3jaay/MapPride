@@ -26,7 +26,7 @@ export const ForumModal = () => {
     handleSubmit,
     reset,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = form;
 
   const onSubmit = async data => {
@@ -117,7 +117,7 @@ export const ForumModal = () => {
             ></textarea>
             <InputError message={errors.description?.message} />
             <PrimaryButton className="w-full py-4 justify-center" disabled={processing}>
-              Login
+              {isSubmitting ? 'Submitting' : 'Submit'}
             </PrimaryButton>
           </form>
         </div>

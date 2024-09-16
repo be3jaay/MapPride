@@ -6,6 +6,7 @@ import useTableData from '../../../core/hooks/use-table-data';
 import AdminViewFeedback from '../Modal/Edit/AdminViewFeedback';
 import { useState } from 'react';
 import { useDateFormat } from '../../../core/hooks';
+import { FaStar } from 'react-icons/fa6';
 
 export const FeedbackTable = () => {
   const [feedbackStatus, setFeedbackStatus] = useState({});
@@ -47,7 +48,9 @@ export const FeedbackTable = () => {
             {Array.isArray(feedback) && feedback.length > 0 ? (
               feedback.map(feedback => (
                 <tr key={feedback.id}>
-                  <td style={tableStyle}>{feedback.feedback_value} stars</td>
+                  <td style={tableStyle}>
+                    <span className="flex items-center justify-center">{feedback.feedback_value} stars</span>
+                  </td>
                   <td style={tableStyle}>{feedback.description}</td>
                   <td style={tableStyle}>{formatDate(feedback.created_at)}</td>
                   <td style={tableStyle}>
