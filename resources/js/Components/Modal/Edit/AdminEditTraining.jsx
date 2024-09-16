@@ -1,7 +1,6 @@
 import { FaUserCheck } from 'react-icons/fa';
 import PrimaryButton from '../../PrimaryButton';
 import { ToastContainer } from 'react-toastify';
-import SecondaryButton from '../../SecondaryButton';
 import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,10 +9,9 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { useToastNotifications } from '../../../../core/hooks';
+import DangerButton from '@/Components/DangerButton';
 
 export const AdminEditTraining = ({ training, isOpen, onClose }) => {
-  if (!training) return null;
-
   const { notifyError, notifySuccess } = useToastNotifications();
 
   const form = useForm({
@@ -45,7 +43,7 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
     }
   };
 
-  const handleDecline = () => {
+  const handleClose = () => {
     onClose();
   };
 
@@ -97,19 +95,16 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
               </label>
             </div>
             <div className="flex justify-end mt-4 gap-2">
+              <DangerButton onClick={handleClose} className="flex ">
+                Close
+              </DangerButton>
               <PrimaryButton
                 className="flex items-center justify-center py-2 text-white bg-green-600"
                 disabled={isSubmitting}
                 type="submit"
               >
-                <FaUserCheck /> Update
+                <FaUserCheck /> {isSubmitting ? 'Updating...' : 'Update'}
               </PrimaryButton>
-              <SecondaryButton
-                onClick={handleDecline}
-                className="flex bg-transparent items-center justify-center py-2 text-white border border-gray-300"
-              >
-                Close
-              </SecondaryButton>
             </div>
           </form>
         </div>

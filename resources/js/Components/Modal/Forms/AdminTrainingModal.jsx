@@ -29,7 +29,7 @@ export const AdminTrainingModal = () => {
     handleSubmit,
     reset,
     processing,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = form;
 
   const onSubmit = async data => {
@@ -115,7 +115,7 @@ export const AdminTrainingModal = () => {
             <InputError message={errors.url_link?.message} />
 
             <PrimaryButton className="w-full justify-center py-4" disabled={processing}>
-              Submit
+              {isSubmitting ? 'Submitting' : 'Submit'}
             </PrimaryButton>
           </form>
         </div>

@@ -54,7 +54,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
       .then(() => {
         clearErrors();
         setSuccessMessage('Profile updated successfully');
-        setTimeout(() => setSuccessMessage(''), 3000); // Clear message after 3 seconds
+        setTimeout(() => setSuccessMessage(''), 3000);
       })
       .catch(error => {
         if (error.response && error.response.data && error.response.data.errors) {

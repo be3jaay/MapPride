@@ -4,6 +4,7 @@ import { tableHeaderStyle, tableStyle } from './TableStyle';
 import DangerButton from '../DangerButton';
 import { AdminEditHotline } from '../Modal/Edit/AdminEditHotline';
 import useTableData from '../../../core/hooks/use-table-data';
+import { useDateFormat } from '../../../core/hooks';
 
 export const AdminHotlineTable = () => {
   const {
@@ -18,6 +19,12 @@ export const AdminHotlineTable = () => {
     closeModal,
   } = useTableData('/api/hotlines');
 
+  const { getFormattedDate } = useDateFormat();
+
+  const formattedDate = dateString => {
+    return getFormattedDate(dateString);
+  };
+
   return (
     <div>
       <div className="overflow-x-auto my-4 shadow-lg rounded-md p-4">
@@ -27,6 +34,8 @@ export const AdminHotlineTable = () => {
               <th style={tableHeaderStyle}>Title</th>
               <th style={tableHeaderStyle}>Description</th>
               <th style={tableHeaderStyle}>Phone Number</th>
+              <th style={tableHeaderStyle}>Created At: </th>
+              <th style={tableHeaderStyle}>Updated At: </th>
               <th style={tableHeaderStyle}>Edit</th>
               <th style={tableHeaderStyle}>Delete</th>
             </tr>
@@ -38,6 +47,9 @@ export const AdminHotlineTable = () => {
                   <td style={tableStyle}>{hotline.title}</td>
                   <td style={tableStyle}>{hotline.description}</td>
                   <td style={tableStyle}>{hotline.phoneNumber}</td>
+                  <td style={tableStyle}>{formattedDate(hotline.created_at)}</td>
+                  <td style={tableStyle}>{formattedDate(hotline.updated_at)}</td>
+
                   <td style={tableStyle}>
                     <PrimaryButton
                       onClick={() => handleViewClick(hotline)}

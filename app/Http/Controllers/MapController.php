@@ -76,16 +76,26 @@ class MapController extends Controller
             'location' => 'required|string',
             'longitude' => 'required|numeric',
             'latitude' => 'required|numeric',
-            'image' => 'nullable|string',
+            'image' => 'nullable|file|mimes:jpeg,png,gif|max:2048',
             'title' => 'required|string',
             'description' => 'required|string',
             'address' => 'required|string',
-            'phone' => 'required|integer|max:99999999999',
-            'services' => 'nullable',
-             // Allow either array or string; handled in model
+            'phone' => 'nullable|string',
+            'services' => 'nullable|string',
         ]);
 
         $map = Map::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('images', 'public');
+            $validatedData['image'] = $imagePath;
+        }
+
+        if (isset($validatedData['services'])) {
+            $validatedData['services'] = json_decode($validatedData['services'], true);
+        }
+
         $map->update($validatedData);
 
         return response()->json($map);

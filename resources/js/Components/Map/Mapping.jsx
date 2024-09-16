@@ -3,6 +3,8 @@ import 'leaflet/dist/leaflet.css';
 import { healthIcon, governmentIcon, safeSpaceIcon, supportIcon } from '../../../core/icons/marker-icons';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { FaHeart } from 'react-icons/fa6';
+import { FaRegHeart } from 'react-icons/fa';
 
 export const Mapping = () => {
   const [selectMarker, setSelectMarker] = useState([]);
@@ -57,11 +59,14 @@ export const Mapping = () => {
                       <div>
                         <img src={`/storage/${item.image}`} alt="No image" className="h-auto" />
                       </div>
-                      <div className="w-full card-body shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">
+                      <div className="w-full card-body shadow-lg relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">
                         <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
                         <div className="sm:flex sm:justify-between sm:gap-4">
                           <div className="w-full">
-                            <h3 className="text-xl font-bold text-indigo-700 sm:text-xl">{item.title}</h3>
+                            <div className="flex items-center justify-between">
+                              <h3 className="text-xl font-bold text-indigo-700 sm:text-xl">{item.title}</h3>
+                              <FaRegHeart className="text-3xl cursor-pointer " />
+                            </div>
                             <p className="text-md">{item.description}</p>
                             <hr className="w-full mb-4" />
                           </div>
@@ -77,6 +82,12 @@ export const Mapping = () => {
                             +63 {item.phone}
                           </span>
                         </div>
+                        <hr className="my-4" />
+
+                        <span className="flex items-center font-bold text-gray-600">
+                          <FaHeart className="text-3xl cursor-pointer text-red-400 mr-2 " />
+                          324 users like this location
+                        </span>
                       </div>
                     </div>
                   </Popup>
