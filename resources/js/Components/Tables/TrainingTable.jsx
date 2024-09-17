@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import useTableData from '../../../core/hooks/use-table-data';
 import { AdminEditTraining } from '../Modal/Edit/AdminEditTraining';
 import { useDateFormat } from '../../../core/hooks';
+
 export const TrainingTable = () => {
   const {
     data: training,

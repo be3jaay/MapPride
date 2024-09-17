@@ -20,35 +20,47 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { isSubmitting, errors },
   } = form;
 
   const handleUpdate = async data => {
-    try {
-      const formData = new FormData();
-      formData.append('_method', 'PATCH');
-      formData.append('location', data.location);
-      formData.append('longitude', data.longitude);
-      formData.append('latitude', data.latitude);
-      formData.append('image', data.image[0]);
-      formData.append('title', data.title);
-      formData.append('description', data.description);
-      formData.append('address', data.address);
-      formData.append('phone', data.phone);
-      formData.append('services', JSON.stringify(data.services));
+    // Initialize FormData
+    const formData = new FormData();
 
+    // Append form fields
+    formData.append('location', data.location || '');
+    formData.append('longitude', data.longitude || '');
+    formData.append('latitude', data.latitude || '');
+    formData.append('title', data.title || '');
+    formData.append('description', data.description || '');
+    formData.append('address', data.address || '');
+    formData.append('phone', data.phone || '');
+    formData.append('services', data.services || '');
+
+    // Append image if it exists
+    if (data.image && data.image.length > 0) {
+      formData.append('image', data.image[0]); // Correct way to send file
+    } else {
+      console.error('No image selected');
+    }
+
+    // Log formData fields for debugging
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ': ' + pair[1]); // Debug output
+    }
+
+    try {
+      // Make the PUT request with FormData
       await axios.put(`/api/map/${map.id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      reset();
+      reset(); // Clear the form
       notifySuccess('Training content updated successfully.');
       onClose();
     } catch (error) {
-      notifyError('There was an error updating the training content.');
+      notifyError(error.response?.data?.message || 'There was an error updating the content.');
     }
   };
 
@@ -59,6 +71,7 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
       location: map.location,
       latitude: map.latitude,
       longitude: map.longitude,
+      image: map.image,
       address: map.address,
       phone: map.phone,
       services: map.services,
@@ -106,7 +119,7 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
                   type="text"
                   className="input w-full bg-transparent my-2"
                   placeholder="Longitude"
-                  {...register('longitude', { required: 'The longitude field is required.' })}
+                  {...register('longitude', { required: 'The longitude field is required.', valueAsNumber: true })}
                 />
               </label>
               {errors.longitude && <p className="text-red-500">{errors.longitude.message}</p>}
@@ -116,7 +129,7 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
                   type="text"
                   className="input w-full bg-transparent my-2"
                   placeholder="Latitude"
-                  {...register('latitude', { required: 'The latitude field is required.' })}
+                  {...register('latitude', { required: 'The latitude field is required.', valueAsNumber: true })}
                 />
               </label>
               {errors.latitude && <p className="text-red-500">{errors.latitude.message}</p>}
@@ -125,6 +138,7 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
                 className="file-input file-input-bordered file-input-primary w-full bg-white"
                 {...register('image')}
               />
+              {errors.image && <p className="text-red-500">{errors.image.message}</p>}
               <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
                 Title
                 <input
@@ -157,7 +171,7 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
                   type="text"
                   className="input w-full bg-transparent my-2"
                   placeholder="Phone"
-                  {...register('phone', { required: 'The phone field is required.' })}
+                  {...register('phone', { required: 'The phone field is required.', valueAsNumber: true })}
                 />
               </label>
               {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}

@@ -31,7 +31,6 @@ class TrainingController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validate the incoming request data
         $validatedData = $request->validate([
             'tabs_title' => 'required|string|max:255',
             'title' => 'required|string|max:255',
@@ -39,13 +38,11 @@ class TrainingController extends Controller
             'url_link' => 'required|string|max:255',
         ]);
 
-        // Find the training record
         $training = Training::find($id);
         if (!$training) {
             return response()->json(['message' => 'Training content not found'], 404);
         }
 
-        // Update the training record with validated data
         $training->update($validatedData);
 
         return response()->json($training, 200);

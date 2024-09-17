@@ -30,7 +30,7 @@ class MapController extends Controller
         'title' => 'required|string',
         'description' => 'required|string',
         'address' => 'required|string',
-        'phone' => 'nullable|string',
+        'phone' => 'required|integer|max:999999999',
         'services' => 'nullable|string',
     ]);
 
@@ -70,7 +70,7 @@ class MapController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
             'location' => 'required|string',
@@ -80,18 +80,20 @@ class MapController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'address' => 'required|string',
-            'phone' => 'nullable|string',
+            'phone' => 'required|integer|max:999999999',
             'services' => 'nullable|string',
         ]);
 
         $map = Map::findOrFail($id);
 
+        // Handle image upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imagePath = $image->store('images', 'public');
             $validatedData['image'] = $imagePath;
         }
 
+        // Decode services if present
         if (isset($validatedData['services'])) {
             $validatedData['services'] = json_decode($validatedData['services'], true);
         }
