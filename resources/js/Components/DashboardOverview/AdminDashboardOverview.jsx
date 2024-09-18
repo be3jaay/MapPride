@@ -61,7 +61,7 @@ export const AdminDashboardOverview = () => {
         </article>
       </div>
 
-      <div class="grid grid-cols-12 gap-2 mt-4 w-full h-full ">
+      <div className="grid grid-cols-12 gap-2 mt-4 w-full h-full ">
         <div className="col-span-6 bg-indigo-200 rounded-md  w-full p-4 ">
           <BarGraph />
         </div>
