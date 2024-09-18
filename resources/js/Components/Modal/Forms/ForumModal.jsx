@@ -48,7 +48,7 @@ export const ForumModal = () => {
   return (
     <>
       <ToastContainer />
-      <PrimaryButton onClick={handleOpen}>
+      <PrimaryButton onClick={handleOpen} className="py-4 px-6">
         Share Story <MdForum className="ml-2" />
       </PrimaryButton>
 

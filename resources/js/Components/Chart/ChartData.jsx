@@ -19,26 +19,16 @@ export const lineChartData = {
     },
   ],
 };
-export const barChartData = {
-  labels: ['Harassment', 'Bullying', 'Discrimination'],
-  datasets: [
-    {
-      label: 'Commonly Type of discrimination LGBTQ+ faces',
-      data: [20, 15, 30],
-      borderColor: 'indigo',
-      backgroundColor: 'indigo',
-    },
-  ],
-};
+// export const barChartData = {
+//   labels: ['Harassment', 'Bullying', 'Discrimination'],
+//   datasets: [
+//     {
+//       label: 'Commonly Type of discrimination LGBTQ+ faces',
+//       data: [20, 15, 30],
+//       borderColor: 'indigo',
+//       backgroundColor: 'indigo',
+//     },
+//   ],
+// };
 
-export const pieChartData = {
-  labels: ['Gay', 'Lesbian', 'Bisexual', 'Transgender'],
-  datasets: [
-    {
-      label: ['Gay', 'Lesbian', 'Bisexual', 'Transgender'],
-      data: [20, 40, 23, 12],
-      backgroundColor: ['indigo', 'lime', 'blue', 'black'],
-      hoverOffset: 4,
-    },
-  ],
-};
+// export

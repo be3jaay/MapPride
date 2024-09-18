@@ -20,11 +20,11 @@ export const UserHeaderData = [
     path: 'support',
   },
   {
-    title: 'Experience',
+    title: 'View Story',
     path: 'experience',
   },
   {
-    title: 'Feedback',
+    title: 'Add Feedback',
     path: 'feedback',
   },
 ];

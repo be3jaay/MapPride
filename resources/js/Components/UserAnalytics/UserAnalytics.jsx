@@ -48,7 +48,10 @@ export default function UserAnalytics() {
   return (
     <React.Fragment>
       {data.map((item, index) => (
-        <div className="w-full shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all">
+        <div
+          key={index}
+          className="w-full shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all"
+        >
           <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
           <div className="sm:flex sm:justify-between sm:gap-4">
             <div>{item.title}</div>
