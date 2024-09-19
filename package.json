@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@hookform/resolvers": "^3.9.0",
+        "@reactour/tour": "^3.7.0",
         "chart.js": "^4.4.3",
         "date-fns": "^3.6.0",
         "leaflet": "^1.9.4",

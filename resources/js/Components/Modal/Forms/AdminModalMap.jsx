@@ -6,6 +6,7 @@ import axios from 'axios';
 import useModal from '../../../../core/hooks/use-modal';
 import Modal from '@/Components/Modal';
 import PrimaryButton from '../../PrimaryButton';
+import InputError from '@/Components/InputError';
 
 export const AdminModalMap = () => {
   const [selection, setSelection] = useState([]);
@@ -20,7 +21,7 @@ export const AdminModalMap = () => {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = form;
 
   const onSubmit = async data => {
@@ -47,8 +48,13 @@ export const AdminModalMap = () => {
       reset();
     } catch (error) {
       console.error('Submission Error:', error);
-      notifyError('There was an error posting your experience.');
+      notifyError('There was an error posting your map');
     }
+  };
+
+  const handleClose = () => {
+    reset();
+    closeModal();
   };
 
   useEffect(() => {
@@ -69,7 +75,7 @@ export const AdminModalMap = () => {
     <>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen}>Create Marker</PrimaryButton>
-      <Modal show={isOpen} onClose={closeModal}>
+      <Modal show={isOpen} onClose={handleClose}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-2xl text-indigo-800 ">Create a marker: This will be posted in user's map.</h3>
@@ -148,7 +154,7 @@ export const AdminModalMap = () => {
               />
             </label>
             <PrimaryButton className="w-full justify-center py-4" disabled={isSubmitting} type="submit">
-              Submit
+              {isSubmitting ? 'Submitting...' : 'Submit'}
             </PrimaryButton>
           </form>
         </div>
