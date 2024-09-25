@@ -1,9 +1,6 @@
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import DangerButton from '../DangerButton';
-import WarningButton from '../WarningButton';
 import { useEffect, useState } from 'react';
-import { MdDelete } from 'react-icons/md';
-import { FaEdit } from 'react-icons/fa';
 import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
 import { AdminEditMap } from '../Modal/Edit/AdminEditMap';
@@ -16,9 +13,11 @@ export const AdminMapTable = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { notifySuccess, notifyError } = useToastNotifications();
 
   const fetchData = async (pageNumber = 1) => {
+    setIsLoading(true);
     try {
       const response = await axios.get('/api/map', {
         params: { page: pageNumber },
@@ -29,6 +28,8 @@ export const AdminMapTable = () => {
       setPage(response.data.current_page || 1);
     } catch (error) {
       console.error('Error fetching resources:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -78,7 +79,13 @@ export const AdminMapTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {Array.isArray(selectMarker) && selectMarker.length > 0 ? (
+            {isLoading ? (
+              <tr>
+                <td colSpan="12" style={tableStyle}>
+                  <Loading type="primary" />
+                </td>
+              </tr>
+            ) : Array.isArray(selectMarker) && selectMarker.length > 0 ? (
               selectMarker.map(item => (
                 <tr key={item.id}>
                   <td style={tableStyle}>{item.title}</td>
@@ -105,7 +112,7 @@ export const AdminMapTable = () => {
             ) : (
               <tr>
                 <td colSpan="12" style={tableStyle}>
-                  <Loading type={'primary'} />
+                  Fetched no data...
                 </td>
               </tr>
             )}
