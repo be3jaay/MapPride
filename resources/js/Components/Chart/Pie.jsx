@@ -19,7 +19,7 @@ export const PieGraph = () => {
   console.log(pieData);
   const filterGender = () => {
     const counts = pieData.reduce((acc, item) => {
-      const gender = item.gender;
+      const gender = item.gender.toUpperCase();
       acc[gender] = (acc[gender] || 0) + 1;
       return acc;
     }, {});
@@ -35,7 +35,7 @@ export const PieGraph = () => {
     labels: filterGender(),
     datasets: [
       {
-        data: filterGender().map(gender => pieData.filter(item => item.gender === gender).length),
+        data: filterGender().map(gender => pieData.filter(item => item.gender.toUpperCase() === gender).length),
         backgroundColor: [
           '#264653',
           '#ffbe0b',

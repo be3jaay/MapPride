@@ -1,16 +1,18 @@
-import { FaArrowRightLong } from 'react-icons/fa6';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { Link, Head } from '@inertiajs/react';
 import { Hero } from '../../../core/icons/hero-bg';
-import { RoughNotation, RoughNotationGroup } from 'react-rough-notation';
+import { RoughNotation } from 'react-rough-notation';
 
 export const HeroSection = () => {
   return (
-    <section id="home" className="w-full h-screen p-36 bg-white flex flex-col items-center justify-center">
-      <div className=" flex flex-col gap-2 mt-56">
+    <section
+      id="home"
+      className="w-full h-full lg:h-screen p-12 lg:p-36 bg-white flex flex-col items-center justify-center"
+    >
+      <div className="flex flex-col gap-2 mt-24 lg:mt-56">
         <div className="w-full flex items-center justify-center flex-col">
           <h1 className="text-6xl text-black font-bold z-0">
-            <span className="mr-2 ">Find your</span>
+            <span className="mr-2  ">Find your</span>
             <RoughNotation type="highlight" show={true} color="#4338CA" animationDuration={2500}>
               <span className="text-white ">Inclusive Environment</span>
             </RoughNotation>
@@ -20,11 +22,13 @@ export const HeroSection = () => {
             promoting LGBTQ+-friendly spaces within our community.
           </p>
           <Link href={route('register')}>
-            <PrimaryButton className="py-4 w-40 flex items-center justify-center">Get Involved</PrimaryButton>
+            <PrimaryButton className="py-4 w-[20rem] lg:w-40 flex items-center justify-center">
+              Get Involved
+            </PrimaryButton>
           </Link>
         </div>
       </div>
-      <div className="w-full h-screen flex items-center justify-center">
+      <div className="w-full h-full lg:h-screen flex items-center justify-center">
         <Hero />
       </div>
     </section>

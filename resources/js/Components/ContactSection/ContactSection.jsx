@@ -37,12 +37,12 @@ export const ContactSection = () => {
   return (
     <>
       <ToastContainer />
-      <section id="contact" className="w-full h-screen bg-white">
-        <div className="  flex items-center justify-between ">
-          <img src={message} alt="" className="h-auto w-[60rem] " />
-          <div className="p-36 gap-2 mt-20">
-            <h2 className="text-6xl font-bold text-gray-800">We can work this together.</h2>
-            <p className="text-xl mt-2 text-black">
+      <section id="contact" className="w-full h-full lg:h-screen bg-white">
+        <div className="flex items-center justify-between flex-col lg:flex-row">
+          <img src={message} alt="" className="h-full lg:h-auto w-[60rem]" />
+          <div className="p-12 lg:p-36 gap-2 mt-0 lg:mt-20 ">
+            <h2 className="text-center text-2xl lg:text-6xl font-bold text-gray-800">We can work this together.</h2>
+            <p className="text-md text-center lg:text-xl mt-2 text-black">
               You can message us directly here <span className="underline text-indigo-700">map-pride@gmail.com</span>
             </p>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full">
