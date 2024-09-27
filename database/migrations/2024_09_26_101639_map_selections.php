@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('map_selection', function (Blueprint $table) {
+        Schema::create('map_selections', function (Blueprint $table) {
             $table->id();
             $table->string('location');
             $table->timestamps();
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('map_selection');
+        Schema::dropIfExists('map_selections');
     }
 };

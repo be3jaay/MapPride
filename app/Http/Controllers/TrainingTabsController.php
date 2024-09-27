@@ -9,8 +9,8 @@ class TrainingTabsController extends Controller
 {
     public function index()
     {
-        $tabs_training = TrainingTabs::all();
-        return response()->json($tabs_training);
+        $tabs_trainings = TrainingTabs::all();
+        return response()->json($tabs_trainings);
     }
 
     public function store(Request $request)
@@ -20,8 +20,8 @@ class TrainingTabsController extends Controller
             'tabs_title' => 'required|string|max:255',
         ]);
     
-        $tabs_training = TrainingTabs::create($validatedData);
+        $tabs_trainings = TrainingTabs::create($validatedData);
     
-        return response()->json($tabs_training, 201);
+        return response()->json($tabs_trainings, 201);
     }
 }
