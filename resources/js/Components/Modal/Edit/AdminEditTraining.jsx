@@ -94,16 +94,14 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
                 />
               </label>
             </div>
-            <div className="flex justify-end mt-4 gap-2">
-              <DangerButton onClick={handleClose} className="flex ">
-                Close
-              </DangerButton>
+            <div className="w-full flex justify-end mt-4 gap-2">
               <PrimaryButton
-                className="flex items-center justify-center py-2 text-white bg-green-600"
+                className="w-full flex items-center justify-center py-4 text-white bg-green-600"
                 disabled={isSubmitting}
                 type="submit"
               >
-                <FaUserCheck /> {isSubmitting ? 'Updating...' : 'Update'}
+                {isSubmitting ? 'Updating...' : 'Update'}
+                <FaUserCheck className="ml-2" />
               </PrimaryButton>
             </div>
           </form>

@@ -13,7 +13,6 @@ use App\Http\Controllers\HotlineController;
 use App\Http\Controllers\MapSelectionController;
 use App\Http\Controllers\MarkerLocationController;
 use App\Http\Controllers\MapController;
-use App\Http\Controllers\LocationLikeController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
@@ -68,7 +67,6 @@ Route::apiResource('marker-location', MarkerLocationController::class)->only(['i
 Route::apiResource('map', MapController::class);
 
 // Location Like routes
-Route::middleware('auth:sanctum')->post('/location-like', [LocationLikeController::class, 'likeLocation']);
 
 Route::apiResource('users', RegisteredUserController::class);
 

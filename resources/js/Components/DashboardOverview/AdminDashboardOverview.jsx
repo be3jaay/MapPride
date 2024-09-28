@@ -6,10 +6,13 @@ import { FaUsers } from 'react-icons/fa6';
 import { BsPostcardHeart } from 'react-icons/bs';
 import { MdOutlinePinDrop } from 'react-icons/md';
 import { IoStarSharp } from 'react-icons/io5';
+import { ScatterGraph } from '../Chart/Scatter';
 
 export const AdminDashboardOverview = () => {
   const [user, setUser] = useState([]);
   const [story, setStory] = useState([]);
+  const [feedback, setFeedback] = useState([]);
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -20,12 +23,23 @@ export const AdminDashboardOverview = () => {
       const response = await axios.get('/api/experience');
       setStory(response.data.data);
     };
+    const fetchFeedback = async () => {
+      const response = await axios.get('/api/feedback');
+      const feedbackData = response.data.data;
+      setFeedback(feedbackData);
+
+      // Calculate the average rating on feedback_value
+      const totalFeedbackValue = feedbackData.reduce((sum, feedback) => sum + feedback.feedback_value, 0);
+      const average = totalFeedbackValue / feedbackData.length || 0; // Handle division by 0
+      setAverageRating(average.toFixed(2)); // Display the average rating up to 2 decimal points
+    };
     fetchStory();
     fetchUser();
+    fetchFeedback();
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div className="w-full px-8">
       <div className="flex items-center justify-between gap-2 mt-2">
         <article className="rounded-lg border border-gray-100 bg-indigo-200 p-6 w-full">
           <div className="flex items-center justify-between">
@@ -54,7 +68,7 @@ export const AdminDashboardOverview = () => {
             <div>
               <p className="text-lg font-bold text-indigo-700">Average Rating on Application</p>
               <p className="text-xl font-medium text-gray-900 flex items-center">
-                {story.length}
+                {averageRating}
                 <IoStarSharp className="ml-1 text-indigo-700" />
               </p>
             </div>
