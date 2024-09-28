@@ -89,13 +89,13 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
                 />
               </label>
             </div>
-            <div className="flex justify-end mt-4 gap-2">
+            <div className="flex justify-end mt-4 gap-2 w-full">
               <PrimaryButton
-                className="flex items-center justify-center py-2 text-white bg-green-600"
+                className="w-full flex items-center justify-center py-4 text-white bg-green-600"
                 disabled={isSubmitting}
                 type="submit"
               >
-                Update
+                {isSubmitting ? 'Submitting' : 'Submit'}
               </PrimaryButton>
             </div>
           </form>
