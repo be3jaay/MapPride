@@ -69,7 +69,7 @@ export const LineGraph = () => {
           display: true,
           text: 'Counts',
         },
-        beginAtZero: true, // Start y-axis from zero
+        beginAtZero: true,
       },
     },
   };
