@@ -65,7 +65,6 @@ export const Mapping = () => {
                           <div className="w-full">
                             <div className="flex items-center justify-between">
                               <h3 className="text-xl font-bold text-indigo-700 sm:text-xl">{item.title}</h3>
-                              <FaRegHeart className="text-3xl cursor-pointer " />
                             </div>
                             <p className="text-md">{item.description}</p>
                             <hr className="w-full mb-4" />
@@ -83,11 +82,13 @@ export const Mapping = () => {
                           </span>
                         </div>
                         <hr className="my-4" />
-
-                        <span className="flex items-center font-bold text-gray-600">
-                          <FaHeart className="text-3xl cursor-pointer text-red-400 mr-2 " />
-                          324 users like this location
-                        </span>
+                        <div className="rating rating-lg flex items-center justify-center my-2">
+                          <input type="radio" value={1} className="mask mask-star-2 bg-indigo-700" />
+                          <input type="radio" value={2} className="mask mask-star-2 bg-indigo-700" />
+                          <input type="radio" value={3} className="mask mask-star-2 bg-indigo-700" />
+                          <input type="radio" value={4} className="mask mask-star-2 bg-indigo-700" />
+                          <input type="radio" value={5} className="mask mask-star-2 bg-indigo-700" />
+                        </div>
                       </div>
                     </div>
                   </Popup>

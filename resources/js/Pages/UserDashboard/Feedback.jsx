@@ -36,6 +36,7 @@ export default function Feedback({ auth }) {
       notifyError('There was an error posting your feedback.');
     }
   };
+
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Dashboard" />
@@ -94,9 +95,15 @@ export default function Feedback({ auth }) {
                 <InputError message={errors.description?.message} />
 
                 <div className="card-actions justify-center">
-                  <PrimaryButton className="btn btn-primary w-full text-white" type="submit">
-                    Submit
-                  </PrimaryButton>
+                  {auth.user.usertype === 'admin' ? (
+                    <PrimaryButton className="btn btn-primary w-full text-white" disabled={true} type="submit">
+                      Submit
+                    </PrimaryButton>
+                  ) : (
+                    <PrimaryButton className="btn btn-primary w-full text-white" type="submit">
+                      Submit
+                    </PrimaryButton>
+                  )}
                 </div>
               </div>
             </div>

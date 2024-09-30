@@ -13,6 +13,7 @@ use App\Http\Controllers\HotlineController;
 use App\Http\Controllers\MapSelectionController;
 use App\Http\Controllers\MarkerLocationController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
@@ -66,7 +67,13 @@ Route::apiResource('marker-location', MarkerLocationController::class)->only(['i
 // Map routes
 Route::apiResource('map', MapController::class);
 
+Route::apiResource('blogs', BlogsController::class);
+
 // Location Like routes
 
 Route::apiResource('users', RegisteredUserController::class);
 
+Route::post('/blogs/{blog}/comments', [BlogsController::class, 'storeComment']);
+
+// Add this line in routes/api.php
+Route::get('/blogs/{blog}/comments', [BlogsController::class, 'showComments']);

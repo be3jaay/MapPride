@@ -24,6 +24,10 @@ export const UserHeaderData = [
     path: 'experience',
   },
   {
+    title: 'Community Thread',
+    path: 'thread',
+  },
+  {
     title: 'Add Feedback',
     path: 'feedback',
   },
