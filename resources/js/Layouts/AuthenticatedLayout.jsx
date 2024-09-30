@@ -20,9 +20,9 @@ export default function Authenticated({ header, children }) {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white ">
       <nav className="bg-white border-b border-white drop-shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-8xl mx-auto px-4 py-3 sm:px-6 lg:px-60">
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="shrink-0 flex items-center">
@@ -42,7 +42,7 @@ export default function Authenticated({ header, children }) {
 
             <div className="hidden sm:flex sm:items-center sm:ms-6">
               <div className="ms-3 relative flex items-center">
-                <div className="avatar online">
+                <div className="avatar">
                   <div className="w-10 rounded-full">
                     <Link href={route('profile.edit')}>
                       <img src={getProfilePictureUrl()} alt="No-PFP" />

@@ -71,6 +71,14 @@ export const AdminModalMap = () => {
     fetchTabs();
   }, []);
 
+  const [areCheckboxesChecked, setAreCheckboxesChecked] = useState(false);
+
+  const handleCheckboxChange = e => {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+    setAreCheckboxesChecked(allChecked);
+  };
+
   return (
     <>
       <ToastContainer />
@@ -153,7 +161,20 @@ export const AdminModalMap = () => {
                 {...register('services')}
               />
             </label>
-            <PrimaryButton className="w-full justify-center py-4" disabled={isSubmitting} type="submit">
+
+            <div className="flex items-star my-4 flex-col gap-3">
+              <label className="">
+                <input type="checkbox" onChange={handleCheckboxChange} />
+                <span className="ml-2 text-black font-bold text-lg">
+                  By agreeing to this, you confirm that this place is an inclusive environment.
+                </span>
+              </label>
+            </div>
+            <PrimaryButton
+              className="w-full justify-center py-4"
+              disabled={isSubmitting || !areCheckboxesChecked}
+              type="submit"
+            >
               {isSubmitting ? 'Submitting...' : 'Submit'}
             </PrimaryButton>
           </form>

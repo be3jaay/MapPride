@@ -12,6 +12,7 @@ export const AdminDashboardOverview = () => {
   const [user, setUser] = useState([]);
   const [story, setStory] = useState([]);
   const [feedback, setFeedback] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
@@ -23,6 +24,11 @@ export const AdminDashboardOverview = () => {
       const response = await axios.get('/api/experience');
       setStory(response.data.data);
     };
+
+    const fetchBlogs = async () => {
+      const response = await axios.get('/api/blogs');
+      setBlogs(response.data.data);
+    };
     const fetchFeedback = async () => {
       const response = await axios.get('/api/feedback');
       const feedbackData = response.data.data;
@@ -33,6 +39,7 @@ export const AdminDashboardOverview = () => {
       const average = totalFeedbackValue / feedbackData.length || 0; // Handle division by 0
       setAverageRating(average.toFixed(2)); // Display the average rating up to 2 decimal points
     };
+    fetchBlogs();
     fetchStory();
     fetchUser();
     fetchFeedback();
@@ -57,6 +64,17 @@ export const AdminDashboardOverview = () => {
             <div>
               <p className="text-lg font-bold text-indigo-700">Story Posted</p>
               <p className="text-xl font-medium text-gray-900">{story.length}</p>
+            </div>
+            <span className="rounded-full bg-indigo-50 p-3 text-black text-2xl">
+              <BsPostcardHeart />
+            </span>
+          </div>
+        </article>
+        <article className="rounded-lg border border-gray-100 bg-indigo-200 p-6 w-full">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-lg font-bold text-indigo-700">Thread Posted</p>
+              <p className="text-xl font-medium text-gray-900">{blogs.length}</p>
             </div>
             <span className="rounded-full bg-indigo-50 p-3 text-black text-2xl">
               <BsPostcardHeart />
