@@ -22,6 +22,21 @@ class Map extends Model
     ];
 
     protected $casts = [
-        'services' => 'array', 
+        'services' => 'array',
     ];
+
+    // Define the relationship with the Rating model
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    // Append the average_rating attribute to the model's array form
+    protected $appends = ['average_rating'];
+
+    // Define the accessor for the average_rating attribute
+    public function getAverageRatingAttribute()
+    {
+        return $this->ratings()->avg('rating_value');
+    }
 }

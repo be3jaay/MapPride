@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Map;
 use Illuminate\Http\Request;
-
+use App\Models\Rating;
+use Illuminate\Support\Facades\DB; // Add this line
 
 class MapController extends Controller
 {
@@ -14,39 +15,48 @@ class MapController extends Controller
     public function index()
     {
         $perPage = 10; // Number of items per page
-        $maps = Map::orderBy('created_at', 'desc')->paginate($perPage); // Pass $perPage to paginate
+        $maps = Map::with('ratings') // Eager load ratings
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
+
+        // Calculate average rating for each map
+        $maps->getCollection()->transform(function ($map) {
+            $map->average_rating = $map->ratings()->avg('rating_value'); // Add average rating to map
+            return $map;
+        });
+
         return response()->json($maps);
     }
-    
+
 
 
     public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'location' => 'required|string',
-        'longitude' => 'required|numeric',
-        'latitude' => 'required|numeric',
-        'image' => 'nullable|file|mimes:jpeg,png,gif|max:2048',
-        'title' => 'required|string',
-        'description' => 'required|string',
-        'address' => 'required|string',
-        'phone' => 'required|integer|max:999999999',
-        'services' => 'nullable|string',
-    ]);
+    {
+        $validatedData = $request->validate([
+            'location' => 'required|string',
+            'longitude' => 'required|numeric',
+            'latitude' => 'required|numeric',
+            'image' => 'nullable|file|mimes:jpeg,png,gif|max:2048',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'address' => 'required|string',
+            'phone' => 'required|integer|max:999999999',
+            'services' => 'nullable|string',
+        ]);
 
-    if ($request->hasFile('image')) {
-        $image = $request->file('image');
-        // Save the file in the 'images' directory within 'public'
-        $imagePath = $image->store('images', 'public');
-        $validatedData['image'] = $imagePath;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            // Save the file in the 'images' directory within 'public'
+            $imagePath = $image->store('images', 'public');
+            $validatedData['image'] = $imagePath;
+        }
+
+        $validatedData['services'] = json_decode($validatedData['services'], true);
+
+        $map = Map::create($validatedData);
+
+        return response()->json($map, 201);
     }
-
-    $validatedData['services'] = json_decode($validatedData['services'], true);
-
-    $map = Map::create($validatedData);
-
-    return response()->json($map, 201);
-}
 
     /**
      * Display the specified resource.
@@ -113,5 +123,44 @@ class MapController extends Controller
 
         return response()->json(null, 204);
     }
-}
 
+    public function rate(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'rating_value' => 'required|integer|min:1|max:5',
+        ]);
+
+        $map = Map::findOrFail($id);
+        $rating = new Rating($validatedData);
+        $map->ratings()->save($rating);
+
+        return response()->json(['message' => 'Rating submitted successfully.'], 201);
+    }
+
+    /**
+     * Display the average rating for the specified resource.
+     */
+    public function averageRating(string $id)
+    {
+        $map = Map::findOrFail($id);
+        $averageRating = $map->ratings()->avg('rating_value'); // Calculate average rating
+
+        return response()->json(['average_rating' => $averageRating]);
+    }
+
+    public function getHighestRatedMap()
+    {
+        $highestRatedMap = Map::select('maps.*', DB::raw('AVG(ratings.rating_value) as average_rating'))
+            ->leftJoin('ratings', 'maps.id', '=', 'ratings.map_id')
+            ->groupBy('maps.id', 'maps.location', 'maps.longitude', 'maps.latitude', 'maps.image', 'maps.title', 'maps.description', 'maps.address', 'maps.phone', 'maps.services', 'maps.created_at', 'maps.updated_at')
+            ->orderByDesc('average_rating')
+            ->first();
+
+        if ($highestRatedMap) {
+            $highestRatedMap->average_rating = round($highestRatedMap->average_rating, 2);
+        }
+
+        return response()->json(['highest_rated_map' => $highestRatedMap]);
+    }
+
+}

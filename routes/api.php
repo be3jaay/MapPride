@@ -77,3 +77,11 @@ Route::post('/blogs/{blog}/comments', [BlogsController::class, 'storeComment']);
 
 // Add this line in routes/api.php
 Route::get('/blogs/{blog}/comments', [BlogsController::class, 'showComments']);
+
+Route::post('/map/{id}/rate', [MapController::class, 'rate']);
+
+Route::get('/map/{id}/rate', [MapController::class, 'averageRating']);
+
+
+Route::get('/maps/highest-rated', [MapController::class, 'getHighestRatedMap']);
+
