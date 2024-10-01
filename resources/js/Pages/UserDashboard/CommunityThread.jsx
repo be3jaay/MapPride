@@ -76,8 +76,8 @@ export default function CommunityThread({ auth }) {
 
   return (
     <AuthenticatedLayout user={user}>
-      <div className="w-full bg-white h-full">
-        <header className="w-full px-60 border-b border-gray-200 bg-indigo-50">
+      <div className="w-full bg-indigo-50 h-full">
+        <header className="w-full px-[20rem] border-b border-indigo-700 bg-indigo-50">
           <div className="w-full  py-8 sm:py-12 ">
             <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
               <div>
@@ -90,12 +90,11 @@ export default function CommunityThread({ auth }) {
             </div>
           </div>
         </header>
-        <header className="w-full px-60 border-b border-gray-200 bg-indigo-50"></header>
-        <section className="px-[30rem] mt-4 h-auto">
+        <section className="px-[20rem] mt-12 h-auto">
           {blogs.map((item, index) => (
             <article
               key={index}
-              className="bg-gray-100 overflow-hidden rounded-lg shadow transition hover:shadow-lg p-6 mb-6"
+              className="bg-white overflow-hidden rounded-lg shadow transition hover:shadow-lg p-6 mb-6"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="avatar ">

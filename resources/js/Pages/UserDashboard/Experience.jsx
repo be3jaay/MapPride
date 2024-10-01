@@ -40,7 +40,7 @@ export default function Experience({ auth }) {
       <Head title="Experience" />
 
       <div className="py-12">
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div className="w-full mx-auto sm:px-6 lg:px-8">
           <div className="bg-indigo-200  overflow-hidden shadow-sm sm:rounded-lg">
             <Alert
               type="info"
@@ -53,7 +53,7 @@ export default function Experience({ auth }) {
               item.approved ? (
                 <div
                   key={index}
-                  className="shadow-lg relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 "
+                  className="shadow-lg relative block overflow-hidden rounded-lg bg-white border border-gray-100 p-4 sm:p-6 lg:p-8 "
                 >
                   <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
                   <div className="sm:flex sm:justify-between sm:gap-4">

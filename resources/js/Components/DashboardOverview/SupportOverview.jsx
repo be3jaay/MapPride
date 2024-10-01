@@ -40,7 +40,7 @@ export const SupportOverview = () => {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div className="py-12 max-w-full mx-auto sm:px-6 lg:px-8">
       <div className="flex items-star justify-between flex-col gap-6 mt-2">
         <Alert
           type="info"
@@ -52,7 +52,7 @@ export const SupportOverview = () => {
             supportData.map((support, index) => (
               <div
                 key={index}
-                className="w-full shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all"
+                className="w-full shadow-lg bg-white relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8"
               >
                 <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
                 <div className="sm:flex sm:justify-between sm:gap-4">
@@ -78,17 +78,20 @@ export const SupportOverview = () => {
             <Loading type="primary" />
           )}
         </div>
-        <Alert
-          type="info"
-          message="Hotline Services"
-          description="In this section, you will be able to see all available support services and hotline services."
-        />
+        <div className="mt-12">
+          <Alert
+            type="info"
+            message="Hotline Services"
+            description="In this section, you will be able to see all available support services and hotline services."
+          />
+        </div>
+
         <div className="flex items-center justify-center gap-2">
           {hotlineData && hotlineData.length > 0 ? (
             hotlineData.map((support, index) => (
               <div
                 key={index}
-                className="w-full shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all"
+                className="w-full shadow-lg bg-white  relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 transition-all"
               >
                 <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
                 <div className="sm:flex sm:justify-between sm:gap-4">

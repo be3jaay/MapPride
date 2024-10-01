@@ -3,7 +3,7 @@ import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
 import { Alert } from '@/Components/Alert';
 import { AdminDashboardOverview } from '@/Components/DashboardOverview/AdminDashboardOverview';
-import { AdminBlogTable } from '@/Components/Tables/AdminMapTable';
+import { AdminBlogTable } from '@/Components/Tables/AdminBlogTable';
 
 export default function AdminBlog({ auth }) {
   const user = auth.user;

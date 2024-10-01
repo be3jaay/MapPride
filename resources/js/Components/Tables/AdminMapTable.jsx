@@ -1,65 +1,123 @@
+import { tableHeaderStyle, tableStyle } from './TableStyle';
+import DangerButton from '../DangerButton';
+import { useEffect, useState } from 'react';
 import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
-import { tableHeaderStyle, tableStyle } from './TableStyle';
-import { AdminEditSupport } from '../Modal/Edit/AdminEditSupport';
-import DangerButton from '../DangerButton';
-import useTableData from '../../../core/hooks/use-table-data';
-import { useDateFormat } from '../../../core/hooks';
+import { AdminEditMap } from '../Modal/Edit/AdminEditMap';
+import axios from 'axios';
+import { useToastNotifications } from '../../../core/hooks';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
-export const AdminBlogTable = () => {
-  const {
-    data: support,
-    selectedItem: selectedSupport,
-    totalPages,
-    page,
-    isModalOpen,
-    handleDelete,
-    handlePageChange,
-    handleViewClick,
-    closeModal,
-  } = useTableData('/api/blogs');
+const MySwal = withReactContent(Swal);
 
-  const { getFormattedDate } = useDateFormat();
+export const AdminMapTable = () => {
+  const [selectMarker, setSelectMarker] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [totalPages, setTotalPages] = useState(1);
+  const [page, setPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { notifySuccess, notifyError } = useToastNotifications();
 
-  const formattedDate = dateString => {
-    return getFormattedDate(dateString);
+  const fetchData = async (pageNumber = 1) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get('/api/map', {
+        params: { page: pageNumber },
+      });
+      const data = response.data.data ?? [];
+      setSelectMarker(data);
+      setTotalPages(response.data.last_page || 1);
+      setPage(response.data.current_page || 1);
+    } catch (error) {
+      console.error('Error fetching resources:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
-  console.log(support);
+
+  useEffect(() => {
+    fetchData(page);
+  }, [page]);
+
+  const handlePageChange = newPage => {
+    setPage(newPage);
+  };
+
+  const handleDelete = async item => {
+    const result = await MySwal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    });
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`/api/map/${item.id}`);
+        notifySuccess('The content was successfully deleted.');
+        fetchData(page);
+      } catch (error) {
+        notifyError('Error deleting resource.');
+        console.error('Error deleting resource:', error);
+      }
+    }
+  };
+
+  const handleViewClick = item => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
+  };
+
   return (
-    <div>
-      <div className="overflow-x-auto my-4 shadow-lg rounded-md p-4  ">
+    <div className="">
+      <div className="overflow-x-auto my-4 shadow-lg rounded-md p-4">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-md">
           <thead className="ltr:text-left rtl:text-right">
             <tr>
-              <th style={tableHeaderStyle}>Username</th>
               <th style={tableHeaderStyle}>Title</th>
               <th style={tableHeaderStyle}>Description</th>
-              <th style={tableHeaderStyle}>Image</th>
-
-              <th style={tableHeaderStyle}>Created At: </th>
-              <th style={tableHeaderStyle}>Updated At: </th>
+              <th style={tableHeaderStyle}>Location</th>
+              <th style={tableHeaderStyle}>Address</th>
+              <th style={tableHeaderStyle}>Phone</th>
+              <th style={tableHeaderStyle}>Services</th>
+              <th style={tableHeaderStyle}>Edit</th>
               <th style={tableHeaderStyle}>Delete</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {Array.isArray(support) && support.length > 0 ? (
-              support.map(support => (
-                <tr key={support.id}>
-                  <td style={tableStyle}>{support.username}</td>
-                  <td style={tableStyle}>{support.title}</td>
-                  <td style={tableStyle}>{support.description}</td>
+            {isLoading ? (
+              <tr>
+                <td colSpan="12" style={tableStyle}>
+                  <Loading type="primary" />
+                </td>
+              </tr>
+            ) : Array.isArray(selectMarker) && selectMarker.length > 0 ? (
+              selectMarker.map(item => (
+                <tr key={item.id}>
+                  <td style={tableStyle}>{item.title}</td>
+                  <td style={tableStyle}>{item.description}</td>
+                  <td style={tableStyle}>{item.location}</td>
+                  <td style={tableStyle}>{item.address}</td>
+                  <td style={tableStyle}>{item.phone}</td>
+                  <td style={tableStyle}>{item.services}</td>
                   <td style={tableStyle}>
-                    <img src={`/storage/${support.image}`} alt="No image" className="h-auto w-full rounded-md" />
-                  </td>
-
-                  <td style={tableStyle}>{formattedDate(support.created_at)}</td>
-                  <td style={tableStyle}>{formattedDate(support.updated_at)}</td>
-
-                  <td style={tableStyle}>
-                    <DangerButton
-                      onClick={() => handleDelete(support)}
+                    <PrimaryButton
+                      onClick={() => handleViewClick(item)}
                       className="flex items-center justify-center py-2"
                     >
+                      Edit
+                    </PrimaryButton>
+                  </td>
+                  <td style={tableStyle}>
+                    <DangerButton onClick={() => handleDelete(item)} className="flex items-center justify-center py-2">
                       Delete
                     </DangerButton>
                   </td>
@@ -67,8 +125,8 @@ export const AdminBlogTable = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="5" style={tableStyle}>
-                  <Loading type={'primary'} />
+                <td colSpan="12" style={tableStyle}>
+                  Fetched no data...
                 </td>
               </tr>
             )}
@@ -94,9 +152,7 @@ export const AdminBlogTable = () => {
           Next
         </PrimaryButton>
       </div>
-      {isModalOpen && selectedSupport && (
-        <AdminEditSupport support={selectedSupport} isOpen={isModalOpen} onClose={closeModal} />
-      )}
+      {isModalOpen && selectedItem && <AdminEditMap map={selectedItem} isOpen={isModalOpen} onClose={closeModal} />}
     </div>
   );
 };

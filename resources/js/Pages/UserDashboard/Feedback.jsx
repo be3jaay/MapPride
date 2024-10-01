@@ -43,7 +43,7 @@ export default function Feedback({ auth }) {
       <ToastContainer />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="py-12">
-          <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <div className="w-full mx-auto sm:px-6 lg:px-8">
             <div className="bg-indigo-200 overflow-hidden shadow-sm sm:rounded-lg">
               <Alert
                 type="info"

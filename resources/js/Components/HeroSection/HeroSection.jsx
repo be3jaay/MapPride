@@ -9,10 +9,10 @@ export const HeroSection = () => {
       id="home"
       className="w-full h-full lg:h-screen p-12 lg:p-36 bg-white flex flex-col items-center justify-center"
     >
-      <div className="flex flex-col gap-2 mt-24  lg:mt-56">
-        <div className="w-full flex items-center justify-center flex-col">
+      <div className="flex flex-col gap-2 mt-14   lg:mt-56 h-auto">
+        <div className="w-full flex items-start lg:items-center justify-center flex-col">
           <h1 className="text-6xl text-black font-bold z-0">
-            <span className="mr-2  ">Find your</span>
+            <span className="mr-2 ">Find your</span>
             <RoughNotation type="highlight" show={true} color="#4338CA" animationDuration={2500}>
               <span className="text-white ">Inclusive Environment</span>
             </RoughNotation>
@@ -28,7 +28,7 @@ export const HeroSection = () => {
           </Link>
         </div>
       </div>
-      <div className="w-full h-full lg:h-screen flex items-center justify-center">
+      <div className="w-full h-full  flex items-center justify-center">
         <Hero />
       </div>
     </section>
