@@ -2,6 +2,7 @@ import { Alert } from '@/Components/Alert';
 import AdminAuthenticated from '@/Layouts/AdminAuthLayout';
 import { Head } from '@inertiajs/react';
 import { AdminModalMap } from '@/Components/Modal/Forms/AdminModalMap';
+import { AdminMapTable } from '@/Components/Tables/AdminMapTable';
 
 export default function AdminMap({ auth }) {
   const user = auth.user;

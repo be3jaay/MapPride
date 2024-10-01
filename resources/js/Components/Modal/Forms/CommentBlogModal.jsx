@@ -48,13 +48,13 @@ export const CommentBlogModal = ({ isOpen, onClose, blogId, auth }) => {
         <h3 className="font-bold text-2xl mb-4 text-indigo-700">Add a Comment</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
           <textarea
-            className="textarea border-black w-full h-32 bg-white font-bold text-black"
+            className="textarea border-black w-full h-96 bg-white font-bold text-black"
             placeholder="Write your comment here..."
             {...register('content')}
           ></textarea>
           <div className="flex justify-end mt-4 gap-2">
             <PrimaryButton
-              className="flex items-center justify-center py-4 text-white bg-green-600"
+              className="flex items-center w-full justify-center py-4 text-white bg-green-600"
               disabled={isSubmitting}
               type="submit"
             >

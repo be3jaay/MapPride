@@ -1,11 +1,16 @@
 import { LayerGroup, LayersControl, MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { healthIcon, governmentIcon, safeSpaceIcon, supportIcon } from '../../../core/icons/marker-icons';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useToastNotifications } from '../../../core/hooks';
 import { GoStarFill } from 'react-icons/go';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { useForm } from 'react-hook-form';
+
+const MySwal = withReactContent(Swal);
 
 export const Mapping = ({ auth }) => {
   const user = auth.user;
@@ -15,6 +20,14 @@ export const Mapping = ({ auth }) => {
   const [ratings, setRatings] = useState({});
   const [averageRatings, setAverageRatings] = useState({});
   const { notifyError, notifySuccess } = useToastNotifications();
+  const [close, setClose] = useState(false);
+  const popupRef = useRef(null);
+
+  const { reset } = useForm();
+
+  const handleClose = () => {
+    setClose(true);
+  };
 
   useEffect(() => {
     const fetchLayer = async () => {
@@ -71,14 +84,36 @@ export const Mapping = ({ auth }) => {
   const handleSubmitRatings = async itemId => {
     try {
       const response = await axios.post(`/api/map/${itemId}/rate`, { rating_value: ratings[itemId] });
+
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Support content updated successfully.',
+      });
+
+      if (popupRef.current) {
+        popupRef.current._close();
+      }
+
+      handleClose();
+      reset();
+
       if (response.status === 200) {
         notifySuccess('Successfully submitted the ratings');
       } else {
-        throw new Error('Unexpected response status');
+        MySwal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Clicked a rating value',
+        });
       }
     } catch (error) {
       console.error('Error submitting ratings:', error);
-      notifyError('Failed to submit the ratings. Please try again.');
+      MySwal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'You have not yet clicked a rating ',
+      });
     }
   };
 
@@ -95,7 +130,7 @@ export const Mapping = ({ auth }) => {
               <LayerGroup>
                 {selectMarker[category].map((item, i) => (
                   <Marker key={i} position={[item.longitude, item.latitude]} icon={getIcon(item.location)}>
-                    <Popup className="w-full">
+                    <Popup ref={popupRef} className="w-full" closeOnClick={close}>
                       <div className="card bg-white w-[30rem] flex items-center justify-center">
                         <div>
                           <img src={`/storage/${item.image}`} alt="No image" className="h-auto" />
@@ -113,7 +148,7 @@ export const Mapping = ({ auth }) => {
                           </div>
                           <div>
                             <span className="mb-2 text-pretty text-sm text-gray-700 font-bold flex items-center">
-                              Adderss: {item.address}
+                              Address: {item.address}
                             </span>
                             <span className="mb-2 text-pretty text-sm text-gray-700 font-bold flex items-center">
                               Available Services: {item.services}
