@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useDateFormat } from '../../../core/hooks';
+import { FaReply } from 'react-icons/fa';
 
 export default function CommunityThread({ auth }) {
   const user = auth.user;
@@ -130,19 +131,18 @@ export default function CommunityThread({ auth }) {
                     {comments[item.id].map((comment, commentIndex) => (
                       <div
                         key={commentIndex}
-                        className="p-3 rounded-md mb-2 w-full flex items-center justify-start gap-3"
+                        className="p-3 rounded-md mb-2 w-full flex items-start justify-start flex-col gap-3"
                       >
-                        <div className=" ">
+                        <div className="flex items-center justify-start">
                           <div className="avatar ">
                             <div className="w-10 rounded-full">
                               <img src={`/storage/${comment.icon}`} alt="No image" className="h-auto w-full" />
                             </div>
                           </div>
+                          <p className="text-sm text-indigo-700 font-bold ml-4">{comment.username}</p>
                         </div>
-                        <div className="flex items-start justify-start gap-2 flex-col">
-                          <p className="text-sm font-bold">{comment.username}</p>
-                          <p className="text-sm">{comment.content}</p>
-                        </div>
+                        <div className="flex items-start justify-start gap-2 flex-col"></div>
+                        <p className="text-sm text-gray-600">{comment.content}</p>
                       </div>
                     ))}
                   </div>
@@ -151,6 +151,7 @@ export default function CommunityThread({ auth }) {
                   <PrimaryButton className="py-3 px-6 mt-6 " onClick={() => openCommentModal(item.id)}>
                     {' '}
                     Add Comment
+                    <FaReply className=" ml-2" />
                   </PrimaryButton>
                 </div>
               </div>

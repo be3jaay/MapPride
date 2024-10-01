@@ -44,7 +44,7 @@ export default function Training({ auth }) {
                       </div>
                     </div>
                     <div className="my-4">
-                      <p className="text-pretty text-sm text-gray-500">{item.description}</p>
+                      <p className="text-sm text-gray-500 h-60 overflow-hidden text-ellipsis">{item.description}</p>
                     </div>
                     <span>Updated at: {formattedDate(item.updated_at)}</span>
                     <PrimaryButton className="w-full text-white justify-center py-3 mt-6 ">View Here</PrimaryButton>

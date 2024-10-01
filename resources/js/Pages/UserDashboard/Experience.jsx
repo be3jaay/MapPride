@@ -48,7 +48,7 @@ export default function Experience({ auth }) {
               description="This is a freedom wall - These posted below are the approved shared experiences of users."
             />
           </div>
-          <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className="grid grid-cols-2 gap-4 mt-4 h-full">
             {experience.map((item, index) =>
               item.approved ? (
                 <div
@@ -68,9 +68,11 @@ export default function Experience({ auth }) {
                     </div>
                   </div>
                   <div className="mt-4">
-                    <p className="text-pretty text-sm text-gray-500">{item.description}</p>
+                    <p className="text-pretty text-sm text-gray-500 text-ellipsis overflow-hidden">
+                      {item.description}
+                    </p>
                   </div>
-                  <dl className="mt-6 flex gap-4 sm:gap-6 items-end">
+                  <div className="w-full mt-6 flex gap-4 sm:gap-6 items-end justify-star">
                     <div className="flex flex-col-reverse">
                       <dt className="text-sm font-medium text-gray-600">{formatDate(item.created_at)}</dt>
                       <dd className="text-xs text-gray-500">Created At</dd>
@@ -79,7 +81,7 @@ export default function Experience({ auth }) {
                       <dt className="text-sm font-medium text-gray-600">{item.experience_type}</dt>
                       <dd className="text-xs text-gray-500">Type</dd>
                     </div>
-                  </dl>
+                  </div>
                 </div>
               ) : null,
             )}

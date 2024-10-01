@@ -8,6 +8,7 @@ import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
 import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { IoMdAddCircle } from 'react-icons/io';
 
 export default function BlogModal({ auth }) {
   const { handleOpen, isOpen, closeModal } = useModal();
@@ -68,7 +69,7 @@ export default function BlogModal({ auth }) {
     <React.Fragment>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen} className="py-4 px-6 ">
-        Add Post
+        Add Post <IoMdAddCircle className="text-lg ml-2" />
       </PrimaryButton>
 
       <Modal show={isOpen} onClose={handleClose}>
