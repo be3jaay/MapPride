@@ -32,6 +32,10 @@ export const AdminHeaderData = [
     path: 'admin.hotline',
   },
   {
+    title: 'Blogs',
+    path: 'admin.blog',
+  },
+  {
     title: 'User Management',
     path: 'admin.user',
   },

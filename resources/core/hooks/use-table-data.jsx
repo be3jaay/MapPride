@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useToastNotifications } from '.';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const useTableData = apiEndpoint => {
   const [data, setData] = useState([]);
@@ -34,9 +38,24 @@ const useTableData = apiEndpoint => {
   }, [page]);
 
   const handleDelete = async item => {
-    await axios.delete(`${apiEndpoint}/${item.id}`, item);
-    notifySuccess('The content was successfully deleted.');
-    fetchData(page);
+    const result = await MySwal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`${apiEndpoint}/${item.id}`, item);
+        notifySuccess('The content was successfully deleted.');
+        fetchData(page);
+      } catch (error) {
+        console.error('There was an error deleting the resource!', error);
+      }
+    }
   };
 
   const handlePageChange = newPage => {

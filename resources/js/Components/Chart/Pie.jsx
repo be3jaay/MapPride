@@ -16,7 +16,6 @@ export const PieGraph = () => {
     fetchData();
   }, []);
 
-  console.log(pieData);
   const filterGender = () => {
     const counts = pieData.reduce((acc, item) => {
       const gender = item.gender.toUpperCase();

@@ -29,7 +29,6 @@ export default function CommunityThread({ auth }) {
   const fetchComments = async blogId => {
     try {
       const response = await axios.get(`/api/blogs/${blogId}/comments`);
-      console.log('Fetched comments:', response.data);
       if (Array.isArray(response.data)) {
         setComments(prevComments => ({
           ...prevComments,
@@ -82,7 +81,7 @@ export default function CommunityThread({ auth }) {
           <div className="w-full  py-8 sm:py-12 ">
             <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-indigo-700 sm:text-3xl">Discussion</h1>
+                <h1 className="text-2xl font-bold text-indigo-700 sm:text-3xl">Community Discussion</h1>
                 <p className="mt-1.5 text-sm text-gray-500">Connect with other users by creating a discussion</p>
               </div>
               <div className="flex items-center gap-4">

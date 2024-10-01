@@ -70,7 +70,7 @@ export default function Experience({ auth }) {
                   <div className="mt-4">
                     <p className="text-pretty text-sm text-gray-500">{item.description}</p>
                   </div>
-                  <dl className="mt-6 flex gap-4 sm:gap-6">
+                  <dl className="mt-6 flex gap-4 sm:gap-6 items-end">
                     <div className="flex flex-col-reverse">
                       <dt className="text-sm font-medium text-gray-600">{formatDate(item.created_at)}</dt>
                       <dd className="text-xs text-gray-500">Created At</dd>

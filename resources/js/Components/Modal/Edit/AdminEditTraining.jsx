@@ -9,7 +9,10 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { useToastNotifications } from '../../../../core/hooks';
-import DangerButton from '@/Components/DangerButton';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export const AdminEditTraining = ({ training, isOpen, onClose }) => {
   const { notifyError, notifySuccess } = useToastNotifications();
@@ -35,16 +38,16 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
   const handleUpdate = async data => {
     try {
       await axios.put(`/api/training/${training.id}`, data);
-      notifySuccess('Training content updated successfully.');
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Training content updated successfully.',
+      });
       onClose();
       reset();
     } catch (error) {
       notifyError('There was an error updating the training content.');
     }
-  };
-
-  const handleClose = () => {
-    onClose();
   };
 
   useEffect(() => {

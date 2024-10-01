@@ -7,6 +7,10 @@ import { resourcesForumSchema } from '../../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useToastNotifications } from '../../../../core/hooks';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export const AdminEditResources = ({ resources, isOpen, onClose }) => {
   if (!resources) return null;
@@ -34,8 +38,12 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
   const handleUpdate = async data => {
     try {
       await axios.put(`/api/resources/${resources.id}`, data);
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Resource content updated successfully.',
+      });
       reset();
-      notifySuccess('Training content updated successfully.');
       onClose();
     } catch (error) {
       notifyError('There was an error updating the training content.');

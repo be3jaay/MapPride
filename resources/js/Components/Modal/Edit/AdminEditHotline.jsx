@@ -8,6 +8,10 @@ import { hotlineSchema } from '../../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useToastNotifications } from '../../../../core/hooks';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export const AdminEditHotline = ({ hotline, isOpen, onClose }) => {
   if (!hotline) return null;
@@ -34,8 +38,12 @@ export const AdminEditHotline = ({ hotline, isOpen, onClose }) => {
   const handleUpdate = async data => {
     try {
       await axios.put(`/api/hotlines/${hotline.id}`, data);
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Support content updated successfully.',
+      });
       reset();
-      notifySuccess('Hotline content updated successfully.');
       onClose();
     } catch (error) {
       notifyError('There was an error updating the hotline content.');
@@ -87,7 +95,7 @@ export const AdminEditHotline = ({ hotline, isOpen, onClose }) => {
                 disabled={isSubmitting}
                 type="submit"
               >
-                Update
+                {isSubmitting ? 'Updating' : 'Update'}
               </PrimaryButton>
             </div>
           </form>

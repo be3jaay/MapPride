@@ -1,7 +1,5 @@
-import { FaUserCheck } from 'react-icons/fa';
 import PrimaryButton from '../../PrimaryButton';
 import { ToastContainer, toast } from 'react-toastify';
-import SecondaryButton from '../../SecondaryButton';
 import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,6 +7,10 @@ import { supportSchema } from '../../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useToastNotifications } from '../../../../core/hooks';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export const AdminEditSupport = ({ support, isOpen, onClose }) => {
   if (!support) return null;
@@ -35,16 +37,16 @@ export const AdminEditSupport = ({ support, isOpen, onClose }) => {
   const handleUpdate = async data => {
     try {
       await axios.put(`/api/support/${support.id}`, data);
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Support content updated successfully.',
+      });
       reset();
-      notifySuccess('Training content updated successfully.');
       onClose();
     } catch (error) {
-      notifyError('There was an error updating the training content.');
+      notifyError('There was an error updating the support content.');
     }
-  };
-
-  const handleDecline = () => {
-    onClose();
   };
 
   useEffect(() => {
@@ -62,15 +64,13 @@ export const AdminEditSupport = ({ support, isOpen, onClose }) => {
         <div className="modal-box bg-indigo-200 w-[60rem] p-12">
           <form onSubmit={handleSubmit(handleUpdate)}>
             <div className="my-4">
-              <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-                Title
-                <input
-                  type="text"
-                  className="input w-full bg-transparent my-2"
-                  placeholder="Title here..."
-                  {...register('title')}
-                />
-              </label>
+              <span className="text-lg text-black">Title: </span>
+              <input
+                type="text"
+                className="input w-full bg-white text-black my-2"
+                placeholder="Title here..."
+                {...register('title')}
+              />
             </div>
             <textarea
               placeholder="Share your story here..."
@@ -86,21 +86,13 @@ export const AdminEditSupport = ({ support, isOpen, onClose }) => {
                 {...register('phoneNumber')}
               />
             </label>
-            <div className="flex justify-end mt-4 gap-2">
-              <PrimaryButton
-                className="flex items-center justify-center py-4 text-white bg-green-600"
-                disabled={isSubmitting}
-                type="submit"
-              >
-                Update
-              </PrimaryButton>
-              <SecondaryButton
-                onClick={handleDecline}
-                className="flex bg-transparent items-center justify-center py-2 text-white border border-gray-300"
-              >
-                Close
-              </SecondaryButton>
-            </div>
+            <PrimaryButton
+              className="flex items-center  w-full justify-center py-4 text-white "
+              disabled={isSubmitting}
+              type="submit"
+            >
+              Update
+            </PrimaryButton>
           </form>
         </div>
       </Modal>

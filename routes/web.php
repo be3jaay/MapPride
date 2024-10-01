@@ -94,8 +94,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return Inertia::render('AdminDashboard/AdminMap');
     })->name('admin.map');
 
+    Route::get('/admin/blog', function () {
+        return Inertia::render('AdminDashboard/AdminBlog');
+    })->name('admin.blog');
 });
 
-require __DIR__.'/auth.php';
-
-
+require __DIR__ . '/auth.php';

@@ -5,20 +5,43 @@ import Modal from '../../Modal';
 import DangerButton from '@/Components/DangerButton';
 import axios from 'axios';
 import { useToastNotifications } from '../../../../core/hooks';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
+const MySwal = withReactContent(Swal);
 const AdminModalExperience = ({ experience, isOpen, onClose, onStatusChange }) => {
   const { notifySuccess, notifyError } = useToastNotifications();
 
   if (!experience) return null;
 
   const handleApprove = async () => {
-    await axios.put(`/api/experience/${experience.id}/approve`);
-    notifySuccess('Experience approved successfully');
-    onClose();
+    const result = await MySwal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Approve Content',
+      cancelButtonText: 'No, cancel!',
+    });
+    if (result.isConfirmed) {
+      await axios.put(`/api/experience/${experience.id}/approve`);
+      notifySuccess('Experience approved successfully');
+      onClose();
+    }
   };
   const handleDelete = async experience => {
-    await axios.delete(`/api/experience/${experience.id}`, experience);
-    notifySuccess('The content was successfully fixed.');
+    const result = await MySwal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Reject Content',
+      cancelButtonText: 'No, cancel!',
+    });
+    if (result.isConfirmed) {
+      await axios.delete(`/api/experience/${experience.id}`, experience);
+      notifySuccess('The content was rejected.');
+    }
   };
 
   return (

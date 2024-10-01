@@ -3,7 +3,7 @@ import ally from '../../core/images/ally.png';
 
 export default function Guest({ children }) {
   return (
-    <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-white">
+    <div className=" px-10 lg:px-0 min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-white">
       <div>
         <Link href="/">
           <img src={ally} alt="" className="w-20 h-20" />

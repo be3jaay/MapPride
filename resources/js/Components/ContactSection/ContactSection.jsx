@@ -29,7 +29,6 @@ export const ContactSection = () => {
   } = form;
 
   const onSubmit = value => {
-    console.log(value);
     notifySuccess('Form successfully submitted.');
     reset();
   };

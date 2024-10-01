@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Map;
 use Illuminate\Http\Request;
 use App\Models\Rating;
-use Illuminate\Support\Facades\DB; // Add this line
+use Illuminate\Support\Facades\DB;
 
 class MapController extends Controller
 {
@@ -14,14 +14,14 @@ class MapController extends Controller
      */
     public function index()
     {
-        $perPage = 10; // Number of items per page
-        $maps = Map::with('ratings') // Eager load ratings
+        $perPage = 10;
+        $maps = Map::with('ratings')
             ->orderBy('created_at', 'desc')
             ->paginate($perPage);
 
         // Calculate average rating for each map
         $maps->getCollection()->transform(function ($map) {
-            $map->average_rating = $map->ratings()->avg('rating_value'); // Add average rating to map
+            $map->average_rating = $map->ratings()->avg('rating_value');
             return $map;
         });
 
@@ -162,5 +162,4 @@ class MapController extends Controller
 
         return response()->json(['highest_rated_map' => $highestRatedMap]);
     }
-
 }

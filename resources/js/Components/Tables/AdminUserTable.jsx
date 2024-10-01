@@ -7,6 +7,10 @@ import DangerButton from '../DangerButton';
 import { useToastNotifications } from '../../../core/hooks';
 import { useDateFormat } from '../../../core/hooks';
 import { Badge } from '../Badge';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export default function AdminUserTable() {
   const [user, setUser] = useState([]);
@@ -42,8 +46,19 @@ export default function AdminUserTable() {
   };
 
   const handleDelete = async user => {
-    await axios.delete(`/api/users/${user.id}`, user);
-    notifySuccess('The content was successfully deleted.');
+    const result = await MySwal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    });
+
+    if (result.isConfirmed) {
+      await axios.delete(`/api/users/${user.id}`, user);
+      notifySuccess('The content was successfully deleted.');
+    }
   };
 
   const formattedDate = dateString => {
