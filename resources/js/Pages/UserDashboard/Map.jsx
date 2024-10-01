@@ -25,7 +25,7 @@ export default function UserMap({ auth }) {
           </div>
 
           <div className="w-full h-[44rem] mt-4">
-            <Mapping />
+            <Mapping auth={auth} />
           </div>
         </div>
       </div>
