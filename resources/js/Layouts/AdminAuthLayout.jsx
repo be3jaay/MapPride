@@ -31,7 +31,7 @@ export default function AdminAuthenticated({ user, header, children }) {
         </div>
         <hr />
 
-        <nav className="mt-5 flex items-start justify-center flex-col px-6 gap-9">
+        <nav className="mt-5 flex items-start justify-center flex-col px-6 gap-8">
           {AdminHeaderData.map((item, index) => (
             <NavLink href={route(item.path)} active={route().current(item.path)} key={index}>
               <span className="text-indigo-700 text-start text-md font-bold mr-4 text-lg">{item.icon}</span>

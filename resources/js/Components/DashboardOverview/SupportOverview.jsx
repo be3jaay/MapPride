@@ -40,14 +40,14 @@ export const SupportOverview = () => {
   }, []);
 
   return (
-    <div className="py-12 max-w-full mx-auto sm:px-6 lg:px-8">
-      <div className="flex items-star justify-between flex-col gap-6 mt-2">
+    <div className="py-12 px-4 w-full sm:px-6 lg:px-8">
+      <div className="flex items-start justify-between flex-col gap-6 mt-2">
         <Alert
           type="info"
           message="Support Services"
           description="In this section, you will be able to see all available support services and hotline services."
         />
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center flex-col lg:flex-row gap-2">
           {supportData && supportData.length > 0 ? (
             supportData.map((support, index) => (
               <div
@@ -86,7 +86,7 @@ export const SupportOverview = () => {
           />
         </div>
 
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center flex-col lg:flex-row gap-2">
           {hotlineData && hotlineData.length > 0 ? (
             hotlineData.map((support, index) => (
               <div

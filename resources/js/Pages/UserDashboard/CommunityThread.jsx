@@ -8,6 +8,9 @@ import axios from 'axios';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useDateFormat } from '../../../core/hooks';
 import { FaReply } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa';
+import { FaRegEyeSlash } from 'react-icons/fa';
+import SecondaryButton from '@/Components/SecondaryButton';
 
 export default function CommunityThread({ auth }) {
   const user = auth.user;
@@ -16,6 +19,18 @@ export default function CommunityThread({ auth }) {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [isCommentModalOpen, setCommentModalOpen] = useState(false);
   const [selectedBlogId, setSelectedBlogId] = useState(null);
+  const [showComment, setShowComment] = useState(false);
+  const [toggle, setToggle] = useState(false);
+
+  const viewComment = () => {
+    setShowComment(true);
+    setToggle(true);
+  };
+
+  const hideComment = () => {
+    setShowComment(false);
+    setToggle(false);
+  };
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -78,20 +93,20 @@ export default function CommunityThread({ auth }) {
   return (
     <AuthenticatedLayout user={user}>
       <div className="w-full bg-indigo-50 h-full">
-        <header className="w-full px-[20rem] border-b border-indigo-700 bg-indigo-50">
+        <header className="w-full px-4 lg:px-[20rem] border-b border-indigo-700 bg-indigo-50">
           <div className="w-full  py-8 sm:py-12 ">
             <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <h1 className="text-2xl font-bold text-indigo-700 sm:text-3xl">Community Discussion</h1>
                 <p className="mt-1.5 text-sm text-gray-500">Connect with other users by creating a discussion</p>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-start lg:items-center lg:gap-4">
                 <BlogModal auth={auth} user={user} />
               </div>
             </div>
           </div>
         </header>
-        <section className="px-[20rem] mt-12 h-auto">
+        <section className="px-4 lg:px-[20rem] mt-12 h-auto">
           {blogs.map((item, index) => (
             <article
               key={index}
@@ -115,41 +130,49 @@ export default function CommunityThread({ auth }) {
                 <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500 mb-2">{item.description}</p>
                 <hr className="py-2" />
 
-                <div className="mt-2 sm:flex sm:items-center sm:gap-2">
+                <div className="mt-2 sm:flex sm:items-center sm:gap-2 w-full flex  justify-between ">
                   <div className="flex items-center gap-1 text-gray-700 ">
                     <GoCommentDiscussion />
                     <p className="text-xs">{comments[item.id] ? comments[item.id].length : 0} comments</p>
                   </div>
-                  <span className="hidden sm:block" aria-hidden="true">
-                    &middot;
-                  </span>
+                  {!toggle ? (
+                    <SecondaryButton onClick={viewComment}>
+                      <FaEye className="text-2xl text-black cursor-pointer " />
+                    </SecondaryButton>
+                  ) : (
+                    <SecondaryButton onClick={hideComment}>
+                      <FaRegEyeSlash className="text-2xl text-black cursor-pointer " />
+                    </SecondaryButton>
+                  )}
                 </div>
-
-                {comments[item.id] && comments[item.id].length > 0 && (
-                  <div className="mt-4">
-                    <h4 className="text-md font-semibold mb-2">Comments:</h4>
-                    {comments[item.id].map((comment, commentIndex) => (
-                      <div
-                        key={commentIndex}
-                        className="p-3 rounded-md mb-2 w-full flex items-start justify-start flex-col gap-3"
-                      >
-                        <div className="flex items-center justify-start">
-                          <div className="avatar ">
-                            <div className="w-10 rounded-full">
-                              <img src={`/storage/${comment.icon}`} alt="No image" className="h-auto w-full" />
+                {showComment && (
+                  <div className="w-full">
+                    {comments[item.id] && comments[item.id].length > 0 && (
+                      <div className="mt-4">
+                        <h4 className="text-xl font-semibold mb-2 text-indigo-700">Comments:</h4>
+                        {comments[item.id].map((comment, commentIndex) => (
+                          <div
+                            key={commentIndex}
+                            className="p-6 bg-white rounded-md mb-2 w-full flex items-start justify-start flex-col gap-3"
+                          >
+                            <div className="flex items-center justify-start">
+                              <div className="avatar ">
+                                <div className="w-10 rounded-full">
+                                  <img src={`/storage/${comment.icon}`} alt="No image" className="h-auto w-full" />
+                                </div>
+                              </div>
+                              <p className="text-sm text-indigo-700 font-bold ml-4">{comment.username}</p>
                             </div>
+                            <div className="flex items-start justify-start gap-2 flex-col"></div>
+                            <p className="text-sm text-gray-600">{comment.content}</p>
                           </div>
-                          <p className="text-sm text-indigo-700 font-bold ml-4">{comment.username}</p>
-                        </div>
-                        <div className="flex items-start justify-start gap-2 flex-col"></div>
-                        <p className="text-sm text-gray-600">{comment.content}</p>
+                        ))}
                       </div>
-                    ))}
+                    )}
                   </div>
                 )}
                 <div className="w-full items-end justify-end flex">
                   <PrimaryButton className="py-3 px-6 mt-6 " onClick={() => openCommentModal(item.id)}>
-                    {' '}
                     Add Comment
                     <FaReply className=" ml-2" />
                   </PrimaryButton>
@@ -161,7 +184,7 @@ export default function CommunityThread({ auth }) {
         {showScrollButton && (
           <button
             onClick={scrollToTop}
-            className="fixed bottom-5 right-20 z-50 p-4 bg-indigo-700 text-white rounded-full"
+            className="fixed bottom-5 animate-bounce right-5 md:right-12 lg:right-20 z-50 p-4 bg-indigo-700 text-white rounded-full"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

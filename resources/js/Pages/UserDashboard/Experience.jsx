@@ -39,8 +39,8 @@ export default function Experience({ auth }) {
     <AuthenticatedLayout user={auth.user}>
       <Head title="Experience" />
 
-      <div className="py-12">
-        <div className="w-full mx-auto sm:px-6 lg:px-8">
+      <div className=" py-4 lg:py-12">
+        <div className="w-full px-4  sm:px-6 lg:px-8">
           <div className="bg-indigo-200  overflow-hidden shadow-sm sm:rounded-lg">
             <Alert
               type="info"
@@ -48,7 +48,7 @@ export default function Experience({ auth }) {
               description="This is a freedom wall - These posted below are the approved shared experiences of users."
             />
           </div>
-          <div className="grid grid-cols-2 gap-4 mt-4 h-full">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 mt-4 h-full">
             {experience.map((item, index) =>
               item.approved ? (
                 <div

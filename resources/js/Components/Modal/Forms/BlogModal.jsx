@@ -28,8 +28,8 @@ export default function BlogModal({ auth }) {
 
   const user = auth.user;
 
-  const [username, setUsername] = useState(user.name);
-  const [icon, setIcon] = useState(user.profile_picture);
+  const [username] = useState(user.name);
+  const [icon] = useState(user.profile_picture);
 
   useEffect(() => {
     setValue('username', username);
@@ -42,8 +42,8 @@ export default function BlogModal({ auth }) {
       formData.append('username', username);
       formData.append('title', data.title);
       formData.append('description', data.description);
-      formData.append('image', data.image[0]);
-      formData.append('icon', icon); // Use the user's icon here
+      formData.append('image', data.image[0] || '');
+      formData.append('icon', icon);
 
       await axios.post('/api/blogs', formData, {
         headers: {
@@ -69,7 +69,7 @@ export default function BlogModal({ auth }) {
     <React.Fragment>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen} className="py-4 px-6 ">
-        Add Post <IoMdAddCircle className="text-lg ml-2" />
+        Add Post <IoMdAddCircle className="text-lg ml-2  " />
       </PrimaryButton>
 
       <Modal show={isOpen} onClose={handleClose}>
@@ -109,7 +109,7 @@ export default function BlogModal({ auth }) {
               {...register('description')}
             ></textarea>
             <InputError message={errors.description?.message} />
-            <PrimaryButton className="w-full py-4 justify-center">
+            <PrimaryButton className="w-full py-4 justify-center ">
               {isSubmitting ? 'Submitting' : 'Submit'}
             </PrimaryButton>
           </form>

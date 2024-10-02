@@ -32,7 +32,7 @@ export default function Training({ auth }) {
         const formattedTabs = Object.keys(groupedData).map(title => ({
           title,
           content: (
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 mt-4">
               {groupedData[title].map(item => (
                 <div key={item.id} className="card bg-white w-full cursor-pointer hover:scale-90 transition-all">
                   <div className="card-body shadow-lg cursor-pointer relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">
@@ -67,7 +67,7 @@ export default function Training({ auth }) {
     <AuthenticatedLayout user={auth.user}>
       <Head title="Training" />
       <div className="py-12">
-        <div className="w-full mx-auto sm:px-6 lg:px-8">
+        <div className="w-full px-4 mx-auto sm:px-6 lg:px-8">
           <div className="bg-indigo-200 overflow-hidden shadow-sm sm:rounded-lg">
             <Alert
               type="info"
