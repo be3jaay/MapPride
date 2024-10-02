@@ -97,24 +97,7 @@ export const Mapping = ({ auth }) => {
 
       handleClose();
       reset();
-
-      if (response.status === 200) {
-        notifySuccess('Successfully submitted the ratings');
-      } else {
-        MySwal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Clicked a rating value',
-        });
-      }
-    } catch (error) {
-      console.error('Error submitting ratings:', error);
-      MySwal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'You have not yet clicked a rating ',
-      });
-    }
+    } catch (error) {}
   };
 
   return (

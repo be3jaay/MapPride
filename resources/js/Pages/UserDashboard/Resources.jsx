@@ -33,7 +33,7 @@ export default function Resources({ auth }) {
         const formattedTabs = Object.keys(groupedData).map(title => ({
           title,
           content: (
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 mt-4">
               {groupedData[title].map((item, index) => (
                 <a href={item.url_link} target="_blank">
                   <div key={index} className="card w-full ">
@@ -74,7 +74,7 @@ export default function Resources({ auth }) {
     <AuthenticatedLayout user={auth.user}>
       <Head title="Resources" />
       <div className="py-12">
-        <div className="w-full mx-auto sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="bg-indigo-200 overflow-hidden shadow-sm sm:rounded-lg">
             <Alert
               type="info"
@@ -82,7 +82,7 @@ export default function Resources({ auth }) {
               description="In this section, you will be able to see all the available resources that will help you develop and understand more about LGBTQ+."
             />
           </div>
-          <div className="my-4">
+          <div className="my-4 flex">
             <CustomTabs tabs={tabs} />
           </div>
         </div>

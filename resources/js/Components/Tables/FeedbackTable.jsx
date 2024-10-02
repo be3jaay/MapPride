@@ -40,8 +40,6 @@ export const FeedbackTable = () => {
               <th style={tableHeaderStyle}>Ratings</th>
               <th style={tableHeaderStyle}>Description</th>
               <th style={tableHeaderStyle}>Date Created</th>
-              <th style={tableHeaderStyle}>Actions</th>
-              <th style={tableHeaderStyle}>Actions Taken</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -52,7 +50,6 @@ export const FeedbackTable = () => {
                     <span className="flex items-center justify-center">{feedback.feedback_value} stars</span>
                   </td>
                   <td style={tableStyle}>{feedback.description}</td>
-                  <td style={tableStyle}>{formatDate(feedback.created_at)}</td>
                   <td style={tableStyle}>
                     <PrimaryButton
                       onClick={() => handleViewClick(feedback)}
@@ -60,9 +57,6 @@ export const FeedbackTable = () => {
                     >
                       View
                     </PrimaryButton>
-                  </td>
-                  <td style={tableStyle}>
-                    <Badge type="warning" message="Under Observation" />
                   </td>
                 </tr>
               ))

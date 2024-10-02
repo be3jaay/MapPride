@@ -13,7 +13,6 @@ export default function Register() {
     name: '',
     email: '',
     preferences: '',
-    gender: '',
     resume: '',
     password: '',
     password_confirmation: '',
@@ -51,9 +50,13 @@ export default function Register() {
     };
   }, []);
 
+  useEffect(() => {
+    // Set gender to the value of preferences whenever preferences changes
+    setData('gender', data.preferences);
+  }, [data.preferences]);
+
   const submit = e => {
     e.preventDefault();
-
     post(route('register'));
   };
 
@@ -122,23 +125,6 @@ export default function Register() {
           )}
 
           <InputError message={errors.preferences} className="mt-2" />
-        </div>
-
-        <div>
-          <InputLabel htmlFor="gender" value="Gender" />
-
-          <TextInput
-            id="gender"
-            name="gender"
-            value={data.gender}
-            className=" block w-full"
-            autoComplete="gender"
-            isFocused={true}
-            onChange={e => setData('gender', e.target.value)}
-            required
-          />
-
-          <InputError message={errors.gender} className="mt-2" />
         </div>
 
         <div className="mt-4">

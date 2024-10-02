@@ -15,7 +15,6 @@ export const AdminBlogTable = () => {
     isModalOpen,
     handleDelete,
     handlePageChange,
-    handleViewClick,
     closeModal,
   } = useTableData('/api/blogs');
 
@@ -24,7 +23,7 @@ export const AdminBlogTable = () => {
   const formattedDate = dateString => {
     return getFormattedDate(dateString);
   };
-  console.log(support);
+
   return (
     <div>
       <div className="overflow-x-auto my-4 shadow-lg rounded-md p-4  ">

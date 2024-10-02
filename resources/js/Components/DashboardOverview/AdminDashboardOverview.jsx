@@ -9,6 +9,7 @@ import { IoStarSharp } from 'react-icons/io5';
 import { RiChatThreadLine } from 'react-icons/ri';
 import axios from 'axios';
 import { Badge } from '../Badge';
+import { Alert } from '../Alert';
 
 export const AdminDashboardOverview = () => {
   const [user, setUser] = useState([]);
@@ -121,6 +122,7 @@ export const AdminDashboardOverview = () => {
           <PieGraph />
         </div>
         <div className="col-span-6 bg-indigo-200 rounded-md  w-full h-auto py-8 px-8 ">
+          <Alert message=" Featured as the highest rated inclusive environment" type="info" />
           {highestRatedMap && (
             <div className="w-full">
               <article className="rounded-lg mt-6 w-full flex items-center justify-center">
