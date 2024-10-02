@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import { Link, usePage } from '@inertiajs/react';
@@ -7,7 +7,6 @@ import { FaChevronDown } from 'react-icons/fa6';
 import ally from '../../core/images/ally.png';
 
 export default function AdminAuthenticated({ user, header, children }) {
-  const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
   const { auth } = usePage().props;
 
   if (!user) {

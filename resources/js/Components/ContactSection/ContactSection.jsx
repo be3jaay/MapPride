@@ -11,7 +11,7 @@ import { useToastNotifications } from '../../../core/hooks';
 import InputError from '../InputError';
 
 export const ContactSection = () => {
-  const { notifySuccess, notifyError } = useToastNotifications();
+  const { notifySuccess } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
@@ -23,12 +23,11 @@ export const ContactSection = () => {
     register,
     handleSubmit,
     reset,
-    processing,
     control,
     formState: { errors, isSubmitting },
   } = form;
 
-  const onSubmit = value => {
+  const onSubmit = () => {
     notifySuccess('Form successfully submitted.');
     reset();
   };

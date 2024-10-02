@@ -35,8 +35,8 @@ export default function Resources({ auth }) {
           content: (
             <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 mt-4">
               {groupedData[title].map((item, index) => (
-                <a href={item.url_link} target="_blank">
-                  <div key={index} className="card w-full ">
+                <a href={item.url_link} key={index} target="_blank " rel="noreferrer">
+                  <div className="card w-full ">
                     <div className="card-body bg-white shadow-lg cursor-pointer relative overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 hover:scale-90 transition-all  flex flex-col justify-between">
                       <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
                       <div>

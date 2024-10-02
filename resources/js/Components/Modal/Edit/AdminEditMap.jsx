@@ -46,7 +46,6 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
 
     // Log formData fields for debugging
     for (let pair of formData.entries()) {
-      console.log(pair[0] + ': ' + pair[1]); // Debug output
     }
 
     try {

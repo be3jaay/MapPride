@@ -26,7 +26,6 @@ export const AdminResourcesModal = () => {
     register,
     handleSubmit,
     reset,
-    processing,
     formState: { isSubmitting, errors },
   } = form;
 

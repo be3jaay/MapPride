@@ -15,7 +15,7 @@ const MySwal = withReactContent(Swal);
 export const AdminEditResources = ({ resources, isOpen, onClose }) => {
   if (!resources) return null;
 
-  const { notifyError, notifySuccess } = useToastNotifications();
+  const { notifyError } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',

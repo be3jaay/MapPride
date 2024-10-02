@@ -9,8 +9,8 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
-const AdminModalExperience = ({ experience, isOpen, onClose, onStatusChange }) => {
-  const { notifySuccess, notifyError } = useToastNotifications();
+const AdminModalExperience = ({ experience, isOpen, onClose }) => {
+  const { notifySuccess } = useToastNotifications();
 
   if (!experience) return null;
 

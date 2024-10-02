@@ -1,12 +1,9 @@
-import { MdOutlineSpaceDashboard } from 'react-icons/md';
+import { MdOutlineSpaceDashboard, MdOutlineSupportAgent, MdOutlineFeedback } from 'react-icons/md';
 import { FiMapPin } from 'react-icons/fi';
 import { LuBook } from 'react-icons/lu';
-import { FaLaptop } from 'react-icons/fa';
-import { MdOutlineSupportAgent } from 'react-icons/md';
+import { FaLaptop, FaRegUser } from 'react-icons/fa';
 import { BsPostcard } from 'react-icons/bs';
 import { FaThreads } from 'react-icons/fa6';
-import { MdOutlineFeedback } from 'react-icons/md';
-import { FaRegUser } from 'react-icons/fa';
 
 export const AdminHeaderData = [
   {

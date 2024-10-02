@@ -4,7 +4,6 @@ import { healthIcon, governmentIcon, safeSpaceIcon, supportIcon } from '../../..
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import PrimaryButton from '@/Components/PrimaryButton';
-import { useToastNotifications } from '../../../core/hooks';
 import { GoStarFill } from 'react-icons/go';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -19,7 +18,6 @@ export const Mapping = ({ auth }) => {
   const [selectMarker, setSelectMarker] = useState([]);
   const [ratings, setRatings] = useState({});
   const [averageRatings, setAverageRatings] = useState({});
-  const { notifyError, notifySuccess } = useToastNotifications();
   const [close, setClose] = useState(false);
   const popupRef = useRef(null);
 
@@ -83,7 +81,7 @@ export const Mapping = ({ auth }) => {
 
   const handleSubmitRatings = async itemId => {
     try {
-      const response = await axios.post(`/api/map/${itemId}/rate`, { rating_value: ratings[itemId] });
+      await axios.post(`/api/map/${itemId}/rate`, { rating_value: ratings[itemId] });
 
       MySwal.fire({
         icon: 'success',

@@ -6,7 +6,6 @@ import axios from 'axios';
 import useModal from '../../../../core/hooks/use-modal';
 import Modal from '@/Components/Modal';
 import PrimaryButton from '../../PrimaryButton';
-import InputError from '@/Components/InputError';
 
 export const AdminModalMap = () => {
   const [selection, setSelection] = useState([]);
@@ -21,7 +20,7 @@ export const AdminModalMap = () => {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = form;
 
   const onSubmit = async data => {
@@ -73,7 +72,7 @@ export const AdminModalMap = () => {
 
   const [areCheckboxesChecked, setAreCheckboxesChecked] = useState(false);
 
-  const handleCheckboxChange = e => {
+  const handleCheckboxChange = () => {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
     setAreCheckboxesChecked(allChecked);

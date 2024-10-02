@@ -7,13 +7,13 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Alert } from '@/Components/Alert';
 
-export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
+export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
   const user = usePage().props.auth.user;
   const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
   const [successMessage, setSuccessMessage] = useState('');
 
-  const { data, setData, errors, setError, clearErrors, processing, recentlySuccessful } = useForm({
+  const { data, setData, errors, setError, clearErrors, processing } = useForm({
     name: user.name,
     email: user.email,
     gender: user.gender,
@@ -80,7 +80,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
   };
 
   return (
-    <section className={'w-full '}>
+    <section className={'w-full'}>
       <header>
         <h2 className="text-xl font-bold text-indigo-700">Profile Information</h2>
         <p className="mt-1 text-sm text-black">Update your account's profile information and email address.</p>

@@ -1,16 +1,13 @@
 import { useState } from 'react';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { UserHeaderData } from '../../core/constant';
 import { FaChevronDown, FaBars } from 'react-icons/fa6';
 import ally from '../../core/images/ally.png';
-import about from '../../core/images/ally.png';
 
 export default function Authenticated({ header, children }) {
   const { auth } = usePage().props;
-  const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const getProfilePictureUrl = () => {

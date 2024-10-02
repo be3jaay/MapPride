@@ -7,7 +7,6 @@ import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
 import React, { useEffect, useState } from 'react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { IoMdAddCircle } from 'react-icons/io';
 
 export default function BlogModal({ auth }) {
