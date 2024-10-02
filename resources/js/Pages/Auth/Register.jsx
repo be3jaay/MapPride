@@ -67,7 +67,7 @@ export default function Register() {
             value={data.name}
             className="mt-1 mb-3 block w-full"
             autoComplete="name"
-            isFocused={true}
+            isFocused
             onChange={e => setData('name', e.target.value)}
             required
           />
@@ -86,7 +86,7 @@ export default function Register() {
                 value={data.preferences}
                 className="mt-1  block w-full"
                 autoComplete="preferences"
-                isFocused={true}
+                isFocused
                 onChange={handleTextChange}
                 required
               />
