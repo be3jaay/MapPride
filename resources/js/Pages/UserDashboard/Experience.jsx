@@ -16,7 +16,7 @@ export default function Experience({ auth }) {
   useEffect(() => {
     const fetchApprovedExperiences = async () => {
       try {
-        const response = await axios.get(`/api/experience`);
+        const response = await axios.get('/api/experience');
         setExperience(response.data.data);
       } catch (error) {
         console.error('Error fetching approved experiences:', error);
