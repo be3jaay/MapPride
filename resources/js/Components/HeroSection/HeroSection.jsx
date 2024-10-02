@@ -13,7 +13,7 @@ export const HeroSection = () => {
         <div className="w-full flex items-start lg:items-center justify-center flex-col">
           <h1 className="text-6xl text-black font-bold z-0">
             <span className="mr-2 ">Find your</span>
-            <RoughNotation type="highlight" show={true} color="#4338CA" animationDuration={2500}>
+            <RoughNotation type="highlight" show color="#4338CA" animationDuration={2500}>
               <span className="text-white ">Inclusive Environment</span>
             </RoughNotation>
           </h1>

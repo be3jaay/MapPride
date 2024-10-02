@@ -96,7 +96,7 @@ export default function Feedback({ auth }) {
 
                 <div className="card-actions justify-center">
                   {auth.user.usertype === 'admin' ? (
-                    <PrimaryButton className="btn btn-primary w-full text-white" disabled={true} type="submit">
+                    <PrimaryButton className="btn btn-primary w-full text-white" disabled type="submit">
                       Submit
                     </PrimaryButton>
                   ) : (
