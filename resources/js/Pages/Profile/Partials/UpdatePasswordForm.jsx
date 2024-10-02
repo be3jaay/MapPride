@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { useForm } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
+import { route } from 'ziggy-js';
 
 export default function UpdatePasswordForm({ className = '' }) {
   const passwordInput = useRef();
@@ -22,13 +23,13 @@ export default function UpdatePasswordForm({ className = '' }) {
     put(route('password.update'), {
       preserveScroll: true,
       onSuccess: () => reset(),
-      onError: errors => {
-        if (errors.password) {
+      onError: errorMessages => {
+        if (errorMessages.password) {
           reset('password', 'password_confirmation');
           passwordInput.current.focus();
         }
 
-        if (errors.current_password) {
+        if (errorMessages.current_password) {
           reset('current_password');
           currentPasswordInput.current.focus();
         }

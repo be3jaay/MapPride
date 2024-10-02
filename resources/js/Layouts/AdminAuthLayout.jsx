@@ -1,10 +1,10 @@
-import React from 'react';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { AdminHeaderData } from '../../core/constant';
 import { FaChevronDown } from 'react-icons/fa6';
 import ally from '../../core/images/ally.png';
+import { route } from 'ziggy-js';
 
 export default function AdminAuthenticated({ user, header, children }) {
   const { auth } = usePage().props;

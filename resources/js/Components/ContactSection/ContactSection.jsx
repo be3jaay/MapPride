@@ -23,7 +23,6 @@ export const ContactSection = () => {
     register,
     handleSubmit,
     reset,
-    control,
     formState: { errors, isSubmitting },
   } = form;
 
@@ -44,7 +43,7 @@ export const ContactSection = () => {
               You can message us directly here <span className="underline text-indigo-700">map-pride@gmail.com</span>
             </p>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-              <label control={control} className="input input-bordered flex items-center gap-2 mt-6">
+              <label className="input input-bordered flex items-center gap-2 mt-6">
                 <FaRegUser />
                 <input
                   type="text"
