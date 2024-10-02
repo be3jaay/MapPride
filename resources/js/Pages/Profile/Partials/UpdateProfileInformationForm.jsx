@@ -57,7 +57,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         setTimeout(() => setSuccessMessage(''), 3000);
       })
       .catch(error => {
-        if (error.response && error.response.data && error.response.data.errors) {
+        if (error.response?.data && error.response.data.errors) {
           Object.keys(error.response.data.errors).forEach(key => {
             setError(key, error.response.data.errors[key][0]);
           });
