@@ -6,6 +6,7 @@ import { Link, useForm, usePage } from '@inertiajs/react';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Alert } from '@/Components/Alert';
+import { route } from 'ziggy-js';
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
   const user = usePage().props.auth.user;
@@ -145,7 +146,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
             <img
               className="h-16 w-16 object-cover rounded-full"
               src={previewUrl || (user.profile_picture ? `/storage/${user.profile_picture}` : '/default-avatar.png')}
-              alt="Profile picture"
+              alt={user.name || 'User'}
             />
           </div>
           <label className="block">

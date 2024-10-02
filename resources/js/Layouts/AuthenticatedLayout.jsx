@@ -5,6 +5,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { UserHeaderData } from '../../core/constant';
 import { FaChevronDown, FaBars } from 'react-icons/fa6';
 import ally from '../../core/images/ally.png';
+import { route } from 'ziggy-js';
 
 export default function Authenticated({ header, children }) {
   const { auth } = usePage().props;

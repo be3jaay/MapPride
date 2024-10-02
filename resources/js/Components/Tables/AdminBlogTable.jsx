@@ -48,7 +48,12 @@ export const AdminBlogTable = () => {
                   <td style={tableStyle}>{support.title}</td>
                   <td style={tableStyle}>{support.description}</td>
                   <td style={tableStyle}>
-                    <img src={`/storage/${support.image}`} alt="No image" className="h-auto w-full rounded-md" />
+                    <img
+                      src={`/storage/${support.image}`}
+                      aria-hidden
+                      alt="No Image"
+                      className="h-auto w-full rounded-md"
+                    />
                   </td>
 
                   <td style={tableStyle}>{formattedDate(support.created_at)}</td>

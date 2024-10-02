@@ -44,10 +44,6 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
       console.error('No image selected');
     }
 
-    // Log formData fields for debugging
-    for (let pair of formData.entries()) {
-    }
-
     try {
       // Make the PUT request with FormData
       await axios.put(`/api/map/${map.id}`, formData, {

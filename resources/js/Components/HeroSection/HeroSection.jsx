@@ -2,6 +2,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { Link } from '@inertiajs/react';
 import { Hero } from '../../../core/icons/hero-bg';
 import { RoughNotation } from 'react-rough-notation';
+import { route } from 'ziggy-js';
 
 export const HeroSection = () => {
   return (

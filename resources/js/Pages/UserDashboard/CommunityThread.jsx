@@ -120,7 +120,7 @@ export default function CommunityThread({ auth }) {
               <div className="flex items-center gap-3 mb-4">
                 <div className="avatar ">
                   <div className="w-10 rounded-full">
-                    <img src={`/storage/${item.icon}`} alt="No image" className="h-auto w-full" />
+                    <img src={`/storage/${item.icon}`} aria-hidden alt="No Image" className="h-auto w-full" />
                   </div>
                 </div>
                 <div>
@@ -128,7 +128,7 @@ export default function CommunityThread({ auth }) {
                   <p className="text-gray-700">{formattedDate(item.created_at)}</p>
                 </div>
               </div>
-              <img src={`/storage/${item.image}`} alt="No image" className="h-auto w-full rounded-md" />
+              <img src={`/storage/${item.image}`} aria-hidden alt="No Image" className="h-auto w-full rounded-md" />
 
               <div className="bg-gray-100 p-4 sm:p-6 ">
                 <h3 className="mt-0.5 text-lg text-gray-900">{item.title}</h3>
@@ -163,7 +163,12 @@ export default function CommunityThread({ auth }) {
                             <div className="flex items-center justify-start">
                               <div className="avatar ">
                                 <div className="w-10 rounded-full">
-                                  <img src={`/storage/${comment.icon}`} alt="No image" className="h-auto w-full" />
+                                  <img
+                                    src={`/storage/${comment.icon}`}
+                                    aria-hidden
+                                    alt="No Image"
+                                    className="h-auto w-full"
+                                  />
                                 </div>
                               </div>
                               <p className="text-sm text-indigo-700 font-bold ml-4">{comment.username}</p>

@@ -6,6 +6,7 @@ import { ContactSection } from '@/Components/ContactSection/ContactSection';
 import { Services } from '@/Components/ServicesSection/Services';
 import Footer from '@/Components/FooterSection/Footer';
 import { NavigationData } from '../../core/constant/NavigationData/NavigationData';
+import { route } from 'ziggy-js';
 
 export default function Welcome({ auth }) {
   return (
