@@ -1,7 +1,6 @@
 import { MdErrorOutline } from 'react-icons/md';
 import { IoWarningOutline } from 'react-icons/io5';
-import { IoMdInformationCircleOutline } from 'react-icons/io';
-import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
+import { IoMdInformationCircleOutline, IoIosCheckmarkCircleOutline } from 'react-icons/io';
 
 export const Alert = ({ message, description, type, icon }) => {
   const alertStyles = {

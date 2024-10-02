@@ -1,12 +1,9 @@
 import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
-import { Badge } from '../Badge';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import useTableData from '../../../core/hooks/use-table-data';
 import AdminViewFeedback from '../Modal/Edit/AdminViewFeedback';
 import { useState } from 'react';
-import { useDateFormat } from '../../../core/hooks';
-import { FaStar } from 'react-icons/fa6';
 
 export const FeedbackTable = () => {
   const [feedbackStatus, setFeedbackStatus] = useState({});
@@ -21,14 +18,8 @@ export const FeedbackTable = () => {
     closeModal,
   } = useTableData('/api/feedback');
 
-  const { getFormattedDate } = useDateFormat();
-
   const handleStatusChange = (id, status) => {
     setFeedbackStatus({ ...feedbackStatus, [id]: status });
-  };
-
-  const formatDate = dateString => {
-    return getFormattedDate(dateString);
   };
 
   return (

@@ -7,9 +7,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useDateFormat } from '../../../core/hooks';
-import { FaReply } from 'react-icons/fa';
-import { FaEye } from 'react-icons/fa';
-import { FaRegEyeSlash } from 'react-icons/fa';
+import { FaReply, FaRegEyeSlash, FaEye } from 'react-icons/fa';
+
 import SecondaryButton from '@/Components/SecondaryButton';
 
 export default function CommunityThread({ auth }) {
@@ -31,6 +30,10 @@ export default function CommunityThread({ auth }) {
     setShowComment(false);
     setToggle(false);
   };
+
+  const handleViewComment = viewComment;
+  const handleHideComment = hideComment;
+  const handleOpenCommentModal = blogId => openCommentModal(blogId);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -72,6 +75,8 @@ export default function CommunityThread({ auth }) {
       behavior: 'smooth',
     });
   };
+
+  const handleScrollToTop = scrollToTop;
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -136,11 +141,11 @@ export default function CommunityThread({ auth }) {
                     <p className="text-xs">{comments[item.id] ? comments[item.id].length : 0} comments</p>
                   </div>
                   {!toggle ? (
-                    <SecondaryButton onClick={viewComment}>
+                    <SecondaryButton onClick={handleViewComment}>
                       <FaEye className="text-2xl text-black cursor-pointer " />
                     </SecondaryButton>
                   ) : (
-                    <SecondaryButton onClick={hideComment}>
+                    <SecondaryButton onClick={handleHideComment}>
                       <FaRegEyeSlash className="text-2xl text-black cursor-pointer " />
                     </SecondaryButton>
                   )}
@@ -172,7 +177,7 @@ export default function CommunityThread({ auth }) {
                   </div>
                 )}
                 <div className="w-full items-end justify-end flex">
-                  <PrimaryButton className="py-3 px-6 mt-6 " onClick={() => openCommentModal(item.id)}>
+                  <PrimaryButton className="py-3 px-6 mt-6 " onClick={() => handleOpenCommentModal(item.id)}>
                     Add Comment
                     <FaReply className=" ml-2" />
                   </PrimaryButton>
@@ -183,7 +188,7 @@ export default function CommunityThread({ auth }) {
         </section>
         {showScrollButton && (
           <button
-            onClick={scrollToTop}
+            onClick={handleScrollToTop}
             className="fixed bottom-5 animate-bounce right-5 md:right-12 lg:right-20 z-50 p-4 bg-indigo-700 text-white rounded-full"
           >
             <svg

@@ -1,5 +1,5 @@
 import PrimaryButton from '../../PrimaryButton';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,7 +15,7 @@ const MySwal = withReactContent(Swal);
 export const AdminEditSupport = ({ support, isOpen, onClose }) => {
   if (!support) return null;
 
-  const { notifyError, notifySuccess } = useToastNotifications();
+  const { notifyError } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',

@@ -5,7 +5,6 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
-import Checkbox from '@/Components/Checkbox';
 import { FaRetweet } from 'react-icons/fa';
 
 export default function Register() {
@@ -18,11 +17,6 @@ export default function Register() {
     password_confirmation: '',
   });
 
-  const [enable, setEnable] = useState(true);
-
-  const handleCheckboxChange = () => {
-    setEnable(!enable);
-  };
   const [isOtherSelected, setIsOtherSelected] = useState(false);
 
   const handleSelectChange = e => {
@@ -51,7 +45,6 @@ export default function Register() {
   }, []);
 
   useEffect(() => {
-    // Set gender to the value of preferences whenever preferences changes
     setData('gender', data.preferences);
   }, [data.preferences]);
 

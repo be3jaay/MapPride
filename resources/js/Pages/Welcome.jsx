@@ -7,7 +7,7 @@ import { Services } from '@/Components/ServicesSection/Services';
 import Footer from '@/Components/FooterSection/Footer';
 import { NavigationData } from '../../core/constant/NavigationData/NavigationData';
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+export default function Welcome({ auth }) {
   return (
     <>
       <Head title="Welcome" />

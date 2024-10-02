@@ -1,5 +1,5 @@
 import PrimaryButton from '@/Components/PrimaryButton';
-import { Link, Head } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { Hero } from '../../../core/icons/hero-bg';
 import { RoughNotation } from 'react-rough-notation';
 

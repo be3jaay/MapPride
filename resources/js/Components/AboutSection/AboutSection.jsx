@@ -1,4 +1,3 @@
-import React from 'react';
 import about from '../../../core/images/about.png';
 
 export const AboutSection = () => {

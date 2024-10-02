@@ -16,7 +16,7 @@ const MySwal = withReactContent(Swal);
 export const AdminEditHotline = ({ hotline, isOpen, onClose }) => {
   if (!hotline) return null;
 
-  const { notifySuccess, notifyError } = useToastNotifications();
+  const { notifyError } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',

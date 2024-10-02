@@ -15,7 +15,7 @@ import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal);
 
 export const AdminEditTraining = ({ training, isOpen, onClose }) => {
-  const { notifyError, notifySuccess } = useToastNotifications();
+  const { notifyError } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
