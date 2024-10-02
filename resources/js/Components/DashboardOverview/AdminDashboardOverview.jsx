@@ -44,7 +44,7 @@ export const AdminDashboardOverview = () => {
     const fetchHighestRatedMap = async () => {
       try {
         const response = await axios.get('/api/maps/highest-rated');
-        if (response.data && response.data.highest_rated_map) {
+        if (response.data?.highest_rated_map) {
           setHighestRatedMap(response.data.highest_rated_map);
         }
       } catch (error) {
