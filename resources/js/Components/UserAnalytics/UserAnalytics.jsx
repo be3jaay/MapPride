@@ -12,15 +12,15 @@ export default function UserAnalytics() {
 
   useEffect(() => {
     const fetchMap = async () => {
-      const response = await axios.get(`/api/map`);
+      const response = await axios.get("/api/map");
       setMap(response.data.data);
     };
     const fetchResources = async () => {
-      const response = await axios.get(`/api/resources`);
+      const response = await axios.get("/api/resources");
       setResources(response.data.data);
     };
     const fetchTraining = async () => {
-      const response = await axios.get(`/api/training`);
+      const response = await axios.get("/api/training");
       setTraining(response.data.data);
     };
     fetchMap();

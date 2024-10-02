@@ -80,7 +80,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
   };
 
   return (
-    <section className={`w-full `}>
+    <section className={"w-full "}>
       <header>
         <h2 className="text-xl font-bold text-indigo-700">Profile Information</h2>
         <p className="mt-1 text-sm text-black">Update your account's profile information and email address.</p>
