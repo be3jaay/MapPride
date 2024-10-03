@@ -37,7 +37,7 @@ export const AdminDashboardOverview = () => {
       const feedbackData = response.data.data;
       setFeedback(feedbackData);
 
-      const totalFeedbackValue = feedbackData.reduce((sum, feedback) => sum + feedback.feedback_value, 0);
+      const totalFeedbackValue = feedbackData.reduce((sum, item) => sum + item.feedback_value, 0);
       const average = totalFeedbackValue / feedbackData.length || 0;
       setAverageRating(average.toFixed(1));
     };
@@ -65,7 +65,7 @@ export const AdminDashboardOverview = () => {
         <article className="rounded-lg border border-gray-100 bg-indigo-200 p-6 w-full">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-lg font-bold text-indigo-700">Total Users</p>
+              <p className="text-lg font-bold text-indigo-700">All Users</p>
               <p className="text-xl font-medium text-gray-900">{user.length}</p>
             </div>
             <span className="rounded-full bg-indigo-50 p-3 text-black text-2xl">
@@ -87,7 +87,7 @@ export const AdminDashboardOverview = () => {
         <article className="rounded-lg border border-gray-100 bg-indigo-200 p-6 w-full">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-lg font-bold text-indigo-700">Thread Posted</p>
+              <p className="text-lg font-bold text-indigo-700">Discussion Posted</p>
               <p className="text-xl font-medium text-gray-900">{blogs.length}</p>
             </div>
             <span className="rounded-full bg-indigo-50 p-3 text-black text-2xl">
@@ -122,28 +122,28 @@ export const AdminDashboardOverview = () => {
           <PieGraph />
         </div>
         <div className="col-span-6 bg-indigo-200 rounded-md  w-full h-auto py-8 px-8 ">
-          <Alert message=" Featured as the highest rated inclusive environment" type="info" />
           {highestRatedMap && (
             <div className="w-full">
+              <Alert message=" Featured as the highest rated inclusive environment" type="info" />
+
               <article className="rounded-lg mt-6 w-full flex items-center justify-center">
                 <div className="card w-full bg-white flex items-center justify-center">
                   <div className="w-full">
-                    <img src={`/storage/${highestRatedMap.image}`} alt="No image" className="h-auto w-full" />
+                    <img
+                      src={`/storage/${highestRatedMap.image}`}
+                      aria-hidden
+                      alt="No image"
+                      className="h-auto w-full"
+                    />
                   </div>
                   <div className="w-full card-body shadow-lg relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">
                     <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
                     <div className="sm:flex sm:justify-between sm:gap-4">
                       <div className="w-full">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xl font-bold text-indigo-700">
-                            Featured as the highest rated inclusive environment
-                          </span>
-
-                          <Badge type="info" message={highestRatedMap.average_rating} className="py-3 px-6">
-                            <IoStarSharp className="ml-1 text-indigo-700" />
-                          </Badge>
-                        </div>
-                        <hr className="w-full mb-4" />
+                        <Badge type="info" message={highestRatedMap.average_rating} className="py-3 px-6">
+                          <IoStarSharp className="ml-1 text-indigo-700" />
+                        </Badge>
+                        <hr className="w-full my-4" />
                       </div>
                     </div>
                     <div className="gap-3">

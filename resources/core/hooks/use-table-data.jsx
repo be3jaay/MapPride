@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useToastNotifications } from '.';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -12,8 +11,6 @@ const useTableData = apiEndpoint => {
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const { notifySuccess } = useToastNotifications();
 
   const fetchData = async (pageNumber = 1) => {
     try {
@@ -50,7 +47,11 @@ const useTableData = apiEndpoint => {
     if (result.isConfirmed) {
       try {
         await axios.delete(`${apiEndpoint}/${item.id}`, item);
-        notifySuccess('The content was successfully deleted.');
+        MySwal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Content deleted successfully.',
+        });
         fetchData(page);
       } catch (error) {
         console.error('There was an error deleting the resource!', error);

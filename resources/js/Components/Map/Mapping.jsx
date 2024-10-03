@@ -106,11 +106,11 @@ export const Mapping = ({ auth }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <LayersControl position="topright">
-          {Object.keys(selectMarker).map((category, index) => (
-            <LayersControl.Overlay key={index} name={category} checked>
+          {Object.keys(selectMarker).map(category => (
+            <LayersControl.Overlay key={category.id} name={category} checked>
               <LayerGroup>
-                {selectMarker[category].map((item, i) => (
-                  <Marker key={i} position={[item.longitude, item.latitude]} icon={getIcon(item.location)}>
+                {selectMarker[category].map(item => (
+                  <Marker key={item.id} position={[item.longitude, item.latitude]} icon={getIcon(item.location)}>
                     <Popup ref={popupRef} className="w-full" closeOnClick={close}>
                       <div className="card bg-white w-[30rem] flex items-center justify-center">
                         <div>

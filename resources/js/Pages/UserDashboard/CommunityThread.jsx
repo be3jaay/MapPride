@@ -100,9 +100,11 @@ export default function CommunityThread({ auth }) {
       <div className="w-full bg-indigo-50 h-full">
         <header className="w-full px-4 lg:px-[20rem] border-b border-indigo-700 bg-indigo-50">
           <div className="w-full  py-8 sm:py-12 ">
-            <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-indigo-700 sm:text-3xl">Community Discussion</h1>
+                <h1 className="text-2xl text-center md:text-start font-bold text-indigo-700 sm:text-3xl">
+                  Community Discussion
+                </h1>
                 <p className="mt-1.5 text-sm text-gray-500">Connect with other users by creating a discussion</p>
               </div>
               <div className="flex items-start lg:items-center lg:gap-4">
@@ -158,7 +160,7 @@ export default function CommunityThread({ auth }) {
                         {comments[item.id].map((comment, commentIndex) => (
                           <div
                             key={commentIndex}
-                            className="p-6 bg-white rounded-md mb-2 w-full flex items-start justify-start flex-col gap-3"
+                            className="p-2 md:p-6 bg-white rounded-md mb-2 w-[16rem] md:w-full flex items-start justify-start flex-col gap-3"
                           >
                             <div className="flex items-center justify-start">
                               <div className="avatar ">

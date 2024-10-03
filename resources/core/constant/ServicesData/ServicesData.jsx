@@ -8,20 +8,28 @@ export const ServicesData = [
     title: 'Mapping',
     subTitle: 'Sub title',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      'The platform includes an interactive map feature that displays safe spaces across various locations. Users can easily discover and connect with inclusive:',
+    subDescription1: 'Safe Spaces',
+    subDescription2: 'Healthcare Facilities',
+    subDescription3: 'Government Services',
+    subDescription4: 'Support Association',
+  },
+  {
+    icon: <MdOutlineLibraryBooks />,
+    title: 'Resources',
+    subTitle: 'Sub title',
+    description: 'A comprehensive resources hub offers access to:',
+    subDescription1: 'LGBTQ+ Rights Information',
+    subDescription2: 'Mental Health Support',
+    subDescription3: 'Social Services',
   },
   {
     icon: <FaRegLightbulb />,
     title: 'Training',
     subTitle: 'Sub title',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  },
-  {
-    icon: <MdOutlineLibraryBooks />,
-    title: 'Resources',
-    subTitle: 'Sub title',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      'The training platform provides educational opportunities to enhance personal and professional growth. It offers:',
+    subDescription1: 'Online Courses & Workshops',
+    subDescription2: 'Free Certification Programs',
   },
 ];

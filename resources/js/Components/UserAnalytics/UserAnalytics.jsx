@@ -19,7 +19,7 @@ export default function UserAnalytics() {
       setResources(response.data.data);
     };
     const fetchTraining = async () => {
-      const response = await axios.get('/api/training');
+      const response = await axios.get('/api/training/view-all');
       setTraining(response.data.data);
     };
     fetchMap();

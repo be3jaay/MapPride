@@ -10,4 +10,6 @@ export const trainingSchema = yup.object().shape({
   title: yup.string().required('Title is required').default(''),
   description: yup.string().required('Title is required').default(''),
   url_link: yup.string().required('Title is required').default(''),
+  credits: yup.string().required('Credits to owner is required').default(''),
+  certificate: yup.number().optional().default(0),
 });

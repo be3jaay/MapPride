@@ -4,14 +4,11 @@ import { ToastContainer } from 'react-toastify';
 import Modal from '../../Modal';
 import DangerButton from '@/Components/DangerButton';
 import axios from 'axios';
-import { useToastNotifications } from '../../../../core/hooks';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
 const AdminModalExperience = ({ experience, isOpen, onClose }) => {
-  const { notifySuccess } = useToastNotifications();
-
   if (!experience) return null;
 
   const handleApprove = async () => {
@@ -25,11 +22,15 @@ const AdminModalExperience = ({ experience, isOpen, onClose }) => {
     });
     if (result.isConfirmed) {
       await axios.put(`/api/experience/${experience.id}/approve`);
-      notifySuccess('Experience approved successfully');
       onClose();
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Story content approved successfully.',
+      });
     }
   };
-  const handleDelete = async experience => {
+  const handleDelete = async data => {
     const result = await MySwal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -39,8 +40,13 @@ const AdminModalExperience = ({ experience, isOpen, onClose }) => {
       cancelButtonText: 'No, cancel!',
     });
     if (result.isConfirmed) {
-      await axios.delete(`/api/experience/${experience.id}`, experience);
-      notifySuccess('The content was rejected.');
+      await axios.delete(`/api/experience/${experience.id}`, data);
+      onClose();
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Story content rejected successfully.',
+      });
     }
   };
 
@@ -86,7 +92,7 @@ const AdminModalExperience = ({ experience, isOpen, onClose }) => {
               </DangerButton>
               <PrimaryButton
                 onClick={() => {
-                  handleApprove(experience);
+                  handleApprove();
                 }}
                 className="flex items-center justify-center py-4 px-6 text-white bg-green-600"
               >

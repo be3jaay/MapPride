@@ -22,6 +22,8 @@ class TrainingController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'url_link' => 'required|string|max:255',
+            'credits' => 'required|string|max:255',
+            'certificate' => 'nullable|integer',
         ]);
 
         $training = Training::create($validatedData);
@@ -36,6 +38,8 @@ class TrainingController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'url_link' => 'required|string|max:255',
+            'credits' => 'required|string|max:255',
+            'certificate' => 'nullable|integer',
         ]);
 
         $training = Training::find($id);
@@ -57,5 +61,12 @@ class TrainingController extends Controller
 
         $training->delete();
         return response()->json($training, 200);
+    }
+
+    public function show()
+    {
+        $perPage = 1000;
+        $training = Training::orderBy('created_at', 'desc')->paginate($perPage);
+        return response()->json($training);
     }
 }

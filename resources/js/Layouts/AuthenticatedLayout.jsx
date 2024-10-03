@@ -6,6 +6,7 @@ import { UserHeaderData } from '../../core/constant';
 import { FaChevronDown, FaBars } from 'react-icons/fa6';
 import ally from '../../core/images/ally.png';
 import { route } from 'ziggy-js';
+import { CollapsedSidebar } from '@/Components/CollapsedSidebar';
 
 export default function Authenticated({ header, children }) {
   const { auth } = usePage().props;
@@ -29,33 +30,34 @@ export default function Authenticated({ header, children }) {
           isSidebarCollapsed ? 'w-16' : 'w-64'
         }`}
       >
-        <div className="px-6 py-7 flex items-center justify-between">
-          {!isSidebarCollapsed && (
+        {!isSidebarCollapsed && (
+          <div className="px-6 py-7 flex items-center justify-center">
             <Link href="/">
-              <img src={ally} alt="" className="w-14 h-14" />
+              <img src={ally} aria-hidden alt="" className="w-14 h-14" />
             </Link>
-          )}
-        </div>
+          </div>
+        )}
+
         <hr />
 
-        <nav className="mt-5 flex items-start justify-center flex-col px-6 gap-10">
+        <nav className="mt-5 flex items-start justify-center flex-col  gap-10">
           <button
             onClick={toggleSidebar}
-            className="text-indigo-700 focus:outline-none flex items-center justify-end w-full"
+            className="text-indigo-700 focus:outline-none px-6 flex items-center justify-end w-full"
           >
             <FaBars />
           </button>
           {UserHeaderData.map((item, index) => (
-            <NavLink href={route(item.path)} active={route().current(item.path)} key={index}>
+            <NavLink href={route(item.path)} active={route().current(item.path)} key={item.id}>
               {isSidebarCollapsed ? (
-                <span>
-                  <span className="text-indigo-700 focus:outline-none text-start w-full text-lg">
+                <div className="flex items-center justify-center w-full px-4">
+                  <span className="text-indigo-700 focus:outline-none text-center w-full text-lg">
                     {item.icon}
                     <span className="hidden text-indigo-700 text-start text-md font-bold">{item.title}</span>
                   </span>
-                </span>
+                </div>
               ) : (
-                <div className="flex">
+                <div className="flex px-6">
                   <span className="text-indigo-700 text-start text-md font-bold mr-4 text-lg">{item.icon}</span>
                   <span className="text-indigo-700 text-start text-md font-bold">{item.title}</span>
                 </div>
@@ -63,15 +65,17 @@ export default function Authenticated({ header, children }) {
             </NavLink>
           ))}
         </nav>
-        <div className="mt-5 px-8 flex items-end h-14">
-          <div className="avatar">
-            <div className="w-10 rounded-full">
-              <Link href={route('profile.edit')}>
-                <img src={getProfilePictureUrl()} alt="No-PFP" />
-              </Link>
+        {isSidebarCollapsed ? (
+          <CollapsedSidebar auth={auth} getProfilePictureUrl={getProfilePictureUrl} />
+        ) : (
+          <div className="mt-5 px-8 flex items-end h-14">
+            <div className="avatar">
+              <div className="w-10 rounded-full">
+                <Link href={route('profile.edit')}>
+                  <img src={getProfilePictureUrl()} aria-hidden alt="No-PFP" />
+                </Link>
+              </div>
             </div>
-          </div>
-          {!isSidebarCollapsed && (
             <Dropdown>
               <Dropdown.Trigger>
                 <span className="inline-flex rounded-md">
@@ -92,8 +96,8 @@ export default function Authenticated({ header, children }) {
                 </Dropdown.Link>
               </Dropdown.Content>
             </Dropdown>
-          )}
-        </div>
+          </div>
+        )}
       </aside>
 
       <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarCollapsed ? 'ml-16' : 'ml-64'}`}>

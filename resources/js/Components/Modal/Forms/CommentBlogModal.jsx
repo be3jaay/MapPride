@@ -15,7 +15,7 @@ export const CommentBlogModal = ({ isOpen, onClose, blogId, auth }) => {
 
   const form = useForm({
     mode: 'all',
-    resolver: yupResolver(commentSchema), // Define your validation schema
+    resolver: yupResolver(commentSchema),
   });
 
   const {
@@ -44,9 +44,16 @@ export const CommentBlogModal = ({ isOpen, onClose, blogId, auth }) => {
 
   return (
     <Modal show={isOpen} onClose={onClose}>
-      <div className="modal-box bg-indigo-200 w-[60rem] p-12">
+      <div className="modal-box bg-indigo-200 w-[26rem] md:w-[60rem] p-12">
         <h3 className="font-bold text-2xl mb-4 text-indigo-700">Add a Comment</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <button
+            className="btn btn-md text-black btn-circle btn-ghost absolute right-2 top-2"
+            type="button"
+            onClick={onClose}
+          >
+            ✕
+          </button>
           <textarea
             className="textarea border-black w-full h-96 bg-white font-bold text-black"
             placeholder="Write your comment here..."
