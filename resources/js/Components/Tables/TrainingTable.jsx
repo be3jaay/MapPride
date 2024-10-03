@@ -38,6 +38,8 @@ export const TrainingTable = () => {
                 <th style={tableHeaderStyle}>Title</th>
                 <th style={tableHeaderStyle}>Description</th>
                 <th style={tableHeaderStyle}>Link</th>
+                <th style={tableHeaderStyle}>Credits</th>
+                <th style={tableHeaderStyle}>Certificate</th>
                 <th style={tableHeaderStyle}>Updated At: </th>
                 <th style={tableHeaderStyle}>Edit</th>
                 <th style={tableHeaderStyle}>Delete</th>
@@ -45,16 +47,18 @@ export const TrainingTable = () => {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {Array.isArray(training) && training.length > 0 ? (
-                training.map(training => (
-                  <tr key={training.id}>
-                    <td style={tableStyle}>{training.tabs_title}</td>
-                    <td style={tableStyle}>{training.title}</td>
-                    <td style={tableStyle}>{training.description}</td>
-                    <td style={tableStyle}>{training.url_link}</td>
-                    <td style={tableStyle}>{formattedDate(training.updated_at)}</td>
+                training.map(item => (
+                  <tr key={item.id}>
+                    <td style={tableStyle}>{item.tabs_title}</td>
+                    <td style={tableStyle}>{item.title}</td>
+                    <td style={tableStyle}>{item.description}</td>
+                    <td style={tableStyle}>{item.url_link}</td>
+                    <th style={tableHeaderStyle}>{item.credits}</th>
+                    <th style={tableHeaderStyle}>{item.certificate}</th>
+                    <td style={tableStyle}>{formattedDate(item.updated_at)}</td>
                     <td style={tableStyle}>
                       <PrimaryButton
-                        onClick={() => handleViewClick(training)}
+                        onClick={() => handleViewClick(item)}
                         className="flex items-center justify-center py-2"
                       >
                         Edit
@@ -62,7 +66,7 @@ export const TrainingTable = () => {
                     </td>
                     <td style={tableStyle}>
                       <DangerButton
-                        onClick={() => handleDelete(training)}
+                        onClick={() => handleDelete(item)}
                         className="flex items-center justify-center py-2"
                       >
                         Delete

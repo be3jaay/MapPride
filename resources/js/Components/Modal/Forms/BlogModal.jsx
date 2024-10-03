@@ -50,12 +50,12 @@ export default function BlogModal({ auth }) {
         },
       });
 
-      notifySuccess('Your marker has been created, thank you.');
+      notifySuccess('Post has been created, thank you.');
       closeModal();
       reset();
     } catch (error) {
       console.error('Submission Error:', error);
-      notifyError('There was an error posting your map');
+      notifyError('There was an error posting your blog');
     }
   };
 
@@ -81,8 +81,8 @@ export default function BlogModal({ auth }) {
             >
               ✕
             </button>
-            <h3 className="font-bold text-2xl text-indigo-800">
-              How are you? This is a freedom wall, feel free to share your story here.
+            <h3 className="font-bold text-lg text-center lg:text-start md:text-2xl text-indigo-800">
+              This is a community discussion for you to communicate and connect with other user
             </h3>
 
             <InputError message={errors.username?.message} />

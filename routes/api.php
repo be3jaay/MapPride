@@ -48,6 +48,8 @@ Route::apiResource('hotlines', HotlineController::class);
 
 Route::apiResource('training', TrainingController::class);
 
+Route::get('/training/view-all', [TrainingController::class, 'view_all']);
+
 Route::apiResource('feedback', FeedbackController::class)->except(['update']);
 
 Route::apiResource('map-selection', MapSelectionController::class)->only(['index', 'store']);

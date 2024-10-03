@@ -42,26 +42,23 @@ export const SupportTable = () => {
           </thead>
           <tbody className="divide-y divide-gray-200">
             {Array.isArray(support) && support.length > 0 ? (
-              support.map(support => (
-                <tr key={support.id}>
-                  <td style={tableStyle}>{support.title}</td>
-                  <td style={tableStyle}>{support.description}</td>
-                  <td style={tableStyle}>{support.phoneNumber}</td>
-                  <td style={tableStyle}>{formattedDate(support.created_at)}</td>
-                  <td style={tableStyle}>{formattedDate(support.updated_at)}</td>
+              support.map(item => (
+                <tr key={item.id}>
+                  <td style={tableStyle}>{item.title}</td>
+                  <td style={tableStyle}>{item.description}</td>
+                  <td style={tableStyle}>{item.phoneNumber}</td>
+                  <td style={tableStyle}>{formattedDate(item.created_at)}</td>
+                  <td style={tableStyle}>{formattedDate(item.updated_at)}</td>
                   <td style={tableStyle}>
                     <PrimaryButton
-                      onClick={() => handleViewClick(support)}
+                      onClick={() => handleViewClick(item)}
                       className="flex items-center justify-center py-2"
                     >
                       Edit
                     </PrimaryButton>
                   </td>
                   <td style={tableStyle}>
-                    <DangerButton
-                      onClick={() => handleDelete(support)}
-                      className="flex items-center justify-center py-2"
-                    >
+                    <DangerButton onClick={() => handleDelete(item)} className="flex items-center justify-center py-2">
                       Delete
                     </DangerButton>
                   </td>

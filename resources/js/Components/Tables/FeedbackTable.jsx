@@ -35,15 +35,15 @@ export const FeedbackTable = () => {
           </thead>
           <tbody className="divide-y divide-gray-200">
             {Array.isArray(feedback) && feedback.length > 0 ? (
-              feedback.map(feedback => (
-                <tr key={feedback.id}>
+              feedback.map(item => (
+                <tr key={item.id}>
                   <td style={tableStyle}>
-                    <span className="flex items-center justify-center">{feedback.feedback_value} stars</span>
+                    <span className="flex items-center justify-center">{item.feedback_value} stars</span>
                   </td>
-                  <td style={tableStyle}>{feedback.description}</td>
+                  <td style={tableStyle}>{item.description}</td>
                   <td style={tableStyle}>
                     <PrimaryButton
-                      onClick={() => handleViewClick(feedback)}
+                      onClick={() => handleViewClick(item)}
                       className="flex items-center justify-center py-2"
                     >
                       View

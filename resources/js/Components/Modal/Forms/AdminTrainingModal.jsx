@@ -21,7 +21,7 @@ export const AdminTrainingModal = () => {
   const form = useForm({
     mode: 'all',
     resolver: yupResolver(trainingSchema),
-    defaultValues: trainingSchema.getDefault(),
+    defaultValues: { ...trainingSchema.getDefault() },
   });
 
   const {
@@ -71,7 +71,7 @@ export const AdminTrainingModal = () => {
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-2xl text-indigo-800 text-center">
-              This modal is used to create training content for users.
+              This modal is used to create training content .
             </h3>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Tab
@@ -113,6 +113,25 @@ export const AdminTrainingModal = () => {
               />
             </label>
             <InputError message={errors.url_link?.message} />
+
+            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+              Credits
+              <input
+                type="text"
+                className="input w-full bg-transparent my-2"
+                placeholder="Credits to owner..."
+                {...register('credits')}
+              />
+            </label>
+            <InputError message={errors.credits?.message} />
+
+            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+              Certificate
+              <select className="select w-full bg-white text-black font-bold my-4" {...register('certificate')}>
+                <option value={1}>Have Free Certificate</option>
+                <option value={0}>Have No Free Certificate</option>
+              </select>
+            </label>
 
             <PrimaryButton className="w-full justify-center py-4" disabled={processing}>
               {isSubmitting ? 'Submitting' : 'Submit'}

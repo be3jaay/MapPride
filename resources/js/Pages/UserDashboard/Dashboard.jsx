@@ -14,7 +14,7 @@ export default function Dashboard({ auth }) {
             <div className="sm:flex sm:items-center sm:justify-between">
               <div className="text-start sm:text-left">
                 <h1 className="text-lg  font-bold text-indigo-700 sm:text-3xl">Welcome Back, {user.name}</h1>
-                <p className="mt-1.5 text-md text-gray-600">I hope you're doing good, best of luck! 🎉</p>
+                <p className="mt-1.5 text-md text-gray-600">I hope you&apos;re doing good, best of luck! 🎉</p>
               </div>
               <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
                 <ForumModal />

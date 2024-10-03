@@ -4,7 +4,7 @@ import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
 import DangerButton from '../DangerButton';
-import { useToastNotifications, useDateFormat } from '../../../core/hooks';
+import { useDateFormat } from '../../../core/hooks';
 import { Badge } from '../Badge';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -16,7 +16,6 @@ export default function AdminUserTable() {
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
   const { getFormattedDate } = useDateFormat();
-  const { notifySuccess } = useToastNotifications();
 
   const fetchUser = async (pageNumber = 1) => {
     try {
@@ -56,7 +55,11 @@ export default function AdminUserTable() {
 
     if (result.isConfirmed) {
       await axios.delete(`/api/users/${user.id}`, user);
-      notifySuccess('The content was successfully deleted.');
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'User deleted successfully.',
+      });
     }
   };
 
@@ -80,19 +83,19 @@ export default function AdminUserTable() {
           </thead>
           <tbody className="divide-y divide-gray-200">
             {Array.isArray(user) && user.length > 0 ? (
-              user.map(user => (
-                <tr key={user.id}>
-                  <td style={tableStyle}>{user.name}</td>
-                  <td style={tableStyle}>{user.email}</td>
-                  <td style={tableStyle}>{user.gender}</td>
-                  <td style={tableStyle}>{formattedDate(user.created_at)}</td>
+              user.map(singleUser => (
+                <tr key={singleUser.id}>
+                  <td style={tableStyle}>{singleUser.name}</td>
+                  <td style={tableStyle}>{singleUser.email}</td>
+                  <td style={tableStyle}>{singleUser.gender}</td>
+                  <td style={tableStyle}>{formattedDate(singleUser.created_at)}</td>
                   <td style={tableStyle}>
-                    <Badge message={user.usertype} type={user.usertype === 'admin' ? 'info' : 'success'} />
+                    <Badge message={singleUser.usertype} type={singleUser.usertype === 'admin' ? 'info' : 'success'} />
                   </td>
                   <td style={tableStyle}>
                     <DangerButton
                       onClick={() => {
-                        handleDelete(user);
+                        handleDelete(singleUser);
                       }}
                       className="flex items-center justify-center py-2"
                     >

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('url_link');
+            $table->string('credits');
+            $table->integer('certificate')->nullable();
             $table->timestamps();
         });
     }

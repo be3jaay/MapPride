@@ -1,5 +1,4 @@
 import ally from '../../../core/images/ally.png';
-import { FooterData } from '../../../core/constant/FooterData/FooterData';
 import { FaChevronUp } from 'react-icons/fa';
 
 export default function Footer() {
@@ -24,18 +23,9 @@ export default function Footer() {
               neque.
             </p>
           </div>
-
-          <ul className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:mt-0 lg:justify-end lg:gap-12">
-            {FooterData.map((item, index) => (
-              <li key={index}>
-                <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
-                  {item.title}
-                </a>
-              </li>
-            ))}
-          </ul>
         </div>
-        <p className="mt-12 text-center text-sm text-gray-500 lg:text-right">
+        <hr className="my-4" />
+        <p className="w-full flex mt-12 text-center text-sm text-gray-500 lg:text-right">
           Copyright &copy; 2024. All rights reserved. | Developed by :
           <span className="text-indigo-700 font-bold ">Brian James L. Dela Cruz</span>
         </p>

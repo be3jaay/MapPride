@@ -14,6 +14,7 @@ class Training extends Model
         'title',
         'description',
         'url_link',
+        'credits',
+        'certificate'
     ];
 }
-

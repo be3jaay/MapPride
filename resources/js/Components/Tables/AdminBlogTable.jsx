@@ -1,22 +1,12 @@
 import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
 import { tableHeaderStyle, tableStyle } from './TableStyle';
-import { AdminEditSupport } from '../Modal/Edit/AdminEditSupport';
 import DangerButton from '../DangerButton';
 import useTableData from '../../../core/hooks/use-table-data';
 import { useDateFormat } from '../../../core/hooks';
 
 export const AdminBlogTable = () => {
-  const {
-    data: support,
-    selectedItem: selectedSupport,
-    totalPages,
-    page,
-    isModalOpen,
-    handleDelete,
-    handlePageChange,
-    closeModal,
-  } = useTableData('/api/blogs');
+  const { data: blogs, totalPages, page, handleDelete, handlePageChange } = useTableData('/api/blogs');
 
   const { getFormattedDate } = useDateFormat();
 
@@ -41,29 +31,24 @@ export const AdminBlogTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {Array.isArray(support) && support.length > 0 ? (
-              support.map(support => (
-                <tr key={support.id}>
-                  <td style={tableStyle}>{support.username}</td>
-                  <td style={tableStyle}>{support.title}</td>
-                  <td style={tableStyle}>{support.description}</td>
+            {Array.isArray(blogs) && blogs.length > 0 ? (
+              blogs.map(blog => (
+                <tr key={blogs.id}>
+                  <td style={tableStyle}>{blog.username}</td>
+                  <td style={tableStyle}>{blog.title}</td>
+                  <td style={tableStyle}>{blog.description}</td>
                   <td style={tableStyle}>
                     <img
-                      src={`/storage/${support.image}`}
+                      src={`/storage/${blog.image}`}
                       aria-hidden
                       alt="No Image"
                       className="h-auto w-full rounded-md"
                     />
                   </td>
-
-                  <td style={tableStyle}>{formattedDate(support.created_at)}</td>
-                  <td style={tableStyle}>{formattedDate(support.updated_at)}</td>
-
+                  <td style={tableStyle}>{formattedDate(blog.created_at)}</td>
+                  <td style={tableStyle}>{formattedDate(blog.updated_at)}</td>
                   <td style={tableStyle}>
-                    <DangerButton
-                      onClick={() => handleDelete(support)}
-                      className="flex items-center justify-center py-2"
-                    >
+                    <DangerButton onClick={() => handleDelete(blog)} className="flex items-center justify-center py-2">
                       Delete
                     </DangerButton>
                   </td>
@@ -98,9 +83,6 @@ export const AdminBlogTable = () => {
           Next
         </PrimaryButton>
       </div>
-      {isModalOpen && selectedSupport && (
-        <AdminEditSupport support={selectedSupport} isOpen={isModalOpen} onClose={closeModal} />
-      )}
     </div>
   );
 };

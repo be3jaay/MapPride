@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
+// import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
@@ -8,7 +8,9 @@ import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { route } from 'ziggy-js';
 
-export default function Login({ status, canResetPassword }) {
+//canResetPassword on props
+
+export default function Login({ status }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     email: '',
     password: '',
@@ -60,7 +62,7 @@ export default function Login({ status, canResetPassword }) {
           />
           <InputError message={errors.password} className="mt-2" />
         </div>
-        <div className="flex my-4 items-center justify-between">
+        {/* <div className="flex my-4 items-center justify-between">
           <label className="flex items-center">
             <Checkbox name="remember" checked={data.remember} onChange={e => setData('remember', e.target.checked)} />
             <span className="ms-2 text-md text-black">Remember me</span>
@@ -73,11 +75,11 @@ export default function Login({ status, canResetPassword }) {
               Forgot your password?
             </Link>
           )}
-        </div>
+        </div> */}
 
         <div className="flex items-center justify-between my-4">
           <Link href="register" className="text-black">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <span className="underline font-bold text-md text-black dark:hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
               Register here
             </span>
