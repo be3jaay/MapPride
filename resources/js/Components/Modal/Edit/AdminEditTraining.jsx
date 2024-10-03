@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { trainingSchema } from '../../../../core/schema';
 import axios from 'axios';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { useToastNotifications } from '../../../../core/hooks';
 import Swal from 'sweetalert2';
@@ -59,7 +59,7 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
   }, [training, reset]);
 
   return (
-    <>
+    <React.Fragment>
       <Modal show={isOpen} onClose={onClose}>
         <ToastContainer />
         <div className="modal-box bg-indigo-200 w-[60rem] p-12">
@@ -129,6 +129,6 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
           </form>
         </div>
       </Modal>
-    </>
+    </React.Fragment>
   );
 };

@@ -1,5 +1,4 @@
 import ally from '../../../core/images/ally.png';
-import { FooterData } from '../../../core/constant/FooterData/FooterData';
 import { FaChevronUp } from 'react-icons/fa';
 
 export default function Footer() {

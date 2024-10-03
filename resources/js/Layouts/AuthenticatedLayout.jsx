@@ -47,7 +47,7 @@ export default function Authenticated({ header, children }) {
           >
             <FaBars />
           </button>
-          {UserHeaderData.map((item, index) => (
+          {UserHeaderData.map(item => (
             <NavLink href={route(item.path)} active={route().current(item.path)} key={item.id}>
               {isSidebarCollapsed ? (
                 <div className="flex items-center justify-center w-full px-4">

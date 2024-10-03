@@ -1,8 +1,9 @@
 import { GrMap } from 'react-icons/gr';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { MdOutlineLibraryBooks } from 'react-icons/md';
+import React from 'react';
 
-export const ServicesData = [
+const data = [
   {
     icon: <GrMap />,
     title: 'Mapping',
@@ -33,3 +34,39 @@ export const ServicesData = [
     subDescription2: 'Free Certification Programs',
   },
 ];
+
+export const ServicesData = () => {
+  return (
+    <React.Fragment>
+      {data?.map(item => (
+        <div key={item.id} className=" w-full flex items-center justify-center ">
+          <article className="w-full rounded-xl mb-4 shadow-md bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 ">
+            <div className="flex items-start sm:gap-8">
+              <div
+                className="hidden sm:grid sm:size-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-indigo-500"
+                aria-hidden="true"
+              >
+                <div className="text-2xl text-indigo-700">{item.icon}</div>
+              </div>
+              <div>
+                <strong className="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 font-medium text-white">
+                  {item.title}
+                </strong>
+
+                <h3 className="mt-4 text-lg font-bold sm:text-xl">
+                  <span className="">{item.description}</span>
+                </h3>
+                <ol className="px-4 py-3">
+                  <li className="mt-1 text-md text-gray-700">{item.subDescription2}</li>
+                  <li className="mt-1 text-md text-gray-700">{item.subDescription3}</li>
+                  <li className="mt-1 text-md text-gray-700">{item.subDescription4}</li>
+                  <li className="mt-1 text-md text-gray-700">{item.subDescription1}</li>
+                </ol>
+              </div>
+            </div>
+          </article>
+        </div>
+      ))}
+    </React.Fragment>
+  );
+};

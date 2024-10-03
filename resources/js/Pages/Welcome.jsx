@@ -35,13 +35,11 @@ export default function Welcome({ auth }) {
                 Dashboard
               </Link>
             ) : (
-              <>
-                <Link href={route('login')}>
-                  <button className="btn w-24 bg-transparent text-indigo-700 border-indigo-700 hover:bg-indigo-700 hover:text-white">
-                    Login
-                  </button>
-                </Link>
-              </>
+              <Link href={route('login')}>
+                <button className="btn w-24 bg-transparent text-indigo-700 border-indigo-700 hover:bg-indigo-700 hover:text-white">
+                  Login
+                </button>
+              </Link>
             )}
           </div>
         </ul>

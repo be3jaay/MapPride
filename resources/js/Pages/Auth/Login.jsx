@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
+// import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
@@ -8,7 +8,9 @@ import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { route } from 'ziggy-js';
 
-export default function Login({ status, canResetPassword }) {
+//canResetPassword on props
+
+export default function Login({ status }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     email: '',
     password: '',
