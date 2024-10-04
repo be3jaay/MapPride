@@ -2,11 +2,10 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "heroku-postbuild": "npm run build",
-        "test": "jest"
-    },
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
     "devDependencies": {
         "@babel/core": "^7.25.2",
         "@babel/preset-env": "^7.25.4",
