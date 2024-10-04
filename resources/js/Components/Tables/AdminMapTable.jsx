@@ -5,7 +5,6 @@ import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
 import { AdminEditMap } from '../Modal/Edit/AdminEditMap';
 import axios from 'axios';
-import { useToastNotifications } from '../../../core/hooks';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -18,7 +17,6 @@ export const AdminMapTable = () => {
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { notifySuccess, notifyError } = useToastNotifications();
 
   const fetchData = async (pageNumber = 1) => {
     setIsLoading(true);
@@ -57,11 +55,18 @@ export const AdminMapTable = () => {
     if (result.isConfirmed) {
       try {
         await axios.delete(`/api/map/${item.id}`);
-        notifySuccess('The content was successfully deleted.');
+        MySwal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Content deleted successfully.',
+        });
         fetchData(page);
       } catch (error) {
-        notifyError('Error deleting resource.');
-        console.error('Error deleting resource:', error);
+        MySwal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error deletion content',
+        });
       }
     }
   };

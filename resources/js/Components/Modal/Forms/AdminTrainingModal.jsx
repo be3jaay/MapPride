@@ -5,13 +5,15 @@ import { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { trainingSchema } from '../../../../core/schema';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import useModal from '../../../../core/hooks/use-modal';
-import { useToastNotifications } from '../../../../core/hooks';
 import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const TrainingForms = ({ handleSubmit, onSubmit, tabs, processing, register, errors, isSubmitting }) => {
   return (
@@ -56,7 +58,6 @@ export const AdminTrainingModal = () => {
   const [tabs, setTabs] = useState([]);
 
   const { handleOpen, isOpen, closeModal } = useModal();
-  const { notifyError, notifySuccess } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
@@ -72,26 +73,31 @@ export const AdminTrainingModal = () => {
     formState: { errors, isSubmitting },
   } = form;
 
-  const onSubmit = useCallback(
-    async data => {
-      try {
-        await axios.post('/api/training', data);
-        notifySuccess('Form submitted successfully!');
-        closeModal();
-        reset();
-      } catch (error) {
-        notifyError('Form submission failed!');
-        closeModal();
-        reset();
-      }
-    },
-    [notifyError, notifySuccess],
-  );
+  const onSubmit = useCallback(async data => {
+    try {
+      await axios.post('/api/training', data);
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Content submitted successfully.',
+      });
+      closeModal();
+      reset();
+    } catch (error) {
+      MySwal.fire({
+        icon: 'error',
+        title: 'error',
+        text: 'There was an error posting your content',
+      });
+      closeModal();
+      reset();
+    }
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     reset();
     closeModal();
-  };
+  }, [reset, closeModal]);
 
   useEffect(() => {
     const fetchTabs = async () => {
@@ -108,7 +114,6 @@ export const AdminTrainingModal = () => {
 
   return (
     <div>
-      <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
         Create Training Content <MdForum className="ml-2" />
       </PrimaryButton>

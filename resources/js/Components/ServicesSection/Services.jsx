@@ -2,7 +2,7 @@ import { ServicesData } from '../../../core/constant';
 
 export const Services = () => {
   return (
-    <section id="services" className="w-full lg:p-36 h-full bg-indigo-50">
+    <section id="services" className="w-full lg:p-36 h-full bg-white">
       <div className="p-14 lg:p-0 text-center lg:text-start">
         <div className="flex items-center justify-between">
           <div className="w-full flex items-center justify-center flex-col">

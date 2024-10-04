@@ -7,9 +7,25 @@ import Footer from '@/Components/FooterSection/Footer';
 import { NavigationData } from '../../core/constant/NavigationData/NavigationData';
 import { route } from 'ziggy-js';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 
 export default function Welcome({ auth }) {
+  const [toggle, setToggle] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const viewNavigation = useCallback(() => {
+    setShow(true);
+    setToggle(true);
+  });
+
+  const closeNavigation = useCallback(() => {
+    setShow(false);
+  });
+
+  const closeNav = useCallback(() => {
+    setShow(false);
+  });
+
   return (
     <React.Fragment>
       <Head title="Welcome" />
@@ -17,7 +33,7 @@ export default function Welcome({ auth }) {
         <div className="">
           <img src={ally} alt="" className="w-12 h-12" />
         </div>
-        <ul className="hidden text-indigo-700 md:flex items-center justify-between w-full gap-12 font-bold">
+        <ul className="hidden text-indigo-700 md:flex items-center justify-end w-full gap-12 font-bold">
           <div className="flex items-center justify-center gap-12 md:ml-40 lg:ml-72">
             {NavigationData.map(item => (
               <a key={item.id} href={item.path} className="">
@@ -43,7 +59,39 @@ export default function Welcome({ auth }) {
             )}
           </div>
         </ul>
-        <GiHamburgerMenu className="flex md:hidden" />
+        <GiHamburgerMenu className="flex md:hidden text-2xl text-indigo-700" onClick={viewNavigation} />
+        {show && (
+          <div className="bg-indigo-700 h-screen transition-all">
+            <div className="fixed top-0 left-0 w-full h-full bg-indigo-700 z-100">
+              <div className="flex justify-end p-4">
+                <button onClick={closeNavigation} className="text-white text-lg">
+                  ✕
+                </button>
+              </div>
+              <div className="flex flex-col items-center justify-center gap-4 h-screen bg-indigo-700">
+                {NavigationData.map(item => (
+                  <a key={item.id} href={item.path} className="text-white" onClick={closeNav}>
+                    {item.title}
+                  </a>
+                ))}
+                {auth.user ? (
+                  <Link
+                    href={route('dashboard')}
+                    className="btn w-24 bg-transparent text-indigo-700 border-indigo-700 hover:bg-indigo-700 hover:text-white"
+                  >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <Link href={route('login')}>
+                    <button className="btn w-24 bg-transparent text-indigo-700 border-indigo-700 hover:bg-indigo-700 hover:text-white">
+                      Login
+                    </button>
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
       <HeroSection />
       <AboutSection />

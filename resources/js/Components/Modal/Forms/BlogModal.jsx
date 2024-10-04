@@ -1,14 +1,16 @@
 import Modal from '@/Components/Modal';
 import PrimaryButton from '../../PrimaryButton';
 import { useForm } from 'react-hook-form';
-import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
-import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
 import { useEffect, useState, useCallback } from 'react';
 import { IoMdAddCircle } from 'react-icons/io';
 import { TextField } from '@/Components/TextField';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const BlogForms = ({ handleSubmit, onSubmit, closeModal, errors, register, isSubmitting }) => {
   return (
@@ -43,7 +45,6 @@ const BlogForms = ({ handleSubmit, onSubmit, closeModal, errors, register, isSub
 
 export default function BlogModal({ auth }) {
   const { handleOpen, isOpen, closeModal } = useModal();
-  const { notifyError, notifySuccess } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
@@ -82,23 +83,29 @@ export default function BlogModal({ auth }) {
         },
       });
 
-      notifySuccess('Post has been created, thank you.');
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Post has been created, thank you.',
+      });
       closeModal();
       reset();
     } catch (error) {
-      console.error('Submission Error:', error);
-      notifyError('There was an error posting your blog');
+      MySwal.fire({
+        icon: 'error',
+        title: 'error',
+        text: 'There was an error posting your blog',
+      });
     }
   });
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     reset();
     closeModal();
-  };
+  }, [reset.closeModal]);
 
   return (
     <div>
-      <ToastContainer />
       <PrimaryButton onClick={handleOpen} className="py-4 px-6 ">
         Add Post <IoMdAddCircle className="text-lg ml-2  " />
       </PrimaryButton>

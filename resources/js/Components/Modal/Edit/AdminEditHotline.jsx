@@ -1,5 +1,4 @@
 import PrimaryButton from '../../PrimaryButton';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
@@ -100,7 +99,6 @@ export const AdminEditHotline = ({ hotline, isOpen, onClose }) => {
 
   return (
     <div>
-      <ToastContainer />
       <Modal show={isOpen} onClose={onClose}>
         <div className="modal-box bg-indigo-200 w-[60rem] p-12">
           <EditHotlineForm

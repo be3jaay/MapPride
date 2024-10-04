@@ -4,13 +4,15 @@ import { MdForum } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { hotlineSchema } from '../../../../core/schema';
-import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
-import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
 import { useCallback } from 'react';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const HotlineForms = ({ handleSubmit, onSubmit, errors, register, isSubmitting }) => {
   return (
@@ -40,7 +42,6 @@ const HotlineForms = ({ handleSubmit, onSubmit, errors, register, isSubmitting }
 };
 export const AdminHotlineModal = () => {
   const { handleOpen, isOpen, closeModal } = useModal();
-  const { notifyError, notifySuccess } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
@@ -55,18 +56,23 @@ export const AdminHotlineModal = () => {
     formState: { isSubmitting, errors },
   } = form;
 
-  const onSubmit = useCallback(
-    async data => {
-      try {
-        await axios.post('/api/hotlines', data);
-        reset();
-        notifySuccess('Your experience has been posted, thank you.');
-      } catch (error) {
-        notifyError('There was an error posting your experience.');
-      }
-    },
-    [notifyError, notifySuccess],
-  );
+  const onSubmit = useCallback(async data => {
+    try {
+      await axios.post('/api/hotlines', data);
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Story submitted successfully.',
+      });
+      reset();
+    } catch (error) {
+      MySwal.fire({
+        icon: 'error',
+        title: 'error',
+        text: 'There was an error posting your story',
+      });
+    }
+  }, []);
 
   const handleClose = () => {
     reset();
@@ -75,7 +81,6 @@ export const AdminHotlineModal = () => {
 
   return (
     <div>
-      <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
         Create Hotline Content <MdForum className="ml-2" />
       </PrimaryButton>

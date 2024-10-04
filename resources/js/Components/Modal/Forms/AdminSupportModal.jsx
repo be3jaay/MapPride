@@ -4,14 +4,16 @@ import { MdForum } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { supportSchema } from '../../../../core/schema';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
 import { useCallback } from 'react';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const AdminSupportForm = ({ handleSubmit, onSubmit, register, errors, isSubmitting, processing }) => {
   return (
@@ -41,7 +43,6 @@ const AdminSupportForm = ({ handleSubmit, onSubmit, register, errors, isSubmitti
 };
 export const AdminSupportModal = () => {
   const { handleOpen, isOpen, closeModal } = useModal();
-  const { notifyError, notifySuccess } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
@@ -57,28 +58,32 @@ export const AdminSupportModal = () => {
     formState: { errors, isSubmitting },
   } = form;
 
-  const onSubmit = useCallback(
-    async data => {
-      try {
-        await axios.post('/api/support', data);
-        reset();
-        closeModal();
-        notifySuccess('Your support content has been added, thank you.');
-      } catch (error) {
-        notifyError('There was an error posting your experience.');
-      }
-    },
-    [notifyError, notifySuccess],
-  );
+  const onSubmit = useCallback(async data => {
+    try {
+      await axios.post('/api/support', data);
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Your support content has been added, thank you.',
+      });
+      reset();
+      closeModal();
+    } catch (error) {
+      MySwal.fire({
+        icon: 'error',
+        title: 'error',
+        text: 'There was an error posting your support content',
+      });
+    }
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     reset();
     closeModal();
-  };
+  }, [reset, closeModal]);
 
   return (
     <div>
-      <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
         Create Support Content <MdForum className="ml-2" />
       </PrimaryButton>
