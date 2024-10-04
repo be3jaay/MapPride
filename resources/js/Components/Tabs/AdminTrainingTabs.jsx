@@ -1,6 +1,5 @@
 import Modal from '@/Components/Modal';
 import PrimaryButton from '../PrimaryButton';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { trainingTabSchema } from '../../../core/schema';
