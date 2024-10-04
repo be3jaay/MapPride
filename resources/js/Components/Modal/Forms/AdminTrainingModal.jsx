@@ -1,7 +1,7 @@
 import Modal from '@/Components/Modal';
 import PrimaryButton from '../../PrimaryButton';
 import { MdForum } from 'react-icons/md';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { trainingSchema } from '../../../../core/schema';
@@ -72,16 +72,21 @@ export const AdminTrainingModal = () => {
     formState: { errors, isSubmitting },
   } = form;
 
-  const onSubmit = async data => {
-    try {
-      await axios.post('/api/training', data);
-      notifySuccess('Your resources has been created, thank you.');
-      closeModal();
-      reset();
-    } catch (error) {
-      notifyError('There was an error posting your training.');
-    }
-  };
+  const onSubmit = useCallback(
+    async data => {
+      try {
+        await axios.post('/api/training', data);
+        notifySuccess('Form submitted successfully!');
+        closeModal();
+        reset();
+      } catch (error) {
+        notifyError('Form submission failed!');
+        closeModal();
+        reset();
+      }
+    },
+    [notifyError, notifySuccess],
+  );
 
   const handleClose = () => {
     reset();

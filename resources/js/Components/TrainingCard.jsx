@@ -1,4 +1,3 @@
-import React from 'react';
 import PrimaryButton from './PrimaryButton';
 import { Badge } from './Badge';
 

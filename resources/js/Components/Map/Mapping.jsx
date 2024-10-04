@@ -95,7 +95,13 @@ export const Mapping = ({ auth }) => {
 
       handleClose();
       reset();
-    } catch (error) {}
+    } catch (error) {
+      MySwal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Support content submitted incorrectly.',
+      });
+    }
   };
 
   return (
