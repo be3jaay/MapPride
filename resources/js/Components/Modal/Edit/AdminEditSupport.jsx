@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { supportSchema } from '../../../../core/schema';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useToastNotifications } from '../../../../core/hooks';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -58,20 +58,23 @@ export const AdminEditSupport = ({ support, isOpen, onClose }) => {
     formState: { isSubmitting, errors },
   } = form;
 
-  const handleUpdate = async data => {
-    try {
-      await axios.put(`/api/support/${support.id}`, data);
-      MySwal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Support content updated successfully.',
-      });
-      reset();
-      onClose();
-    } catch (error) {
-      notifyError('There was an error updating the support content.');
-    }
-  };
+  const handleUpdate = useCallback(
+    async data => {
+      try {
+        await axios.put(`/api/support/${support.id}`, data);
+        MySwal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Support content updated successfully.',
+        });
+        reset();
+        onClose();
+      } catch (error) {
+        notifyError('There was an error updating the support content.');
+      }
+    },
+    [notifyError],
+  );
 
   useEffect(() => {
     reset({

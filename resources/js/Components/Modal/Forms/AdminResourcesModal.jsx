@@ -1,7 +1,7 @@
 import Modal from '@/Components/Modal';
 import PrimaryButton from '../../PrimaryButton';
 import { MdForum } from 'react-icons/md';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resourcesForumSchema } from '../../../../core/schema';
@@ -59,21 +59,19 @@ export const AdminResourcesModal = () => {
     formState: { isSubmitting, errors },
   } = form;
 
-  const onSubmit = async data => {
-    try {
-      await axios.post('/api/resources', data);
-      notifySuccess('Your resources has been created, thank you.');
-      closeModal();
-      reset();
-    } catch (error) {
-      notifyError('There was an error posting your experience.');
-    }
-  };
-
-  const handleClose = () => {
-    reset();
-    closeModal();
-  };
+  const onSubmit = useCallback(
+    async data => {
+      try {
+        await axios.post('/api/resources', data);
+        notifySuccess('Your resources has been created, thank you.');
+        closeModal();
+        reset();
+      } catch (error) {
+        notifyError('There was an error posting your experience.');
+      }
+    },
+    [notifySuccess, notifyError],
+  );
 
   useEffect(() => {
     const fetchTabs = async () => {
@@ -96,7 +94,7 @@ export const AdminResourcesModal = () => {
         Create Resources Content
         <MdForum className="ml-2" />
       </PrimaryButton>
-      <Modal show={isOpen} onClose={handleClose}>
+      <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 p-12 w-[96rem]">
           <ResourcesModalForm
             errors={errors}

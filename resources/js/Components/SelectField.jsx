@@ -49,8 +49,8 @@ const SelectInput = ({ name, options, errors, setValue }) => {
           required
           onChange={handleSelectChange}
         >
-          <option value="" disabled>
-            Select Types you&apos;ve experienced
+          <option value="" disabled selected>
+            Select Type
           </option>
           {options.map(option => (
             <option key={option.id} value={option}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import { Link, usePage } from '@inertiajs/react';
@@ -11,14 +11,14 @@ import anonymous from '../../core/images/anonymous.png';
 
 export default function Authenticated({ header, children }) {
   const { auth } = usePage().props;
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
-  const getProfilePictureUrl = () => {
+  const getProfilePictureUrl = useCallback(() => {
     if (auth.user.profile_picture) {
       return `/storage/${auth.user.profile_picture}`;
     }
     return anonymous;
-  };
+  }, [auth.user.profile_picture, anonymous]);
 
   const toggleSidebar = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);
@@ -67,7 +67,7 @@ export default function Authenticated({ header, children }) {
           ))}
         </nav>
         {isSidebarCollapsed ? (
-          <CollapsedSidebar auth={auth} getProfilePictureUrl={getProfilePictureUrl} />
+          <CollapsedSidebar getProfilePictureUrl={getProfilePictureUrl} />
         ) : (
           <div className="mt-5 px-8 flex items-end h-14">
             <div className="avatar">

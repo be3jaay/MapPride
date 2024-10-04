@@ -6,9 +6,40 @@ import axios from 'axios';
 import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { IoMdAddCircle } from 'react-icons/io';
 import { TextField } from '@/Components/TextField';
+
+const BlogForms = ({ handleSubmit, onSubmit, closeModal, errors, register, isSubmitting }) => {
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <button
+        className="btn btn-md text-black btn-circle btn-ghost absolute right-2 top-2"
+        type="button"
+        onClick={closeModal}
+      >
+        ✕
+      </button>
+      <h3 className="font-bold text-lg text-center lg:text-start md:text-2xl text-indigo-800">
+        This is a community discussion for you to communicate and connect with other user
+      </h3>
+      <InputError message={errors.username?.message} />
+      <TextField label="Title" placeholder="Type your title here..." register={register} name="title" errors={errors} />
+      <input
+        type="file"
+        className="file-input file-input-bordered file-input-primary w-full bg-white"
+        {...register('image')}
+      />
+      <textarea
+        placeholder="Blog description here..."
+        className="textarea border-black w-full h-64 mt-4  bg-white font-bold text-black"
+        {...register('description')}
+      ></textarea>
+      <InputError message={errors.description?.message} />
+      <PrimaryButton className="w-full py-4 justify-center ">{isSubmitting ? 'Submitting' : 'Submit'}</PrimaryButton>
+    </form>
+  );
+};
 
 export default function BlogModal({ auth }) {
   const { handleOpen, isOpen, closeModal } = useModal();
@@ -36,7 +67,7 @@ export default function BlogModal({ auth }) {
     setValue('icon', icon);
   }, [username, icon, setValue]);
 
-  const onSubmit = async data => {
+  const onSubmit = useCallback(async data => {
     try {
       const formData = new FormData();
       formData.append('username', username);
@@ -58,7 +89,7 @@ export default function BlogModal({ auth }) {
       console.error('Submission Error:', error);
       notifyError('There was an error posting your blog');
     }
-  };
+  });
 
   const handleClose = () => {
     reset();
@@ -66,49 +97,23 @@ export default function BlogModal({ auth }) {
   };
 
   return (
-    <React.Fragment>
+    <div>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen} className="py-4 px-6 ">
         Add Post <IoMdAddCircle className="text-lg ml-2  " />
       </PrimaryButton>
       <Modal show={isOpen} onClose={handleClose}>
         <div className="modal-box bg-indigo-200 max-w-7xl p-12">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <button
-              className="btn btn-md text-black btn-circle btn-ghost absolute right-2 top-2"
-              type="button"
-              onClick={closeModal}
-            >
-              ✕
-            </button>
-            <h3 className="font-bold text-lg text-center lg:text-start md:text-2xl text-indigo-800">
-              This is a community discussion for you to communicate and connect with other user
-            </h3>
-            <InputError message={errors.username?.message} />
-            <TextField
-              label="Title"
-              placeholder="Type your title here..."
-              register={register}
-              name="title"
-              errors={errors}
-            />
-            <input
-              type="file"
-              className="file-input file-input-bordered file-input-primary w-full bg-white"
-              {...register('image')}
-            />
-            <textarea
-              placeholder="Blog description here..."
-              className="textarea border-black w-full h-64 mt-4  bg-white font-bold text-black"
-              {...register('description')}
-            ></textarea>
-            <InputError message={errors.description?.message} />
-            <PrimaryButton className="w-full py-4 justify-center ">
-              {isSubmitting ? 'Submitting' : 'Submit'}
-            </PrimaryButton>
-          </form>
+          <BlogForms
+            errors={errors}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+            closeModal={closeModal}
+            register={register}
+            isSubmitting={isSubmitting}
+          />
         </div>
       </Modal>
-    </React.Fragment>
+    </div>
   );
 }

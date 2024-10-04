@@ -11,6 +11,7 @@ import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
+import { useCallback } from 'react';
 
 const AdminSupportForm = ({ handleSubmit, onSubmit, register, errors, isSubmitting, processing }) => {
   return (
@@ -56,16 +57,19 @@ export const AdminSupportModal = () => {
     formState: { errors, isSubmitting },
   } = form;
 
-  const onSubmit = async data => {
-    try {
-      await axios.post('/api/support', data);
-      reset();
-      closeModal();
-      notifySuccess('Your support content has been added, thank you.');
-    } catch (error) {
-      notifyError('There was an error posting your experience.');
-    }
-  };
+  const onSubmit = useCallback(
+    async data => {
+      try {
+        await axios.post('/api/support', data);
+        reset();
+        closeModal();
+        notifySuccess('Your support content has been added, thank you.');
+      } catch (error) {
+        notifyError('There was an error posting your experience.');
+      }
+    },
+    [notifyError, notifySuccess],
+  );
 
   const handleClose = () => {
     reset();

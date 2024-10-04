@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useToastNotifications } from '../../../core/hooks';
 import PrimaryButton from '@/Components/PrimaryButton';
 import InputError from '@/Components/InputError';
+import { useCallback } from 'react';
 
 export default function Feedback({ auth }) {
   const { notifyError, notifySuccess } = useToastNotifications();
@@ -27,15 +28,19 @@ export default function Feedback({ auth }) {
     formState: { errors },
   } = form;
 
-  const onSubmit = async data => {
-    try {
-      await axios.post('/api/feedback', data);
-      reset();
-      notifySuccess('Your feedback has been posted, thank you.');
-    } catch (error) {
-      notifyError('There was an error posting your feedback.');
-    }
-  };
+  const onSubmit = useCallback(
+    async data => {
+      try {
+        await axios.post('/api/feedback', data);
+        notifySuccess('Form submitted successfully!');
+        reset();
+      } catch (error) {
+        notifyError('Form submission failed!');
+        reset();
+      }
+    },
+    [notifyError, notifySuccess],
+  );
 
   return (
     <AuthenticatedLayout user={auth.user}>
