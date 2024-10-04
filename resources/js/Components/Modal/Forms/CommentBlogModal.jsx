@@ -3,9 +3,12 @@ import PrimaryButton from '../../PrimaryButton';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { commentSchema } from '../../../../core/schema';
-import { useToastNotifications } from '../../../../core/hooks';
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const CommentBlogForm = ({ handleSubmit, onSubmit, onClose, isSubmitting, register }) => {
   return (
@@ -35,7 +38,6 @@ const CommentBlogForm = ({ handleSubmit, onSubmit, onClose, isSubmitting, regist
   );
 };
 export const CommentBlogModal = ({ isOpen, onClose, blogId, auth }) => {
-  const { notifyError, notifySuccess } = useToastNotifications();
   const user = auth.user;
   const [username, setUsername] = useState(user.name);
   const [icon, setIcon] = useState(user.profile_picture);
@@ -62,14 +64,22 @@ export const CommentBlogModal = ({ isOpen, onClose, blogId, auth }) => {
     async data => {
       try {
         await axios.post(`/api/blogs/${blogId}/comments`, data);
-        notifySuccess('Your comment has been posted, thank you.');
+        MySwal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Your comment has been posted, thank you.',
+        });
         reset();
         onClose();
       } catch (error) {
-        notifyError('There was an error posting your comment.');
+        MySwal.fire({
+          icon: 'error',
+          title: 'error',
+          text: 'There was an error posting your comment.',
+        });
       }
     },
-    [notifySuccess, notifySuccess],
+    [blogId, onClose, reset],
   );
 
   return (

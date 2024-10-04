@@ -1,6 +1,5 @@
 import { FaUserCheck } from 'react-icons/fa';
 import PrimaryButton from '../../PrimaryButton';
-import { ToastContainer } from 'react-toastify';
 import Modal from '../../Modal';
 import DangerButton from '@/Components/DangerButton';
 import axios from 'axios';
@@ -72,45 +71,42 @@ const AdminModalExperience = ({ experience, isOpen, onClose }) => {
   });
 
   return (
-    <div>
-      <ToastContainer />
-      <Modal show={isOpen} onClose={onClose}>
-        <div className="modal-box bg-indigo-200 w-[32rem] p-12">
-          <ViewStory experience={experience} />
-          {experience.approved ? (
-            <div className="flex justify-end mt-4 gap-2">
-              <DangerButton
-                onClick={() => {
-                  handleDelete(experience);
-                }}
-                className="flex items-center justify-center py-2 text-white bg-red-600"
-              >
-                Delete
-              </DangerButton>
-            </div>
-          ) : (
-            <div className="flex justify-end mt-4 gap-2 ">
-              <DangerButton
-                onClick={() => {
-                  handleDelete(experience);
-                }}
-                className="flex items-center justify-center  py-4 px-6 text-white bg-red-600"
-              >
-                Decline
-              </DangerButton>
-              <PrimaryButton
-                onClick={() => {
-                  handleApprove();
-                }}
-                className="flex items-center justify-center py-4 px-6 text-white bg-green-600"
-              >
-                <FaUserCheck className="mr-2" /> Approve
-              </PrimaryButton>
-            </div>
-          )}
-        </div>
-      </Modal>
-    </div>
+    <Modal show={isOpen} onClose={onClose}>
+      <div className="modal-box bg-indigo-200 w-[32rem] p-12">
+        <ViewStory experience={experience} />
+        {experience.approved ? (
+          <div className="flex justify-end mt-4 gap-2">
+            <DangerButton
+              onClick={() => {
+                handleDelete(experience);
+              }}
+              className="flex items-center justify-center py-2 text-white bg-red-600"
+            >
+              Delete
+            </DangerButton>
+          </div>
+        ) : (
+          <div className="flex justify-end mt-4 gap-2 ">
+            <DangerButton
+              onClick={() => {
+                handleDelete(experience);
+              }}
+              className="flex items-center justify-center  py-4 px-6 text-white bg-red-600"
+            >
+              Decline
+            </DangerButton>
+            <PrimaryButton
+              onClick={() => {
+                handleApprove();
+              }}
+              className="flex items-center justify-center py-4 px-6 text-white bg-green-600"
+            >
+              <FaUserCheck className="mr-2" /> Approve
+            </PrimaryButton>
+          </div>
+        )}
+      </div>
+    </Modal>
   );
 };
 

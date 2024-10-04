@@ -4,15 +4,17 @@ import { MdForum } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { forumSchema } from '../../../../core/schema';
-import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
-import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
 import SelectInput from '@/Components/SelectField';
 import { experienceOptions, lagunaLocations } from './ForumOptions';
 import { useCallback } from 'react';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const ForumForm = ({ handleSubmit, closeModal, register, errors, setValue, isSubmitting, onSubmit }) => {
   return (
@@ -65,7 +67,6 @@ const ForumForm = ({ handleSubmit, closeModal, register, errors, setValue, isSub
 };
 export const ForumModal = () => {
   const { handleOpen, isOpen, closeModal } = useModal();
-  const { notifyError, notifySuccess } = useToastNotifications();
 
   const form = useForm({
     mode: 'all',
@@ -81,21 +82,26 @@ export const ForumModal = () => {
     formState: { errors, isSubmitting },
   } = form;
 
-  const onSubmit = useCallback(
-    async data => {
-      try {
-        await axios.post('/api/experience', data);
-        notifySuccess('Form submitted successfully!');
-        closeModal();
-        reset();
-      } catch (error) {
-        notifyError('Form submission failed!');
-        closeModal();
-        reset();
-      }
-    },
-    [notifyError, notifySuccess],
-  );
+  const onSubmit = useCallback(async data => {
+    try {
+      await axios.post('/api/experience', data);
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Content submitted successfully.',
+      });
+      closeModal();
+      reset();
+    } catch (error) {
+      MySwal.fire({
+        icon: 'error',
+        title: 'error',
+        text: 'Content submitted unsuccessfully.',
+      });
+      closeModal();
+      reset();
+    }
+  }, []);
 
   const handleClose = useCallback(() => {
     reset();
@@ -104,11 +110,9 @@ export const ForumModal = () => {
 
   return (
     <div>
-      <ToastContainer />
       <PrimaryButton onClick={handleOpen} className="py-4 px-6">
         Share Story <MdForum className="ml-2" />
       </PrimaryButton>
-
       <Modal show={isOpen} onClose={handleClose}>
         <div className="modal-box bg-indigo-200 max-w-7xl p-12">
           <ForumForm

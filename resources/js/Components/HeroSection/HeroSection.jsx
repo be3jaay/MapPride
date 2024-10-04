@@ -26,7 +26,7 @@ export const HeroSection = () => {
         </div>
       </div>
       <div className="w-full flex flex-col-reverse items-center justify-center md:flex-col">
-        <Link href={route('register')}>
+        <Link href={route('register')} className="w-full ] flex items-center justify-center">
           <PrimaryButton className="py-4 w-full md:w-[20rem] flex items-center justify-center">
             Get Involved
           </PrimaryButton>

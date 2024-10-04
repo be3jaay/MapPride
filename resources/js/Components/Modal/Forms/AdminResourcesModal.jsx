@@ -5,12 +5,14 @@ import { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resourcesForumSchema } from '../../../../core/schema';
-import { ToastContainer } from 'react-toastify';
-import { useToastNotifications } from '../../../../core/hooks';
 import axios from 'axios';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const ResourcesModalForm = ({ handleSubmit, onSubmit, register, tabs, errors, isSubmitting }) => {
   return (
@@ -43,7 +45,6 @@ const ResourcesModalForm = ({ handleSubmit, onSubmit, register, tabs, errors, is
 };
 export const AdminResourcesModal = () => {
   const [tabs, setTabs] = useState([]);
-  const { notifyError, notifySuccess } = useToastNotifications();
   const { handleOpen, isOpen, closeModal } = useModal();
 
   const form = useForm({
@@ -59,19 +60,24 @@ export const AdminResourcesModal = () => {
     formState: { isSubmitting, errors },
   } = form;
 
-  const onSubmit = useCallback(
-    async data => {
-      try {
-        await axios.post('/api/resources', data);
-        notifySuccess('Your resources has been created, thank you.');
-        closeModal();
-        reset();
-      } catch (error) {
-        notifyError('There was an error posting your experience.');
-      }
-    },
-    [notifySuccess, notifyError],
-  );
+  const onSubmit = useCallback(async data => {
+    try {
+      await axios.post('/api/resources', data);
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Your resources has been created, thank you.',
+      });
+      closeModal();
+      reset();
+    } catch (error) {
+      MySwal.fire({
+        icon: 'error',
+        title: 'error',
+        text: 'There was an error posting your resources',
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const fetchTabs = async () => {
@@ -89,7 +95,6 @@ export const AdminResourcesModal = () => {
 
   return (
     <div>
-      <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
         Create Resources Content
         <MdForum className="ml-2" />

@@ -1,6 +1,5 @@
 import { FaUserCheck } from 'react-icons/fa';
 import PrimaryButton from '../../PrimaryButton';
-import { ToastContainer } from 'react-toastify';
 import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -97,7 +96,6 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
 
   return (
     <Modal show={isOpen} onClose={onClose}>
-      <ToastContainer />
       <div className="modal-box bg-indigo-200 w-[60rem] p-12">
         <div className="">
           <h2 className="text-black text-2xl font-bold">Tab Title: {training.tabs_title}</h2>

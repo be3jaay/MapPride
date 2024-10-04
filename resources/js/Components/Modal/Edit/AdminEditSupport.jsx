@@ -1,5 +1,4 @@
 import PrimaryButton from '../../PrimaryButton';
-import { ToastContainer } from 'react-toastify';
 import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -85,19 +84,16 @@ export const AdminEditSupport = ({ support, isOpen, onClose }) => {
   }, [support, reset]);
 
   return (
-    <div>
-      <ToastContainer />
-      <Modal show={isOpen} onClose={onClose}>
-        <div className="modal-box bg-indigo-200 w-[60rem] p-12">
-          <EditSupportForms
-            errors={errors}
-            handleSubmit={handleSubmit}
-            handleUpdate={handleUpdate}
-            isSubmitting={isSubmitting}
-            register={register}
-          />
-        </div>
-      </Modal>
-    </div>
+    <Modal show={isOpen} onClose={onClose}>
+      <div className="modal-box bg-indigo-200 w-[60rem] p-12">
+        <EditSupportForms
+          errors={errors}
+          handleSubmit={handleSubmit}
+          handleUpdate={handleUpdate}
+          isSubmitting={isSubmitting}
+          register={register}
+        />
+      </div>
+    </Modal>
   );
 };

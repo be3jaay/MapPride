@@ -3,7 +3,7 @@ import { FaChevronUp } from 'react-icons/fa';
 
 export default function Footer() {
   return (
-    <footer className="bg-white">
+    <footer className="bg-indigo-50">
       <div className="relative mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 lg:pt-24">
         <div className="absolute end-4 top-4 sm:end-6 sm:top-6 lg:end-8 lg:top-8">
           <a
@@ -18,9 +18,9 @@ export default function Footer() {
         <div className=" lg:flex lg:items-end lg:justify-between">
           <div className="flex items-center flex-col justify-center lg:flex lg:items-start">
             <img src={ally} alt="" className="w-12 h-12" />
-            <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 lg:text-left">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt consequuntur amet culpa cum itaque
-              neque.
+            <p className="mx-auto mt-6 max-w-lg text-center leading-relaxed text-gray-500 lg:text-left">
+              This is a community portal that provides inclusive environment, such as safe spaces, healthcare
+              facilities, government services, and support association.
             </p>
           </div>
         </div>
