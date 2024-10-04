@@ -59,14 +59,20 @@ const useTableData = apiEndpoint => {
     }
   };
 
-  const handlePageChange = newPage => {
-    setPage(newPage);
-  };
+  const handlePageChange = useCallback(
+    newPage => {
+      setPage(newPage);
+    },
+    [setPage],
+  );
 
-  const handleViewClick = item => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
-  };
+  const handleViewClick = useCallback(
+    item => {
+      setSelectedItem(item);
+      setIsModalOpen(true);
+    },
+    [setSelectedItem, setIsModalOpen],
+  );
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false);

@@ -19,7 +19,6 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
     handleSubmit,
     reset,
     formState: { isSubmitting, errors },
-    setError,
   } = form;
 
   const handleUpdate = async data => {
@@ -97,8 +96,8 @@ export const AdminEditMap = ({ map, isOpen, onClose }) => {
                   className="select w-full bg-white text-black font-bold"
                   {...register('location', { required: 'The location field is required.' })}
                 >
-                  {selection.map((item, index) => (
-                    <option key={index} value={item.location}>
+                  {selection.map(item => (
+                    <option key={item.id} value={item.location}>
                       {item.location}
                     </option>
                   ))}

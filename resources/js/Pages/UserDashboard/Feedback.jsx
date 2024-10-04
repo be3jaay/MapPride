@@ -9,6 +9,10 @@ import axios from 'axios';
 import PrimaryButton from '@/Components/PrimaryButton';
 import InputError from '@/Components/InputError';
 import { useCallback } from 'react';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const FormContent = ({ register, errors, auth }) => {
   return (
@@ -105,7 +109,11 @@ export default function Feedback({ auth }) {
       });
       reset();
     } catch (error) {
-      notifyError('Form submission failed!');
+      MySwal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Form submission failed!',
+      });
       reset();
     }
   }, []);

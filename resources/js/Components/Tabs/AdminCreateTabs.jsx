@@ -1,6 +1,6 @@
 import Modal from '@/Components/Modal';
 import PrimaryButton from '../PrimaryButton';
-import { useState } from 'react';
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { tabSchema } from '../../../core/schema';
@@ -10,6 +10,7 @@ import GhostButton from '../GhostButton';
 import InputError from '../InputError';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import useModal from '../../../core/hooks/use-modal';
 
 const MySwal = withReactContent(Swal);
 
@@ -41,16 +42,7 @@ const TabForms = ({ handleSubmit, onSubmit, closeModal, register, isSubmitting, 
   );
 };
 export const AdminCreateTabs = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-    reset();
-  };
+  const { handleOpen, isOpen, closeModal } = useModal();
 
   const form = useForm({
     mode: 'all',
@@ -64,7 +56,7 @@ export const AdminCreateTabs = () => {
     formState: { errors, isSubmitting },
   } = form;
 
-  const onSubmit = async data => {
+  const onSubmit = useCallback(async data => {
     try {
       await axios.post('/api/tabs', data);
       reset();
@@ -80,7 +72,7 @@ export const AdminCreateTabs = () => {
         text: 'Tabs was not created successfully.',
       });
     }
-  };
+  });
 
   return (
     <div>

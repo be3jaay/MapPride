@@ -97,7 +97,7 @@ export const AdminTrainingModal = () => {
   const handleClose = useCallback(() => {
     reset();
     closeModal();
-  }, [reset, closeModale]);
+  }, [reset, closeModal]);
 
   useEffect(() => {
     const fetchTabs = async () => {

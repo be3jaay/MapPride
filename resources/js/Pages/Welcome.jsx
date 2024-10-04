@@ -7,21 +7,24 @@ import Footer from '@/Components/FooterSection/Footer';
 import { NavigationData } from '../../core/constant/NavigationData/NavigationData';
 import { route } from 'ziggy-js';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 export default function Welcome({ auth }) {
   const [toggle, setToggle] = useState(false);
   const [show, setShow] = useState(false);
 
-  const viewNavigation = () => {
+  const viewNavigation = useCallback(() => {
     setShow(true);
     setToggle(true);
-  };
+  });
 
-  const closeNavigation = () => {
+  const closeNavigation = useCallback(() => {
     setShow(false);
-    !toggle;
-  };
+  });
+
+  const closeNav = useCallback(() => {
+    setShow(false);
+  });
 
   return (
     <React.Fragment>
@@ -58,7 +61,7 @@ export default function Welcome({ auth }) {
         </ul>
         <GiHamburgerMenu className="flex md:hidden text-2xl text-indigo-700" onClick={viewNavigation} />
         {show && (
-          <div className="bg-indigo-700 h-screen">
+          <div className="bg-indigo-700 h-screen transition-all">
             <div className="fixed top-0 left-0 w-full h-full bg-indigo-700 z-100">
               <div className="flex justify-end p-4">
                 <button onClick={closeNavigation} className="text-white text-lg">
@@ -67,14 +70,7 @@ export default function Welcome({ auth }) {
               </div>
               <div className="flex flex-col items-center justify-center gap-4 h-screen bg-indigo-700">
                 {NavigationData.map(item => (
-                  <a
-                    key={item.id}
-                    href={item.path}
-                    className="text-white"
-                    onClick={() => {
-                      setShow(false);
-                    }}
-                  >
+                  <a key={item.id} href={item.path} className="text-white" onClick={closeNav}>
                     {item.title}
                   </a>
                 ))}

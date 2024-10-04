@@ -10,6 +10,7 @@ import GhostButton from '../GhostButton';
 import InputError from '../InputError';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import useModal from '../../../core/hooks/use-modal';
 
 const MySwal = withReactContent(Swal);
 
@@ -41,16 +42,7 @@ const TrainingTabsForm = ({ handleSubmit, onSubmit, closeModal, errors, register
   );
 };
 export const AdminTrainingTabs = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-    reset();
-  };
+  const { handleOpen, isOpen, closeModal } = useModal();
 
   const form = useForm({
     mode: 'all',
@@ -68,7 +60,6 @@ export const AdminTrainingTabs = () => {
     try {
       await axios.post('/api/training-tabs', data);
       reset();
-      notifySuccess('Tabs created successfully.');
       MySwal.fire({
         icon: 'success',
         title: 'Success',

@@ -24,8 +24,8 @@ const ModalMapForm = ({
       <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
         Selection
         <select className="select w-full bg-white text-black font-bold my-4" {...register('location')}>
-          {selection.map((item, index) => (
-            <option key={index} value={item.location}>
+          {selection.map(item => (
+            <option key={item.id} value={item.location}>
               {item.location}
             </option>
           ))}

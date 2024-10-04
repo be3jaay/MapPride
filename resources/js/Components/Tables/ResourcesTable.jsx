@@ -42,26 +42,23 @@ export const ResourcesTable = () => {
           </thead>
           <tbody className="divide-y divide-gray-200">
             {Array.isArray(resources) && resources.length > 0 ? (
-              resources.map(resources => (
-                <tr key={resources.id}>
-                  <td style={tableStyle}>{resources.tabs_title}</td>
-                  <td style={tableStyle}>{resources.title}</td>
-                  <td style={tableStyle}>{resources.description}</td>
-                  <td style={tableStyle}>{resources.url_link}</td>
-                  <td style={tableStyle}>{formattedDate(resources.updated_at)}</td>
+              resources.map(item => (
+                <tr key={item.id}>
+                  <td style={tableStyle}>{item.tabs_title}</td>
+                  <td style={tableStyle}>{item.title}</td>
+                  <td style={tableStyle}>{item.description}</td>
+                  <td style={tableStyle}>{item.url_link}</td>
+                  <td style={tableStyle}>{formattedDate(item.updated_at)}</td>
                   <td style={tableStyle}>
                     <PrimaryButton
-                      onClick={() => handleViewClick(resources)}
+                      onClick={() => handleViewClick(item)}
                       className="flex items-center justify-center py-2"
                     >
                       Edit
                     </PrimaryButton>
                   </td>
                   <td style={tableStyle}>
-                    <DangerButton
-                      onClick={() => handleDelete(resources)}
-                      className="flex items-center justify-center py-2"
-                    >
+                    <DangerButton onClick={() => handleDelete(item)} className="flex items-center justify-center py-2">
                       Delete
                     </DangerButton>
                   </td>
