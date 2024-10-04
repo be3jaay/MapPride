@@ -5,7 +5,7 @@ const AdminViewFeedback = ({ feedback, isOpen, onClose }) => {
   if (!feedback) return null;
 
   return (
-    <>
+    <div>
       <ToastContainer />
       <Modal show={isOpen} onClose={onClose}>
         <div className="modal-box bg-indigo-200 w-[32rem] p-12">
@@ -25,7 +25,7 @@ const AdminViewFeedback = ({ feedback, isOpen, onClose }) => {
           </div>
         </div>
       </Modal>
-    </>
+    </div>
   );
 };
 

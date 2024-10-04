@@ -4,10 +4,8 @@ import { Alert } from '@/Components/Alert';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CustomTabs } from '@/Components/Tabs/CustomTabs';
-import PrimaryButton from '@/Components/PrimaryButton';
 import recruitment from '../../../core/images/recruitment.png';
 import { useDateFormat } from '../../../core/hooks';
-import { Badge } from '@/Components/Badge';
 import TrainingCard from '@/Components/TrainingCard';
 
 export default function Training({ auth }) {

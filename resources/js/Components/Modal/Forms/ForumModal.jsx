@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
+import { TextField } from '@/Components/TextField';
 
 export const ForumModal = () => {
   const { handleOpen, isOpen, closeModal } = useModal();
@@ -17,7 +18,7 @@ export const ForumModal = () => {
   const form = useForm({
     mode: 'all',
     resolver: yupResolver(forumSchema),
-    defaultValues: forumSchema.getDefault(),
+    defaultValues: { ...forumSchema.getDefault() },
   });
 
   const {
@@ -64,46 +65,34 @@ export const ForumModal = () => {
             <h3 className="font-bold text-2xl text-indigo-800">
               How are you? This is a freedom wall, feel free to share your story here.
             </h3>
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Username
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="Type your anonymous name here.."
-                {...register('username')}
-              />
-            </label>
-            <InputError message={errors.username?.message} />
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Title
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="Type your title here.."
-                {...register('title')}
-              />
-            </label>
-            <InputError message={errors.title?.message} />
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Experience
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="What type of experience (e.g., Harassment)"
-                {...register('experience_type')}
-              />
-            </label>
-            <InputError message={errors.experience_type?.message} />
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Location
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="Where did the experience happen..."
-                {...register('location')}
-              />
-            </label>
-            <InputError message={errors.location?.message} />
+            <TextField
+              label="Username"
+              placeholder="Type your anonymous name here.."
+              register={register}
+              name="username"
+              errors={errors}
+            />
+            <TextField
+              label="Title"
+              placeholder="Type your title here..."
+              register={register}
+              name="title"
+              errors={errors}
+            />
+            <TextField
+              label="Experience"
+              placeholder="What type of experience (e.g., Harassment)"
+              register={register}
+              name="experience_type"
+              errors={errors}
+            />
+            <TextField
+              label="Location"
+              placeholder="Where did the experience happen..."
+              register={register}
+              name="location"
+              errors={errors}
+            />
             <textarea
               placeholder="Share your story here..."
               className="textarea border-black w-full h-64 bg-white font-bold text-black"

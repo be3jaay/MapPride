@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { useToastNotifications } from '../../../../core/hooks';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { TextField } from '@/Components/TextField';
 
 const MySwal = withReactContent(Swal);
 
@@ -21,10 +22,7 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
     mode: 'all',
     resolver: yupResolver(resourcesForumSchema),
     defaultValues: {
-      tabs_title: resources.tabs_title,
-      title: resources.title,
-      description: resources.description,
-      url_link: resources.url_link,
+      ...resourcesForumSchema.getDefault(),
     },
   });
 
@@ -32,7 +30,7 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = form;
 
   const handleUpdate = async data => {
@@ -60,7 +58,7 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
   }, [resources, reset]);
 
   return (
-    <>
+    <div>
       <ToastContainer />
       <Modal show={isOpen} onClose={onClose}>
         <div className="modal-box bg-indigo-200 w-[60rem] p-12">
@@ -69,15 +67,13 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
           </div>
           <form onSubmit={handleSubmit(handleUpdate)}>
             <div className="my-4">
-              <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-                Title
-                <input
-                  type="text"
-                  className="input w-full bg-transparent my-2"
-                  placeholder="Title here..."
-                  {...register('title')}
-                />
-              </label>
+              <TextField
+                label="Title"
+                placeholder="Type your title here..."
+                register={register}
+                name="title"
+                errors={errors}
+              />
             </div>
             <div className="my-4">
               <textarea
@@ -87,15 +83,13 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
               ></textarea>
             </div>
             <div className="my-4">
-              <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-                Link
-                <input
-                  type="text"
-                  className="input w-full bg-transparent my-2"
-                  placeholder="Link here"
-                  {...register('url_link')}
-                />
-              </label>
+              <TextField
+                label="Link"
+                placeholder="Paste the url link..."
+                register={register}
+                name="url_link"
+                errors={errors}
+              />
             </div>
             <div className="flex justify-end mt-4 gap-2 w-full">
               <PrimaryButton
@@ -109,6 +103,6 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
           </form>
         </div>
       </Modal>
-    </>
+    </div>
   );
 };

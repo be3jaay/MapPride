@@ -8,7 +8,7 @@ import axios from 'axios';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useDateFormat } from '../../../core/hooks';
 import { FaReply, FaRegEyeSlash, FaEye } from 'react-icons/fa';
-
+import anonymous from '../../../core/images/anonymous.png';
 import SecondaryButton from '@/Components/SecondaryButton';
 
 export default function CommunityThread({ auth }) {
@@ -95,6 +95,8 @@ export default function CommunityThread({ auth }) {
     return getFormattedDate(dateString);
   };
 
+  console.log(blogs);
+
   return (
     <AuthenticatedLayout user={user}>
       <div className="w-full bg-indigo-50 h-full">
@@ -122,7 +124,11 @@ export default function CommunityThread({ auth }) {
               <div className="flex items-center gap-3 mb-4">
                 <div className="avatar ">
                   <div className="w-10 rounded-full">
-                    <img src={`/storage/${item.icon}`} aria-hidden alt="No Image" className="h-auto w-full" />
+                    {item.icon ? (
+                      <img src={`/storage/${item.icon}`} aria-hidden alt="No Image" className="h-auto w-full" />
+                    ) : (
+                      <img src={anonymous} aria-hidden alt="No Image" className="h-auto w-full" />
+                    )}
                   </div>
                 </div>
                 <div>
@@ -130,7 +136,9 @@ export default function CommunityThread({ auth }) {
                   <p className="text-gray-700">{formattedDate(item.created_at)}</p>
                 </div>
               </div>
-              <img src={`/storage/${item.image}`} aria-hidden alt="No Image" className="h-auto w-full rounded-md" />
+              {item.image ? (
+                <img src={`/storage/${item.image}`} aria-hidden alt="No Image" className="h-auto w-full rounded-md" />
+              ) : null}
 
               <div className="bg-gray-100 p-4 sm:p-6 ">
                 <h3 className="mt-0.5 text-lg text-gray-900">{item.title}</h3>

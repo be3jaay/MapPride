@@ -10,6 +10,7 @@ import { useToastNotifications } from '../../../../core/hooks';
 import axios from 'axios';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
+import { TextField } from '@/Components/TextField';
 
 export const AdminResourcesModal = () => {
   const [tabs, setTabs] = useState([]);
@@ -19,7 +20,7 @@ export const AdminResourcesModal = () => {
   const form = useForm({
     mode: 'all',
     resolver: yupResolver(resourcesForumSchema),
-    defaultValues: resourcesForumSchema.getDefault(),
+    defaultValues: { ...resourcesForumSchema.getDefault() },
   });
 
   const {
@@ -60,7 +61,7 @@ export const AdminResourcesModal = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
         Create Resources Content
@@ -83,42 +84,32 @@ export const AdminResourcesModal = () => {
               </select>
             </label>
             <InputError message={errors.tabs_title?.message} />
-
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Title
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="Title"
-                {...register('title')}
-              />
-            </label>
-            <InputError message={errors.title?.message} />
-
+            <TextField
+              label="Title"
+              placeholder="Type your title here..."
+              register={register}
+              name="title"
+              errors={errors}
+            />
             <textarea
               placeholder="Enter description here..."
               className="textarea border-black w-full h-64 bg-white font-bold text-black"
               {...register('description')}
             ></textarea>
             <InputError message={errors.description?.message} />
-
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Link
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="Paste the url link"
-                {...register('url_link')}
-              />
-            </label>
-            <InputError message={errors.url_link?.message} />
-
+            <TextField
+              label="Link"
+              placeholder="Paste the url link..."
+              register={register}
+              name="url_link"
+              errors={errors}
+            />
             <PrimaryButton className="w-full justify-center py-4" disabled={isSubmitting} type="submit">
               {isSubmitting ? 'Processing...' : 'Submit'}
             </PrimaryButton>
           </form>
         </div>
       </Modal>
-    </>
+    </div>
   );
 };
