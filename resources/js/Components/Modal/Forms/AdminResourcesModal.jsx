@@ -10,7 +10,37 @@ import { useToastNotifications } from '../../../../core/hooks';
 import axios from 'axios';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
+import { TextField } from '@/Components/TextField';
 
+const ResourcesModalForm = ({ handleSubmit, onSubmit, register, tabs, errors, isSubmitting }) => {
+  return (
+    <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
+      <h3 className="font-bold text-2xl text-indigo-800">Create Resources Content</h3>
+      <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+        Tab
+        <select className="select w-full bg-white text-black font-bold my-4" {...register('tabs_title')}>
+          {tabs.map(title => (
+            <option key={title.id} value={title}>
+              {title}
+            </option>
+          ))}
+        </select>
+      </label>
+      <InputError message={errors.tabs_title?.message} />
+      <TextField label="Title" placeholder="Type your title here..." register={register} name="title" errors={errors} />
+      <textarea
+        placeholder="Enter description here..."
+        className="textarea border-black w-full h-64 bg-white font-bold text-black"
+        {...register('description')}
+      ></textarea>
+      <InputError message={errors.description?.message} />
+      <TextField label="Link" placeholder="Paste the url link..." register={register} name="url_link" errors={errors} />
+      <PrimaryButton className="w-full justify-center py-4" disabled={isSubmitting} type="submit">
+        {isSubmitting ? 'Processing...' : 'Submit'}
+      </PrimaryButton>
+    </form>
+  );
+};
 export const AdminResourcesModal = () => {
   const [tabs, setTabs] = useState([]);
   const { notifyError, notifySuccess } = useToastNotifications();
@@ -19,7 +49,7 @@ export const AdminResourcesModal = () => {
   const form = useForm({
     mode: 'all',
     resolver: yupResolver(resourcesForumSchema),
-    defaultValues: resourcesForumSchema.getDefault(),
+    defaultValues: { ...resourcesForumSchema.getDefault() },
   });
 
   const {
@@ -60,65 +90,24 @@ export const AdminResourcesModal = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen}>
         Create Resources Content
         <MdForum className="ml-2" />
       </PrimaryButton>
       <Modal show={isOpen} onClose={handleClose}>
-        <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
-          <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
-            <h3 className="font-bold text-2xl text-indigo-800">
-              How are you? This is a freedom wall, feel free to share your experience here.
-            </h3>
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Tab
-              <select className="select w-full bg-white text-black font-bold my-4" {...register('tabs_title')}>
-                {tabs.map((title, index) => (
-                  <option key={index} value={title}>
-                    {title}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <InputError message={errors.tabs_title?.message} />
-
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Title
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="Title"
-                {...register('title')}
-              />
-            </label>
-            <InputError message={errors.title?.message} />
-
-            <textarea
-              placeholder="Enter description here..."
-              className="textarea border-black w-full h-64 bg-white font-bold text-black"
-              {...register('description')}
-            ></textarea>
-            <InputError message={errors.description?.message} />
-
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Link
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="Paste the url link"
-                {...register('url_link')}
-              />
-            </label>
-            <InputError message={errors.url_link?.message} />
-
-            <PrimaryButton className="w-full justify-center py-4" disabled={isSubmitting} type="submit">
-              {isSubmitting ? 'Processing...' : 'Submit'}
-            </PrimaryButton>
-          </form>
+        <div className="modal-box bg-indigo-200 p-12 w-[96rem]">
+          <ResourcesModalForm
+            errors={errors}
+            handleSubmit={handleSubmit}
+            isSubmitting={isSubmitting}
+            onSubmit={onSubmit}
+            register={register}
+            tabs={tabs}
+          />
         </div>
       </Modal>
-    </>
+    </div>
   );
 };

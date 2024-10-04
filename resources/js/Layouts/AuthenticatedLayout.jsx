@@ -7,6 +7,7 @@ import { FaChevronDown, FaBars } from 'react-icons/fa6';
 import ally from '../../core/images/ally.png';
 import { route } from 'ziggy-js';
 import { CollapsedSidebar } from '@/Components/CollapsedSidebar';
+import anonymous from '../../core/images/anonymous.png';
 
 export default function Authenticated({ header, children }) {
   const { auth } = usePage().props;
@@ -16,7 +17,7 @@ export default function Authenticated({ header, children }) {
     if (auth.user.profile_picture) {
       return `/storage/${auth.user.profile_picture}`;
     }
-    return '../../core/images/about.png';
+    return anonymous;
   };
 
   const toggleSidebar = () => {

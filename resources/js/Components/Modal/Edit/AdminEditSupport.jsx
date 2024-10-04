@@ -9,8 +9,36 @@ import { useEffect } from 'react';
 import { useToastNotifications } from '../../../../core/hooks';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { TextField } from '@/Components/TextField';
 
 const MySwal = withReactContent(Swal);
+
+const EditSupportForms = ({ handleSubmit, handleUpdate, register, errors, isSubmitting }) => {
+  return (
+    <form onSubmit={handleSubmit(handleUpdate)}>
+      <TextField label="Title" placeholder="Type your title here..." register={register} name="title" errors={errors} />
+      <textarea
+        placeholder="Share your story here..."
+        className="textarea border-black w-full h-64 bg-white font-bold text-black"
+        {...register('description')}
+      ></textarea>
+      <TextField
+        label="Phone"
+        placeholder="Phone number here..."
+        register={register}
+        name="phoneNumber"
+        errors={errors}
+      />
+      <PrimaryButton
+        className="flex items-center  w-full justify-center py-4 text-white "
+        disabled={isSubmitting}
+        type="submit"
+      >
+        {isSubmitting ? 'Updating...' : 'Submit'}
+      </PrimaryButton>
+    </form>
+  );
+};
 
 export const AdminEditSupport = ({ support, isOpen, onClose }) => {
   if (!support) return null;
@@ -20,18 +48,14 @@ export const AdminEditSupport = ({ support, isOpen, onClose }) => {
   const form = useForm({
     mode: 'all',
     resolver: yupResolver(supportSchema),
-    defaultValues: {
-      title: support.title,
-      description: support.description,
-      phoneNumber: support.phoneNumber,
-    },
+    defaultValues: { ...supportSchema.getDefault() },
   });
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = form;
 
   const handleUpdate = async data => {
@@ -58,44 +82,19 @@ export const AdminEditSupport = ({ support, isOpen, onClose }) => {
   }, [support, reset]);
 
   return (
-    <>
+    <div>
       <ToastContainer />
       <Modal show={isOpen} onClose={onClose}>
         <div className="modal-box bg-indigo-200 w-[60rem] p-12">
-          <form onSubmit={handleSubmit(handleUpdate)}>
-            <div className="my-4">
-              <span className="text-lg text-black">Title: </span>
-              <input
-                type="text"
-                className="input w-full bg-white text-black my-2"
-                placeholder="Title here..."
-                {...register('title')}
-              />
-            </div>
-            <textarea
-              placeholder="Share your story here..."
-              className="textarea border-black w-full h-64 bg-white font-bold text-black"
-              {...register('description')}
-            ></textarea>
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Phone
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="Phone number here.."
-                {...register('phoneNumber')}
-              />
-            </label>
-            <PrimaryButton
-              className="flex items-center  w-full justify-center py-4 text-white "
-              disabled={isSubmitting}
-              type="submit"
-            >
-              Update
-            </PrimaryButton>
-          </form>
+          <EditSupportForms
+            errors={errors}
+            handleSubmit={handleSubmit}
+            handleUpdate={handleUpdate}
+            isSubmitting={isSubmitting}
+            register={register}
+          />
         </div>
       </Modal>
-    </>
+    </div>
   );
 };

@@ -106,14 +106,16 @@ export default function Register() {
               required
               onChange={handleSelectChange}
             >
-              <option value="">Select an option</option>
-              <option value="lesbian">Lesbian</option>
-              <option value="gay">Gay</option>
-              <option value="bisexual">Bisexual</option>
-              <option value="transgender">Transgender</option>
-              <option value="queer">Queer</option>
-              <option value="intersex">Intersex</option>
-              <option value="asexual">Asexual</option>
+              <option value="Prefer Not To Say">Prefer Not To Say</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Lesbian">Lesbian</option>
+              <option value="Gay">Gay</option>
+              <option value="Bisexual">Bisexual</option>
+              <option value="Transgender">Transgender</option>
+              <option value="Queer">Queer</option>
+              <option value="Intersex">Intersex</option>
+              <option value="Asexual">Asexual</option>
               <option value="other">Other</option>
             </select>
           )}

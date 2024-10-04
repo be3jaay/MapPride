@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
+import { TextField } from '@/Components/TextField';
 
 export const AdminHotlineModal = () => {
   const { handleOpen, isOpen, closeModal } = useModal();
@@ -55,32 +56,26 @@ export const AdminHotlineModal = () => {
             <h3 className="font-bold text-2xl text-indigo-800 text-center">
               This modal is used to create support content for users.
             </h3>
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Title
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="Title"
-                {...register('title')}
-              />
-            </label>
-            <InputError message={errors.title?.message} />
+            <TextField
+              label="Title"
+              placeholder="Type your title here..."
+              register={register}
+              name="title"
+              errors={errors}
+            />
             <textarea
               placeholder="Enter description here..."
               className="textarea border-black w-full h-64 bg-white font-bold text-black"
               {...register('description')}
             ></textarea>
             <InputError message={errors.description?.message} />
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Phone
-              <input
-                type="text"
-                className="input w-full bg-transparent my-2"
-                placeholder="Paste the url link"
-                {...register('phoneNumber')}
-              />
-            </label>
-            <InputError message={errors.phoneNumber?.message} />
+            <TextField
+              label="Phone"
+              placeholder="Phone number here..."
+              register={register}
+              name="phoneNumber"
+              errors={errors}
+            />
             <PrimaryButton className="w-full justify-center py-4" disabled={processing} type="submit">
               Submit
             </PrimaryButton>

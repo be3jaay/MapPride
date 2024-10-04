@@ -27,7 +27,6 @@ export const BarGraph = () => {
     // Sort and get the top 3
     return Object.entries(counts)
       .sort(([, a], [, b]) => b - a) // Sort by count descending
-      .slice(0, 3) // Get top 3
       .map(([type]) => type); // Extract the types
   };
 
@@ -38,7 +37,18 @@ export const BarGraph = () => {
         label: 'Based on shared story LGBTQ+ commonly experience',
         data: processedData().map(type => barData.filter(item => item.experience_type.toUpperCase() === type).length), // Count occurrences for data
         borderColor: '#f3f3f3',
-        backgroundColor: ['#f72585', '#3a0ca3', '#57cc99'],
+        backgroundColor: [
+          '#7209b7',
+          '#800e13',
+          '#14213d',
+          '#3d405b',
+          '#14213d',
+          '#9e0059',
+          '#252422',
+          '#f2e8cf',
+          '#ffbe0b',
+          '#ffbe0b',
+        ],
       },
     ],
   };
