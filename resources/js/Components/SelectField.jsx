@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaRetweet } from 'react-icons/fa';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
 
-const SelectInput = ({ name, options, register, errors, setValue }) => {
+const SelectInput = ({ name, options, errors, setValue }) => {
   const [isOtherSelected, setIsOtherSelected] = useState(false);
 
   const handleSelectChange = e => {
@@ -50,10 +50,10 @@ const SelectInput = ({ name, options, register, errors, setValue }) => {
           onChange={handleSelectChange}
         >
           <option value="" disabled>
-            Select Types you've experienced
+            Select Types you&apos;ve experienced
           </option>
-          {options.map((option, index) => (
-            <option key={index} value={option}>
+          {options.map(option => (
+            <option key={option.id} value={option}>
               {option}
             </option>
           ))}

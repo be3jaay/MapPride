@@ -1,12 +1,10 @@
 import PrimaryButton from '../../PrimaryButton';
-import { ToastContainer } from 'react-toastify';
 import Modal from '../../Modal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resourcesForumSchema } from '../../../../core/schema';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useToastNotifications } from '../../../../core/hooks';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { TextField } from '@/Components/TextField';
@@ -56,8 +54,6 @@ const EditResourcesForms = ({ handleSubmit, handleUpdate, register, errors, isSu
 export const AdminEditResources = ({ resources, isOpen, onClose }) => {
   if (!resources) return null;
 
-  const { notifyError } = useToastNotifications();
-
   const form = useForm({
     mode: 'all',
     resolver: yupResolver(resourcesForumSchema),
@@ -84,7 +80,11 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
       reset();
       onClose();
     } catch (error) {
-      notifyError('There was an error updating the training content.');
+      MySwal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Resource content submitted incorrectly.',
+      });
     }
   };
 
@@ -98,22 +98,19 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
   }, [resources, reset]);
 
   return (
-    <div>
-      <ToastContainer />
-      <Modal show={isOpen} onClose={onClose}>
-        <div className="modal-box bg-indigo-200 w-[60rem] p-12">
-          <div className="">
-            <h2 className="text-black text-2xl">Edit Training: {resources.tabs_title}</h2>
-            <EditResourcesForms
-              errors={errors}
-              handleSubmit={handleSubmit}
-              handleUpdate={handleUpdate}
-              isSubmitting={isSubmitting}
-              register={register}
-            />
-          </div>
+    <Modal show={isOpen} onClose={onClose}>
+      <div className="modal-box bg-indigo-200 w-[60rem] p-12">
+        <div className="">
+          <h2 className="text-black text-2xl">Edit Training: {resources.tabs_title}</h2>
+          <EditResourcesForms
+            errors={errors}
+            handleSubmit={handleSubmit}
+            handleUpdate={handleUpdate}
+            isSubmitting={isSubmitting}
+            register={register}
+          />
         </div>
-      </Modal>
-    </div>
+      </div>
+    </Modal>
   );
 };
