@@ -14,16 +14,7 @@ import SelectInput from '@/Components/SelectField';
 import { experienceOptions, lagunaLocations } from './ForumOptions';
 import { useCallback } from 'react';
 
-const ForumForm = ({
-  handleSubmit,
-  closeModal,
-  register,
-  errors,
-  experienceOptions,
-  setValue,
-  lagunaLocations,
-  isSubmitting,
-}) => {
+const ForumForm = ({ handleSubmit, closeModal, register, errors, setValue, isSubmitting, onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <button
@@ -83,7 +74,6 @@ export const ForumModal = () => {
   });
 
   const {
-    processing,
     register,
     handleSubmit,
     setValue,
@@ -107,10 +97,10 @@ export const ForumModal = () => {
     [notifyError, notifySuccess],
   );
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     reset();
     closeModal();
-  };
+  }, [reset, closeModal]);
 
   return (
     <div>
@@ -130,6 +120,7 @@ export const ForumModal = () => {
             lagunaLocations={lagunaLocations}
             setValue={setValue}
             isSubmitting={isSubmitting}
+            onSubmit={onSubmit}
           />
         </div>
       </Modal>
