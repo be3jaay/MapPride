@@ -68,11 +68,9 @@ export const AdminResourcesModal = () => {
         <MdForum className="ml-2" />
       </PrimaryButton>
       <Modal show={isOpen} onClose={handleClose}>
-        <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
+        <div className="modal-box bg-indigo-200 p-12 w-[96rem]">
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
-            <h3 className="font-bold text-2xl text-indigo-800">
-              How are you? This is a freedom wall, feel free to share your experience here.
-            </h3>
+            <h3 className="font-bold text-2xl text-indigo-800">Create Resources Content</h3>
             <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
               Tab
               <select className="select w-full bg-white text-black font-bold my-4" {...register('tabs_title')}>

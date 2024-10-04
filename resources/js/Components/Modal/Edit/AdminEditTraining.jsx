@@ -60,62 +60,60 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
   }, [training, reset]);
 
   return (
-    <React.Fragment>
-      <Modal show={isOpen} onClose={onClose}>
-        <ToastContainer />
-        <div className="modal-box bg-indigo-200 w-[60rem] p-12">
-          <div className="">
-            <h2 className="text-black text-2xl font-bold">Tab Title: {training.tabs_title}</h2>
-          </div>
-          <form onSubmit={handleSubmit(handleUpdate)}>
-            <TextField
-              label="Title"
-              placeholder="Type your title here..."
-              register={register}
-              name="title"
-              errors={errors}
-            />
-            <div className="my-4">
-              <textarea
-                placeholder="Description here..."
-                className="textarea border-black w-full h-64 bg-white font-bold text-black"
-                {...register('description')}
-              ></textarea>
-            </div>
-            <TextField
-              label="Link"
-              placeholder="Paste the url link..."
-              register={register}
-              name="url_link"
-              errors={errors}
-            />
-            <TextField
-              label="Credits"
-              placeholder="Credits to owner..."
-              register={register}
-              name="credits"
-              errors={errors}
-            />
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Certificate
-              <select className="select w-full bg-white text-black font-bold my-4" {...register('certificate')}>
-                <option value={1}>Have Free Certificate</option>
-                <option value={0}>Have No Free Certificate</option>
-              </select>
-            </label>
-            <div className="w-full flex justify-end mt-4 gap-2">
-              <PrimaryButton
-                className="w-full flex items-center justify-center py-4 text-white bg-green-600"
-                disabled={isSubmitting}
-                type="submit"
-              >
-                {isSubmitting ? 'Updating...' : 'Update'}
-                <FaUserCheck className="ml-2" />
-              </PrimaryButton>
-            </div>
-          </form>
+    <Modal show={isOpen} onClose={onClose}>
+      <ToastContainer />
+      <div className="modal-box bg-indigo-200 w-[60rem] p-12">
+        <div className="">
+          <h2 className="text-black text-2xl font-bold">Tab Title: {training.tabs_title}</h2>
         </div>
-      </Modal>
-    </React.Fragment>
+        <form onSubmit={handleSubmit(handleUpdate)}>
+          <TextField
+            label="Title"
+            placeholder="Type your title here..."
+            register={register}
+            name="title"
+            errors={errors}
+          />
+          <div className="my-4">
+            <textarea
+              placeholder="Description here..."
+              className="textarea border-black w-full h-64 bg-white font-bold text-black"
+              {...register('description')}
+            ></textarea>
+          </div>
+          <TextField
+            label="Link"
+            placeholder="Paste the url link..."
+            register={register}
+            name="url_link"
+            errors={errors}
+          />
+          <TextField
+            label="Credits"
+            placeholder="Credits to owner..."
+            register={register}
+            name="credits"
+            errors={errors}
+          />
+          <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+            Certificate
+            <select className="select w-full bg-white text-black font-bold my-4" {...register('certificate')}>
+              <option value={1}>Have Free Certificate</option>
+              <option value={0}>Have No Free Certificate</option>
+            </select>
+          </label>
+          <div className="w-full flex justify-end mt-4 gap-2">
+            <PrimaryButton
+              className="w-full flex items-center justify-center py-4 text-white bg-green-600"
+              disabled={isSubmitting}
+              type="submit"
+            >
+              {isSubmitting ? 'Updating...' : 'Update'}
+              <FaUserCheck className="ml-2" />
+            </PrimaryButton>
+          </div>
+        </form>
+      </div>
+    </Modal>
   );
 };

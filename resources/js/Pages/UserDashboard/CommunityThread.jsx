@@ -95,8 +95,6 @@ export default function CommunityThread({ auth }) {
     return getFormattedDate(dateString);
   };
 
-  console.log(blogs);
-
   return (
     <AuthenticatedLayout user={user}>
       <div className="w-full bg-indigo-50 h-full">

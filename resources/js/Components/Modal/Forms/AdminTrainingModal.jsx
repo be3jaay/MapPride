@@ -13,6 +13,45 @@ import { useToastNotifications } from '../../../../core/hooks';
 import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
 
+const TrainingForms = ({ handleSubmit, onSubmit, tabs, processing, register, errors, isSubmitting }) => {
+  return (
+    <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
+      <h3 className="font-bold text-2xl text-indigo-800 text-center">
+        This modal is used to create training content .
+      </h3>
+      <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+        Tab
+        <select className="select w-full bg-white text-black font-bold my-4" {...register('tabs_title')}>
+          {tabs.map((title, index) => (
+            <option key={index} value={title}>
+              {title}
+            </option>
+          ))}
+        </select>
+      </label>
+      <InputError message={errors.tabs_title?.message} />
+      <TextField label="Title" placeholder="Type your title here..." register={register} name="title" errors={errors} />
+      <textarea
+        placeholder="Enter description here..."
+        className="textarea border-black w-full h-64 bg-white font-bold text-black"
+        {...register('description')}
+      ></textarea>
+      <InputError message={errors.description?.message} />
+      <TextField label="Link" placeholder="Paste the url link..." register={register} name="url_link" errors={errors} />
+      <TextField label="Credits" placeholder="Credits to owner..." register={register} name="credits" errors={errors} />
+      <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
+        Certificate
+        <select className="select w-full bg-white text-black font-bold my-4" {...register('certificate')}>
+          <option value={1}>Have Free Certificate</option>
+          <option value={0}>Have No Free Certificate</option>
+        </select>
+      </label>
+      <PrimaryButton className="w-full justify-center py-4" disabled={processing}>
+        {isSubmitting ? 'Submitting' : 'Submit'}
+      </PrimaryButton>
+    </form>
+  );
+};
 export const AdminTrainingModal = () => {
   const [tabs, setTabs] = useState([]);
 
@@ -70,59 +109,15 @@ export const AdminTrainingModal = () => {
       </PrimaryButton>
       <Modal show={isOpen} onClose={handleClose}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
-          <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
-            <h3 className="font-bold text-2xl text-indigo-800 text-center">
-              This modal is used to create training content .
-            </h3>
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Tab
-              <select className="select w-full bg-white text-black font-bold my-4" {...register('tabs_title')}>
-                {tabs.map((title, index) => (
-                  <option key={index} value={title}>
-                    {title}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <InputError message={errors.tabs_title?.message} />
-            <TextField
-              label="Title"
-              placeholder="Type your title here..."
-              register={register}
-              name="title"
-              errors={errors}
-            />
-            <textarea
-              placeholder="Enter description here..."
-              className="textarea border-black w-full h-64 bg-white font-bold text-black"
-              {...register('description')}
-            ></textarea>
-            <InputError message={errors.description?.message} />
-            <TextField
-              label="Link"
-              placeholder="Paste the url link..."
-              register={register}
-              name="url_link"
-              errors={errors}
-            />
-            <TextField
-              label="Credits"
-              placeholder="Credits to owner..."
-              register={register}
-              name="credits"
-              errors={errors}
-            />
-            <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-              Certificate
-              <select className="select w-full bg-white text-black font-bold my-4" {...register('certificate')}>
-                <option value={1}>Have Free Certificate</option>
-                <option value={0}>Have No Free Certificate</option>
-              </select>
-            </label>
-            <PrimaryButton className="w-full justify-center py-4" disabled={processing}>
-              {isSubmitting ? 'Submitting' : 'Submit'}
-            </PrimaryButton>
-          </form>
+          <TrainingForms
+            errors={errors}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+            processing={processing}
+            register={register}
+            tabs={tabs}
+            isSubmitting={isSubmitting}
+          />
         </div>
       </Modal>
     </div>

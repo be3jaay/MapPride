@@ -10,6 +10,7 @@ import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
+import SelectInput from '@/Components/SelectField';
 
 export const ForumModal = () => {
   const { handleOpen, isOpen, closeModal } = useModal();
@@ -25,6 +26,7 @@ export const ForumModal = () => {
     processing,
     register,
     handleSubmit,
+    setValue,
     reset,
     formState: { errors, isSubmitting },
   } = form;
@@ -44,6 +46,22 @@ export const ForumModal = () => {
     reset();
     closeModal();
   };
+
+  const experienceOptions = [
+    'Harassment',
+    'Discrimination',
+    'Bullying',
+    'Verbal Abuse',
+    'Physical Assault',
+    'Sexual Harassment',
+    'Exclusion from Services',
+    'Hate Speech',
+    'Cyberbullying',
+    'Family Rejection',
+    'Workplace Discrimination',
+    'Housing Discrimination',
+    'Medical Misinformation',
+  ];
 
   return (
     <>
@@ -79,12 +97,13 @@ export const ForumModal = () => {
               name="title"
               errors={errors}
             />
-            <TextField
+            <SelectInput
               label="Experience"
-              placeholder="What type of experience (e.g., Harassment)"
-              register={register}
               name="experience_type"
+              options={experienceOptions}
+              register={register}
               errors={errors}
+              setValue={setValue}
             />
             <TextField
               label="Location"

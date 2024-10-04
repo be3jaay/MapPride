@@ -13,6 +13,33 @@ import { TextField } from '@/Components/TextField';
 
 const MySwal = withReactContent(Swal);
 
+const EditSupportForms = ({ handleSubmit, handleUpdate, register, errors, isSubmitting }) => {
+  return (
+    <form onSubmit={handleSubmit(handleUpdate)}>
+      <TextField label="Title" placeholder="Type your title here..." register={register} name="title" errors={errors} />
+      <textarea
+        placeholder="Share your story here..."
+        className="textarea border-black w-full h-64 bg-white font-bold text-black"
+        {...register('description')}
+      ></textarea>
+      <TextField
+        label="Phone"
+        placeholder="Phone number here..."
+        register={register}
+        name="phoneNumber"
+        errors={errors}
+      />
+      <PrimaryButton
+        className="flex items-center  w-full justify-center py-4 text-white "
+        disabled={isSubmitting}
+        type="submit"
+      >
+        {isSubmitting ? 'Updating...' : 'Submit'}
+      </PrimaryButton>
+    </form>
+  );
+};
+
 export const AdminEditSupport = ({ support, isOpen, onClose }) => {
   if (!support) return null;
 
@@ -59,34 +86,13 @@ export const AdminEditSupport = ({ support, isOpen, onClose }) => {
       <ToastContainer />
       <Modal show={isOpen} onClose={onClose}>
         <div className="modal-box bg-indigo-200 w-[60rem] p-12">
-          <form onSubmit={handleSubmit(handleUpdate)}>
-            <TextField
-              label="Title"
-              placeholder="Type your title here..."
-              register={register}
-              name="title"
-              errors={errors}
-            />
-            <textarea
-              placeholder="Share your story here..."
-              className="textarea border-black w-full h-64 bg-white font-bold text-black"
-              {...register('description')}
-            ></textarea>
-            <TextField
-              label="Phone"
-              placeholder="Phone number here..."
-              register={register}
-              name="phoneNumber"
-              errors={errors}
-            />
-            <PrimaryButton
-              className="flex items-center  w-full justify-center py-4 text-white "
-              disabled={isSubmitting}
-              type="submit"
-            >
-              {isSubmitting ? 'Updating...' : 'Submit'}
-            </PrimaryButton>
-          </form>
+          <EditSupportForms
+            errors={errors}
+            handleSubmit={handleSubmit}
+            handleUpdate={handleUpdate}
+            isSubmitting={isSubmitting}
+            register={register}
+          />
         </div>
       </Modal>
     </div>

@@ -1,4 +1,3 @@
-import React from 'react';
 import InputError from './InputError';
 
 export const TextField = ({ label, placeholder, register, name, errors, ...rest }) => {
