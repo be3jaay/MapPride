@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { trainingSchema } from '../../../../core/schema';
 import axios from 'axios';
-import { useEffect, handleUpdate } from 'react';
+import { useEffect, useCallback } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { useToastNotifications } from '../../../../core/hooks';
 import Swal from 'sweetalert2';

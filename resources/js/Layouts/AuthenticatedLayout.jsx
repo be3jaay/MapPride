@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import { Link, usePage } from '@inertiajs/react';
@@ -13,12 +13,12 @@ export default function Authenticated({ header, children }) {
   const { auth } = usePage().props;
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
-  const getProfilePictureUrl = () => {
+  const getProfilePictureUrl = useCallback(() => {
     if (auth.user.profile_picture) {
       return `/storage/${auth.user.profile_picture}`;
     }
     return anonymous;
-  };
+  }, [auth.user.profile_picture, anonymous]);
 
   const toggleSidebar = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);

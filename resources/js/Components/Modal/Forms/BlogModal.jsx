@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useToastNotifications } from '../../../../core/hooks';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { IoMdAddCircle } from 'react-icons/io';
 import { TextField } from '@/Components/TextField';
 

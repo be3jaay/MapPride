@@ -1,7 +1,7 @@
 import Modal from '@/Components/Modal';
 import PrimaryButton from '../../PrimaryButton';
 import { MdForum } from 'react-icons/md';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resourcesForumSchema } from '../../../../core/schema';
@@ -11,7 +11,6 @@ import axios from 'axios';
 import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
-import { useCallback } from 'react';
 
 const ResourcesModalForm = ({ handleSubmit, onSubmit, register, tabs, errors, isSubmitting }) => {
   return (
@@ -95,7 +94,7 @@ export const AdminResourcesModal = () => {
         Create Resources Content
         <MdForum className="ml-2" />
       </PrimaryButton>
-      <Modal show={isOpen} onClose={handleClose}>
+      <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 p-12 w-[96rem]">
           <ResourcesModalForm
             errors={errors}

@@ -14,6 +14,64 @@ import SelectInput from '@/Components/SelectField';
 import { experienceOptions, lagunaLocations } from './ForumOptions';
 import { useCallback } from 'react';
 
+const ForumForm = ({
+  handleSubmit,
+  closeModal,
+  register,
+  errors,
+  experienceOptions,
+  setValue,
+  lagunaLocations,
+  isSubmitting,
+}) => {
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <button
+        className="btn btn-md text-black btn-circle btn-ghost absolute right-2 top-2"
+        type="button"
+        onClick={closeModal}
+      >
+        ✕
+      </button>
+      <h3 className="font-bold text-2xl text-indigo-800">
+        How are you? This is a freedom wall, feel free to share your story here.
+      </h3>
+      <TextField
+        label="Username"
+        placeholder="Type your anonymous name here.."
+        register={register}
+        name="username"
+        errors={errors}
+      />
+      <TextField label="Title" placeholder="Type your title here..." register={register} name="title" errors={errors} />
+      <SelectInput
+        label="Experience"
+        name="experience_type"
+        options={experienceOptions}
+        register={register}
+        errors={errors}
+        setValue={setValue}
+      />
+      <SelectInput
+        label="Location"
+        name="location"
+        options={lagunaLocations}
+        register={register}
+        errors={errors}
+        setValue={setValue}
+      />
+      <textarea
+        placeholder="Share your story here..."
+        className="textarea border-black w-full h-64 bg-white font-bold text-black"
+        {...register('description')}
+      ></textarea>
+      <InputError message={errors.description?.message} />
+      <PrimaryButton className="w-full py-4 justify-center" disabled={isSubmitting}>
+        {isSubmitting ? 'Submitting' : 'Submit'}
+      </PrimaryButton>
+    </form>
+  );
+};
 export const ForumModal = () => {
   const { handleOpen, isOpen, closeModal } = useModal();
   const { notifyError, notifySuccess } = useToastNotifications();
@@ -63,57 +121,16 @@ export const ForumModal = () => {
 
       <Modal show={isOpen} onClose={handleClose}>
         <div className="modal-box bg-indigo-200 max-w-7xl p-12">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <button
-              className="btn btn-md text-black btn-circle btn-ghost absolute right-2 top-2"
-              type="button"
-              onClick={closeModal}
-            >
-              ✕
-            </button>
-            <h3 className="font-bold text-2xl text-indigo-800">
-              How are you? This is a freedom wall, feel free to share your story here.
-            </h3>
-            <TextField
-              label="Username"
-              placeholder="Type your anonymous name here.."
-              register={register}
-              name="username"
-              errors={errors}
-            />
-            <TextField
-              label="Title"
-              placeholder="Type your title here..."
-              register={register}
-              name="title"
-              errors={errors}
-            />
-            <SelectInput
-              label="Experience"
-              name="experience_type"
-              options={experienceOptions}
-              register={register}
-              errors={errors}
-              setValue={setValue}
-            />
-            <SelectInput
-              label="Location"
-              name="location"
-              options={lagunaLocations}
-              register={register}
-              errors={errors}
-              setValue={setValue}
-            />
-            <textarea
-              placeholder="Share your story here..."
-              className="textarea border-black w-full h-64 bg-white font-bold text-black"
-              {...register('description')}
-            ></textarea>
-            <InputError message={errors.description?.message} />
-            <PrimaryButton className="w-full py-4 justify-center" disabled={processing}>
-              {isSubmitting ? 'Submitting' : 'Submit'}
-            </PrimaryButton>
-          </form>
+          <ForumForm
+            handleSubmit={handleSubmit}
+            closeModal={handleClose}
+            register={register}
+            errors={errors}
+            experienceOptions={experienceOptions}
+            lagunaLocations={lagunaLocations}
+            setValue={setValue}
+            isSubmitting={isSubmitting}
+          />
         </div>
       </Modal>
     </div>
