@@ -1,5 +1,16 @@
 import Modal from '../../Modal';
 
+const FeedbackContent = ({ feedback }) => {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-3xl font-bold text-indigo-800">{feedback.feedback_value} stars</h3>
+      </div>
+      <h3 className="text-2xl font-bold text-black">{feedback.created_at}</h3>
+      <p className="text-md text-black text-justify">{feedback.description}</p>
+    </div>
+  );
+};
 const AdminViewFeedback = ({ feedback, isOpen, onClose }) => {
   if (!feedback) return null;
 
@@ -13,13 +24,7 @@ const AdminViewFeedback = ({ feedback, isOpen, onClose }) => {
         >
           ✕
         </button>
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-3xl font-bold text-indigo-800">{feedback.feedback_value} stars</h3>
-          </div>
-          <h3 className="text-2xl font-bold text-black">{feedback.created_at}</h3>
-          <p className="text-md text-black text-justify">{feedback.description}</p>
-        </div>
+        <FeedbackContent feedback={feedback} />
       </div>
     </Modal>
   );
