@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { hotlineSchema } from '../../../../core/schema';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useToastNotifications } from '../../../../core/hooks';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -72,20 +72,23 @@ export const AdminEditHotline = ({ hotline, isOpen, onClose }) => {
     formState: { isSubmitting, errors },
   } = form;
 
-  const handleUpdate = async data => {
-    try {
-      await axios.put(`/api/hotlines/${hotline.id}`, data);
-      MySwal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Support content updated successfully.',
-      });
-      reset();
-      onClose();
-    } catch (error) {
-      notifyError('There was an error updating the hotline content.');
-    }
-  };
+  const handleUpdate = useCallback(
+    async data => {
+      try {
+        await axios.put(`/api/hotlines/${hotline.id}`, data);
+        MySwal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Support content updated successfully.',
+        });
+        reset();
+        onClose();
+      } catch (error) {
+        notifyError('There was an error updating the hotline content.');
+      }
+    },
+    [notifyError],
+  );
 
   useEffect(() => {
     reset({

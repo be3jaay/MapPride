@@ -6,6 +6,7 @@ import DangerButton from '@/Components/DangerButton';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { useCallback } from 'react';
 
 const MySwal = withReactContent(Swal);
 
@@ -30,7 +31,7 @@ const ViewStory = ({ experience }) => {
 const AdminModalExperience = ({ experience, isOpen, onClose }) => {
   if (!experience) return null;
 
-  const handleApprove = async () => {
+  const handleApprove = useCallback(async () => {
     const result = await MySwal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -48,8 +49,9 @@ const AdminModalExperience = ({ experience, isOpen, onClose }) => {
         text: 'Story content approved successfully.',
       });
     }
-  };
-  const handleDelete = async data => {
+  });
+
+  const handleDelete = useCallback(async data => {
     const result = await MySwal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -67,7 +69,7 @@ const AdminModalExperience = ({ experience, isOpen, onClose }) => {
         text: 'Story content rejected successfully.',
       });
     }
-  };
+  });
 
   return (
     <div>

@@ -1,9 +1,28 @@
-import { Link } from '@inertiajs/react';
+import React from 'react';
+import { Link, useForm } from '@inertiajs/react';
 import { route } from 'ziggy-js';
-import Dropdown from '@/Components/Dropdown';
-import { FaChevronDown } from 'react-icons/fa6';
+import { MdExitToApp } from 'react-icons/md';
+import Swal from 'sweetalert2';
 
-export const CollapsedSidebar = ({ auth, getProfilePictureUrl }) => {
+export const CollapsedSidebar = ({ getProfilePictureUrl }) => {
+  const { post } = useForm();
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be logged out!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, log me out!',
+    }).then(result => {
+      if (result.isConfirmed) {
+        post(route('logout'));
+      }
+    });
+  };
+
   return (
     <div className="mt-5 px-8 flex items-center h-14 flex-col gap-4">
       <div className="avatar">
@@ -13,26 +32,12 @@ export const CollapsedSidebar = ({ auth, getProfilePictureUrl }) => {
           </Link>
         </div>
       </div>
-      <Dropdown>
-        <Dropdown.Trigger>
-          <span className="inline-flex rounded-md">
-            <button
-              type="button"
-              className="inline-flex text-indigo-700 items-center  py-2 border border-transparent text-sm leading-4 font-medium rounded-md bg-white hover:text-gray-400 focus:outline-none transition ease-in-out duration-150"
-            >
-              {auth.user.name}
-              <FaChevronDown className="ms-2 me-6.5 h-4 w-3" />
-            </button>
-          </span>
-        </Dropdown.Trigger>
-
-        <Dropdown.Content>
-          <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-          <Dropdown.Link href={route('logout')} method="post" as="button">
-            Log Out
-          </Dropdown.Link>
-        </Dropdown.Content>
-      </Dropdown>
+      <div className="inline-flex text-indigo-700 items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md cursor-pointer bg-white hover:text-indigo-400 focus:outline-none transition ease-in-out duration-150">
+        <Link href={route('profile.edit')}>Profile</Link>
+      </div>
+      <div className="cursor-pointer" onClick={handleLogout}>
+        <MdExitToApp className="text-indigo-700 text-start text-xl font-bold" />
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { LayerGroup, LayersControl, MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { healthIcon, governmentIcon, safeSpaceIcon, supportIcon } from '../../../core/icons/marker-icons';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import axios from 'axios';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { GoStarFill } from 'react-icons/go';
@@ -20,7 +20,6 @@ export const Mapping = ({ auth }) => {
   const [averageRatings, setAverageRatings] = useState({});
   const [close, setClose] = useState(false);
   const popupRef = useRef(null);
-
   const { reset } = useForm();
 
   const handleClose = () => {
@@ -79,33 +78,37 @@ export const Mapping = ({ auth }) => {
     }));
   };
 
-  const handleSubmitRatings = async itemId => {
+  const handleSubmitRatings = useCallback(async itemId => {
     try {
-      await axios.post(`/api/map/${itemId}/rate`, { rating_value: ratings[itemId] });
+      const response = await axios.post(`/api/map/${itemId}/rate`, { rating_value: ratings[itemId] });
 
-      MySwal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Support content updated successfully.',
-      });
+      if (response.status >= 200 && response.status < 300) {
+        MySwal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Map rated successfully.',
+        });
 
-      if (popupRef.current) {
-        popupRef.current._close();
+        if (popupRef.current) {
+          popupRef.current._source.closePopup();
+        }
+
+        handleClose();
+        reset();
+      } else {
+        throw new Error(`Unexpected response status: ${response.status}`);
       }
-
-      handleClose();
-      reset();
     } catch (error) {
       MySwal.fire({
         icon: 'error',
-        title: 'Error',
-        text: 'Support content submitted incorrectly.',
+        title: 'Unprocessable Content',
+        text: 'You have not yet filled the star field',
       });
     }
-  };
+  });
 
   return (
-    <MapContainer center={[14.2127, 121.1639]} zoom={14} scrollWheelZoom={false} className="h-[50rem]">
+    <MapContainer center={[14.2127, 121.1639]} zoom={14} scrollWheelZoom className="h-[47rem]">
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

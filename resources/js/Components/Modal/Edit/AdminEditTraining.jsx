@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { trainingSchema } from '../../../../core/schema';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, handleUpdate } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { useToastNotifications } from '../../../../core/hooks';
 import Swal from 'sweetalert2';
@@ -66,20 +66,23 @@ export const AdminEditTraining = ({ training, isOpen, onClose }) => {
     formState: { isSubmitting, errors },
   } = form;
 
-  const handleUpdate = async data => {
-    try {
-      await axios.put(`/api/training/${training.id}`, data);
-      MySwal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Training content updated successfully.',
-      });
-      onClose();
-      reset();
-    } catch (error) {
-      notifyError('There was an error updating the training content.');
-    }
-  };
+  const handleUpdate = useCallback(
+    async data => {
+      try {
+        await axios.put(`/api/training/${training.id}`, data);
+        MySwal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Training content updated successfully.',
+        });
+        onClose();
+        reset();
+      } catch (error) {
+        notifyError('There was an error updating the training content.');
+      }
+    },
+    [notifyError],
+  );
 
   useEffect(() => {
     reset({

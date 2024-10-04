@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resourcesForumSchema } from '../../../../core/schema';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { TextField } from '@/Components/TextField';
@@ -69,7 +69,7 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
     formState: { isSubmitting, errors },
   } = form;
 
-  const handleUpdate = async data => {
+  const handleUpdate = useCallback(async data => {
     try {
       await axios.put(`/api/resources/${resources.id}`, data);
       MySwal.fire({
@@ -86,7 +86,7 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
         text: 'Resource content submitted incorrectly.',
       });
     }
-  };
+  }, []);
 
   useEffect(() => {
     reset({

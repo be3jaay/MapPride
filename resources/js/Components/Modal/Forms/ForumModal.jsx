@@ -11,6 +11,8 @@ import useModal from '../../../../core/hooks/use-modal';
 import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
 import SelectInput from '@/Components/SelectField';
+import { experienceOptions, lagunaLocations } from './ForumOptions';
+import { useCallback } from 'react';
 
 export const ForumModal = () => {
   const { handleOpen, isOpen, closeModal } = useModal();
@@ -31,40 +33,29 @@ export const ForumModal = () => {
     formState: { errors, isSubmitting },
   } = form;
 
-  const onSubmit = async data => {
-    try {
-      await axios.post('/api/experience', data);
-      reset();
-      closeModal();
-      notifySuccess('Your experience has been posted, thank you.');
-    } catch (error) {
-      notifyError('There was an error posting your experience.');
-    }
-  };
+  const onSubmit = useCallback(
+    async data => {
+      try {
+        await axios.post('/api/experience', data);
+        notifySuccess('Form submitted successfully!');
+        closeModal();
+        reset();
+      } catch (error) {
+        notifyError('Form submission failed!');
+        closeModal();
+        reset();
+      }
+    },
+    [notifyError, notifySuccess],
+  );
 
   const handleClose = () => {
     reset();
     closeModal();
   };
 
-  const experienceOptions = [
-    'Harassment',
-    'Discrimination',
-    'Bullying',
-    'Verbal Abuse',
-    'Physical Assault',
-    'Sexual Harassment',
-    'Exclusion from Services',
-    'Hate Speech',
-    'Cyberbullying',
-    'Family Rejection',
-    'Workplace Discrimination',
-    'Housing Discrimination',
-    'Medical Misinformation',
-  ];
-
   return (
-    <>
+    <div>
       <ToastContainer />
       <PrimaryButton onClick={handleOpen} className="py-4 px-6">
         Share Story <MdForum className="ml-2" />
@@ -105,12 +96,13 @@ export const ForumModal = () => {
               errors={errors}
               setValue={setValue}
             />
-            <TextField
+            <SelectInput
               label="Location"
-              placeholder="Where did the experience happen..."
-              register={register}
               name="location"
+              options={lagunaLocations}
+              register={register}
               errors={errors}
+              setValue={setValue}
             />
             <textarea
               placeholder="Share your story here..."
@@ -124,6 +116,6 @@ export const ForumModal = () => {
           </form>
         </div>
       </Modal>
-    </>
+    </div>
   );
 };
