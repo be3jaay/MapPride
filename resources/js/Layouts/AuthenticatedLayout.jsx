@@ -20,9 +20,9 @@ export default function Authenticated({ header, children }) {
     return anonymous;
   }, [auth.user.profile_picture, anonymous]);
 
-  const toggleSidebar = () => {
+  const toggleSidebar = useCallback(() => {
     setIsSidebarCollapsed(!isSidebarCollapsed);
-  };
+  }, [isSidebarCollapsed]);
 
   return (
     <div className="min-h-screen flex bg-indigo-50">

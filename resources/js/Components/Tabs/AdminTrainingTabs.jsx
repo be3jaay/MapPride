@@ -1,6 +1,5 @@
 import Modal from '@/Components/Modal';
 import PrimaryButton from '../PrimaryButton';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { trainingTabSchema } from '../../../core/schema';
@@ -11,6 +10,7 @@ import InputError from '../InputError';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import useModal from '../../../core/hooks/use-modal';
+import { useCallback } from 'react';
 
 const MySwal = withReactContent(Swal);
 
@@ -56,7 +56,7 @@ export const AdminTrainingTabs = () => {
     formState: { errors, isSubmitting },
   } = form;
 
-  const onSubmit = async data => {
+  const onSubmit = useCallback(async data => {
     try {
       await axios.post('/api/training-tabs', data);
       reset();
@@ -72,7 +72,7 @@ export const AdminTrainingTabs = () => {
         text: 'Tabs was not created successfully.',
       });
     }
-  };
+  }, []);
 
   return (
     <div>

@@ -74,17 +74,12 @@ export const AdminHotlineModal = () => {
     }
   }, []);
 
-  const handleClose = () => {
-    reset();
-    closeModal();
-  };
-
   return (
     <div>
       <PrimaryButton onClick={handleOpen}>
         Create Hotline Content <MdForum className="ml-2" />
       </PrimaryButton>
-      <Modal show={isOpen} onClose={handleClose}>
+      <Modal show={isOpen} onClose={closeModal}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
           <HotlineForms
             errors={errors}
