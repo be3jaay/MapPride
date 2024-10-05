@@ -13,3 +13,23 @@ export const NavigationData = [
     path: '#services',
   },
 ];
+
+export const MobileNavigationData = [
+  {
+    title: 'Home',
+    path: '#home',
+  },
+  {
+    title: 'About',
+    path: '#about',
+  },
+
+  {
+    title: 'Services',
+    path: '#services',
+  },
+  {
+    title: 'Login',
+    path: '/login',
+  },
+];

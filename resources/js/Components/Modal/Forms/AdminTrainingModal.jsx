@@ -12,6 +12,7 @@ import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import SelectInput from '@/Components/SelectField';
 
 const MySwal = withReactContent(Swal);
 
@@ -24,6 +25,9 @@ const TrainingForms = ({ handleSubmit, onSubmit, tabs, processing, register, err
       <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
         Tab
         <select className="select w-full bg-white text-black font-bold my-4" {...register('tabs_title')}>
+          <option value="" disabled selected>
+            Select Type
+          </option>
           {tabs.map(title => (
             <option key={title.id} value={title}>
               {title}

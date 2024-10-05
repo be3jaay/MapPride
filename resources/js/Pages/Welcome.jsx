@@ -4,7 +4,7 @@ import { HeroSection } from '@/Components/HeroSection/HeroSection';
 import { AboutSection } from '@/Components/AboutSection/AboutSection';
 import { Services } from '@/Components/ServicesSection/Services';
 import Footer from '@/Components/FooterSection/Footer';
-import { NavigationData } from '../../core/constant/NavigationData/NavigationData';
+import { MobileNavigationData, NavigationData } from '../../core/constant/NavigationData/NavigationData';
 import { route } from 'ziggy-js';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import React, { useState, useCallback } from 'react';
@@ -68,9 +68,9 @@ export default function Welcome({ auth }) {
                   ✕
                 </button>
               </div>
-              <div className="flex flex-col items-center justify-center gap-4 h-screen bg-indigo-700">
-                {NavigationData.map(item => (
-                  <a key={item.id} href={item.path} className="text-white" onClick={closeNav}>
+              <div className="flex flex-col items-center justify-center gap-4  bg-indigo-700 h-screen">
+                {MobileNavigationData.map(item => (
+                  <a key={item.id} href={item.path} className="text-white " onClick={closeNav}>
                     {item.title}
                   </a>
                 ))}
