@@ -35,7 +35,7 @@ export default function Resources({ auth }) {
           content: (
             <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 mt-4">
               {groupedData[title].map(item => (
-                <ResourcesCard book={book} formatDate={formatDate} item={item} />
+                <ResourcesCard book={book} key={item.id} formatDate={formatDate} item={item} />
               ))}
             </div>
           ),

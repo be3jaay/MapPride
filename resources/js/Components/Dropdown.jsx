@@ -25,7 +25,7 @@ const Trigger = ({ children }) => {
     <>
       <div onClick={toggleOpen}>{children}</div>
 
-      {open && <div className="fixed inset-0 z-40" role="button" onClick={() => setOpen(false)}></div>}
+      {open && <div className="fixed inset-0 z-40" aria-hidden="true" onClick={() => setOpen(false)}></div>}
     </>
   );
 };
