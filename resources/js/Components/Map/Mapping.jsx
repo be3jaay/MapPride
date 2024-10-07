@@ -140,7 +140,7 @@ export const Mapping = ({ auth }) => {
                             Address: {item.address}
                           </span>
                           <span className="mb-2 text-pretty text-sm text-gray-700 font-bold flex items-center">
-                            Available Services: {item.services}
+                            Available Services:
                           </span>
                           <span className="mb-2 text-pretty text-sm text-gray-700 font-bold flex items-center">
                             Contact Number: +63 {item.phone}

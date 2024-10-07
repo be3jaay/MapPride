@@ -11,10 +11,13 @@ import InputError from '@/Components/InputError';
 import { TextField } from '@/Components/TextField';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import SelectInput from '@/Components/SelectField';
 
 const MySwal = withReactContent(Swal);
 
-const ResourcesModalForm = ({ handleSubmit, onSubmit, register, tabs, errors, isSubmitting }) => {
+const options = ['Article', 'Video', 'Podcast', 'Book', 'Website'];
+
+const ResourcesModalForm = ({ setValue, handleSubmit, onSubmit, register, tabs, errors, isSubmitting }) => {
   return (
     <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="font-bold text-2xl text-indigo-800">Create Resources Content</h3>
@@ -39,6 +42,21 @@ const ResourcesModalForm = ({ handleSubmit, onSubmit, register, tabs, errors, is
         {...register('description')}
       ></textarea>
       <InputError message={errors.description?.message} />
+      <TextField
+        label="Author"
+        placeholder="Type the author here..."
+        register={register}
+        name="author"
+        errors={errors}
+      />
+      <SelectInput
+        label="Content Type"
+        name="type"
+        options={options}
+        register={register}
+        errors={errors}
+        setValue={setValue}
+      />
       <TextField label="Link" placeholder="Paste the url link..." register={register} name="url_link" errors={errors} />
       <PrimaryButton className="w-full justify-center py-4" disabled={isSubmitting} type="submit">
         {isSubmitting ? 'Processing...' : 'Submit'}
@@ -60,6 +78,7 @@ export const AdminResourcesModal = () => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { isSubmitting, errors },
   } = form;
 
@@ -111,6 +130,7 @@ export const AdminResourcesModal = () => {
             onSubmit={onSubmit}
             register={register}
             tabs={tabs}
+            setValue={setValue}
           />
         </div>
       </Modal>

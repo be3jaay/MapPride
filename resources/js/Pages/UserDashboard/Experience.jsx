@@ -67,7 +67,7 @@ export default function Experience({ auth }) {
                     </div>
                   </div>
                   <div className="mt-4">
-                    <p className="text-pretty text-sm text-gray-500 text-ellipsis overflow-hidden">
+                    <p className="text-pretty text-sm text-gray-500 text-ellipsis overflow-hidden text-justify">
                       {item.description}
                     </p>
                   </div>

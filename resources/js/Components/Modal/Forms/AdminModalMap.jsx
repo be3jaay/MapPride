@@ -6,153 +6,67 @@ import Modal from '@/Components/Modal';
 import PrimaryButton from '../../PrimaryButton';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-
+import { ModalMapForm } from './ModalMapForm';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { mapSchema } from '../../../../core/schema';
 const MySwal = withReactContent(Swal);
 
-const ModalMapForm = ({
-  handleSubmit,
-  onSubmit,
-  register,
-  selection,
-  handleCheckboxChange,
-  isSubmitting,
-  areCheckboxesChecked,
-}) => {
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="font-bold text-2xl text-indigo-800 ">Create a marker: This will be posted in user&apos;s map.</h3>
-      <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-        Selection
-        <select className="select w-full bg-white text-black font-bold my-4" {...register('location')}>
-          {selection.map(item => (
-            <option key={item.id} value={item.location}>
-              {item.location}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-        Longitude
-        <input
-          type="text"
-          className="input w-full bg-transparent my-2"
-          placeholder="Longitude"
-          {...register('longitude')}
-        />
-      </label>
-      <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-        Latitude
-        <input
-          type="text"
-          className="input w-full bg-transparent my-2"
-          placeholder="Latitude"
-          {...register('latitude')}
-        />
-      </label>
-      <input
-        type="file"
-        className="file-input file-input-bordered file-input-primary w-full bg-white"
-        {...register('image')}
-      />
-      <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-        Title
-        <input type="text" className="input w-full bg-transparent my-2" placeholder="Title" {...register('title')} />
-      </label>
-      <textarea
-        placeholder="Enter description here..."
-        className="textarea border-black w-full h-40 bg-white font-bold text-black"
-        {...register('description')}
-      ></textarea>
-      <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-        Address
-        <input
-          type="text"
-          className="input w-full bg-transparent my-2"
-          placeholder="Address"
-          {...register('address')}
-        />
-      </label>
-      <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-        Phone
-        <input type="text" className="input w-full bg-transparent my-2" placeholder="Phone" {...register('phone')} />
-      </label>
-      <label className="input border-black w-full p-4 h-14 bg-white flex items-center gap-2 my-4 text-black font-bold">
-        Services
-        <input
-          type="text"
-          className="input w-full bg-transparent my-2"
-          placeholder="Services"
-          {...register('services')}
-        />
-      </label>
-
-      <div className="flex items-star my-4 flex-col gap-3">
-        <label className="">
-          <input type="checkbox" onChange={handleCheckboxChange} />
-          <span className="ml-2 text-black font-bold text-lg">
-            By agreeing to this, you confirm that this place is an inclusive environment.
-          </span>
-        </label>
-      </div>
-      <PrimaryButton
-        className="w-full justify-center py-4"
-        disabled={isSubmitting || !areCheckboxesChecked}
-        type="submit"
-      >
-        {isSubmitting ? 'Submitting...' : 'Submit'}
-      </PrimaryButton>
-    </form>
-  );
-};
 export const AdminModalMap = () => {
   const [selection, setSelection] = useState([]);
   const { handleOpen, isOpen, closeModal } = useModal();
 
   const form = useForm({
     mode: 'all',
+    resolver: yupResolver(mapSchema),
+    defaultValues: { ...mapSchema.getDefault() },
   });
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = form;
 
-  const onSubmit = useCallback(async data => {
-    try {
-      const formData = new FormData();
-      formData.append('location', data.location);
-      formData.append('longitude', data.longitude);
-      formData.append('latitude', data.latitude);
-      formData.append('image', data.image[0]);
-      formData.append('title', data.title);
-      formData.append('description', data.description);
-      formData.append('address', data.address);
-      formData.append('phone', data.phone);
-      formData.append('services', JSON.stringify(data.services));
+  const onSubmit = useCallback(
+    async data => {
+      try {
+        const formData = new FormData();
+        formData.append('location', data.location);
+        formData.append('longitude', data.longitude);
+        formData.append('latitude', data.latitude);
+        formData.append('image', data.image[0]);
+        formData.append('title', data.title);
+        formData.append('description', data.description);
+        formData.append('address', data.address);
+        formData.append('phone', data.phone);
 
-      await axios.post('/api/map', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+        const services = [data.service1, data.service2, data.service3].filter(Boolean);
+        formData.append('services', JSON.stringify(services));
 
-      MySwal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Content submitted successfully.',
-      });
-      closeModal();
-      reset();
-    } catch (error) {
-      MySwal.fire({
-        icon: 'error',
-        title: 'error',
-        text: 'There was an error posting your map',
-      });
-    }
-  }, []);
+        await axios.post('/api/map', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        MySwal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Content submitted successfully.',
+        });
+        closeModal();
+        reset();
+      } catch (error) {
+        MySwal.fire({
+          icon: 'error',
+          title: 'error',
+          text: 'There was an error posting your map',
+        });
+      }
+    },
+    [closeModal, reset],
+  );
 
   const handleClose = useCallback(() => {
     reset();
@@ -194,6 +108,7 @@ export const AdminModalMap = () => {
             handleCheckboxChange={handleCheckboxChange}
             isSubmitting={isSubmitting}
             areCheckboxesChecked={areCheckboxesChecked}
+            errors={errors}
           />
         </div>
       </Modal>

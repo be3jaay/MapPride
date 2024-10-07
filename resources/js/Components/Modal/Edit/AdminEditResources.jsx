@@ -8,10 +8,13 @@ import { useEffect, useCallback } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { TextField } from '@/Components/TextField';
+import SelectInput from '@/Components/SelectField';
 
 const MySwal = withReactContent(Swal);
 
-const EditResourcesForms = ({ handleSubmit, handleUpdate, register, errors, isSubmitting }) => {
+const options = ['Article', 'Video', 'Podcast', 'Book', 'Website'];
+
+const EditResourcesForms = ({ setValue, handleSubmit, handleUpdate, register, errors, isSubmitting }) => {
   return (
     <form onSubmit={handleSubmit(handleUpdate)}>
       <div className="my-4">
@@ -30,6 +33,21 @@ const EditResourcesForms = ({ handleSubmit, handleUpdate, register, errors, isSu
           {...register('description')}
         ></textarea>
       </div>
+      <TextField
+        label="Author"
+        placeholder="Type the author here..."
+        register={register}
+        name="author"
+        errors={errors}
+      />
+      <SelectInput
+        label="Content Type"
+        name="type"
+        options={options}
+        register={register}
+        errors={errors}
+        setValue={setValue}
+      />
       <div className="my-4">
         <TextField
           label="Link"
@@ -66,6 +84,7 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { isSubmitting, errors },
   } = form;
 
@@ -94,6 +113,8 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
       title: resources.title,
       description: resources.description,
       url_link: resources.url_link,
+      type: resources.type,
+      author: resources.author,
     });
   }, [resources, reset]);
 
@@ -108,6 +129,7 @@ export const AdminEditResources = ({ resources, isOpen, onClose }) => {
             handleUpdate={handleUpdate}
             isSubmitting={isSubmitting}
             register={register}
+            setValue={setValue}
           />
         </div>
       </div>

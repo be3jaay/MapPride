@@ -1,3 +1,4 @@
+import { Badge } from './Badge';
 import PrimaryButton from './PrimaryButton';
 
 const CardContent = ({ item, book, formatDate }) => {
@@ -13,11 +14,15 @@ const CardContent = ({ item, book, formatDate }) => {
         </div>
         <div className="my-4">
           <p className="text-sm text-gray-500 h-40 overflow-hidden text-ellipsis">{item.description}</p>
+          <div className="gap-2 flex items-center mt-4">
+            <Badge message={item.author} type="info" />
+            <Badge message={item.type} type="info" />
+          </div>
         </div>
       </div>
       <div>
         <span>Updated at: {formatDate(item.updated_at)}</span>
-        <PrimaryButton className="w-full text-white justify-center py-3 mt-6">Read More</PrimaryButton>
+        <PrimaryButton className="w-full text-white justify-center py-3 mt-6">View More</PrimaryButton>
       </div>
     </div>
   );

@@ -13,6 +13,8 @@ class Resources extends Model
         'tabs_title',
         'title',
         'description',
+        'type',
+        'author',
         'url_link',
     ];
 }

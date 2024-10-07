@@ -3,7 +3,7 @@ import DangerButton from '../DangerButton';
 import { useEffect, useState } from 'react';
 import PrimaryButton from '../PrimaryButton';
 import Loading from '../Loading';
-import { AdminEditMap } from '../Modal/Edit/AdminEditMap';
+// import { AdminEditMap } from '../Modal/Edit/AdminEditMap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -12,10 +12,10 @@ const MySwal = withReactContent(Swal);
 
 export const AdminMapTable = () => {
   const [selectMarker, setSelectMarker] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
+  // const [selectedItem, setSelectedItem] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async (pageNumber = 1) => {
@@ -71,15 +71,15 @@ export const AdminMapTable = () => {
     }
   };
 
-  const handleViewClick = item => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
-  };
+  // const handleViewClick = item => {
+  //   setSelectedItem(item);
+  //   setIsModalOpen(true);
+  // };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedItem(null);
-  };
+  // const closeModal = () => {
+  //   setIsModalOpen(false);
+  //   setSelectedItem(null);
+  // };
 
   return (
     <div className="">
@@ -93,7 +93,7 @@ export const AdminMapTable = () => {
               <th style={tableHeaderStyle}>Address</th>
               <th style={tableHeaderStyle}>Phone</th>
               <th style={tableHeaderStyle}>Services</th>
-              <th style={tableHeaderStyle}>Edit</th>
+              {/* <th style={tableHeaderStyle}>Edit</th> */}
               <th style={tableHeaderStyle}>Delete</th>
             </tr>
           </thead>
@@ -113,14 +113,14 @@ export const AdminMapTable = () => {
                   <td style={tableStyle}>{item.address}</td>
                   <td style={tableStyle}>{item.phone}</td>
                   <td style={tableStyle}>{item.services}</td>
-                  <td style={tableStyle}>
+                  {/* <td style={tableStyle}>
                     <PrimaryButton
                       onClick={() => handleViewClick(item)}
                       className="flex items-center justify-center py-2"
                     >
                       Edit
                     </PrimaryButton>
-                  </td>
+                  </td> */}
                   <td style={tableStyle}>
                     <DangerButton onClick={() => handleDelete(item)} className="flex items-center justify-center py-2">
                       Delete
@@ -157,7 +157,7 @@ export const AdminMapTable = () => {
           Next
         </PrimaryButton>
       </div>
-      {isModalOpen && selectedItem && <AdminEditMap map={selectedItem} isOpen={isModalOpen} onClose={closeModal} />}
+      {/* {isModalOpen && selectedItem && <AdminEditMap map={selectedItem} isOpen={isModalOpen} onClose={closeModal} />} */}
     </div>
   );
 };

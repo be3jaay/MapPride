@@ -9,7 +9,7 @@ class ResourcesController extends Controller
 {
     public function index()
     {
-        $perPage = 10; 
+        $perPage = 10;
         $resources = Resources::orderBy('created_at', 'desc')->paginate($perPage);
         return response()->json($resources);
     }
@@ -20,6 +20,8 @@ class ResourcesController extends Controller
             'tabs_title' => 'required|string|max:255',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'author' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
             'url_link' => 'required|string|max:255',
         ]);
 
@@ -35,6 +37,8 @@ class ResourcesController extends Controller
             'tabs_title' => 'required|string|max:255',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'author' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
             'url_link' => 'required|string|max:255',
         ]);
 
@@ -61,4 +65,3 @@ class ResourcesController extends Controller
         return response()->json($resources, 200);
     }
 }
-

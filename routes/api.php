@@ -70,5 +70,4 @@ Route::post('/blogs/{blog}/comments', [BlogsController::class, 'storeComment']);
 
 Route::get('/blogs/{blog}/comments', [BlogsController::class, 'showComments']);
 
-
 Route::apiResource('users', RegisteredUserController::class);

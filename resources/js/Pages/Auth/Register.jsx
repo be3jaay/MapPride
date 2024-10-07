@@ -16,6 +16,7 @@ export default function Register() {
     resume: '',
     password: '',
     password_confirmation: '',
+    usertype: '', // Add usertype to form state
   });
 
   const [isOtherSelected, setIsOtherSelected] = useState(false);
@@ -172,6 +173,22 @@ export default function Register() {
           />
 
           <InputError message={errors.password_confirmation} className="mt-2" />
+        </div>
+
+        <div className="mt-4">
+          <InputLabel htmlFor="usertype" value="User Type" />
+
+          <TextInput
+            id="usertype"
+            name="usertype"
+            value={data.usertype}
+            className="mt-1 mb-3 block w-full"
+            autoComplete="usertype"
+            onChange={e => setData('usertype', e.target.value)}
+            required
+          />
+
+          <InputError message={errors.usertype} className="mt-2" />
         </div>
 
         <div className="flex items-center justify-end mt-4">
