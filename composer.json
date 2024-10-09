@@ -13,7 +13,6 @@
         "laravel/tinker": "^2.8",
         "tightenco/ziggy": "^2.0"
     },
-    "post-install-cmd": [ "ln -sr storage/app/public public/storage" ],
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel/breeze": "^1.29",
@@ -38,6 +37,9 @@
         }
     },
     "scripts": {
+        "post-install-cmd": [
+            "ln -sr storage/app/public public/storage"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
