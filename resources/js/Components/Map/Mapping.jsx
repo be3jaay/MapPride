@@ -222,7 +222,7 @@ export const Mapping = ({ auth }) => {
                         <div>
                           {item.photos && item.photos.length > 0 && (
                             <img
-                              src={`/api/proxy/photo?photoreference=${item.photos[0].photo_reference}`}
+                              src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${item.photos[0].photo_reference}&key=${process.env.GOOGLE_MAPS_API_KEY}`}
                               alt={item.name}
                               className="h-auto"
                             />
