@@ -19,6 +19,9 @@ class Map extends Model
         'address',
         'phone',
         'services',
+        'usertype',
+        'username',
+        'is_Verified',
     ];
 
     protected $casts = [

@@ -8,7 +8,6 @@ export const ModalMapForm = ({
   selection,
   handleCheckboxChange,
   isSubmitting,
-  areCheckboxesChecked,
   errors,
 }) => {
   return (
@@ -80,17 +79,19 @@ export const ModalMapForm = ({
       />
       <div className="flex items-star my-4 flex-col gap-3">
         <label className="">
-          <input type="checkbox" onChange={handleCheckboxChange} />
+          <input
+            type="checkbox"
+            onChange={handleCheckboxChange}
+            value={1}
+            {...register('is_Verified')}
+            name="is_Verified"
+          />
           <span className="ml-2 text-black font-bold text-lg">
             By agreeing to this, you confirm that this place is an inclusive environment.
           </span>
         </label>
       </div>
-      <PrimaryButton
-        className="w-full justify-center py-4"
-        disabled={isSubmitting || !areCheckboxesChecked}
-        type="submit"
-      >
+      <PrimaryButton className="w-full justify-center py-4" disabled={isSubmitting} type="submit">
         {isSubmitting ? 'Submitting...' : 'Submit'}
       </PrimaryButton>
     </form>

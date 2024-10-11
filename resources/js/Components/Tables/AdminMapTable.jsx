@@ -11,11 +11,11 @@ import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal);
 
 export const AdminMapTable = () => {
+  const [filterUser, setFilterUser] = useState(false); // Toggle for filtering non-admins
+  const [showOnlyAdmins, setShowOnlyAdmins] = useState(false); // Toggle for showing only admins
   const [selectMarker, setSelectMarker] = useState([]);
-  // const [selectedItem, setSelectedItem] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async (pageNumber = 1) => {
@@ -33,6 +33,16 @@ export const AdminMapTable = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleFilterUserToggle = () => {
+    setFilterUser(prevVal => !prevVal);
+    if (showOnlyAdmins) setShowOnlyAdmins(false); // Ensure only one toggle is active
+  };
+
+  const handleShowOnlyAdminsToggle = () => {
+    setShowOnlyAdmins(prevVal => !prevVal);
+    if (filterUser) setFilterUser(false); // Ensure only one toggle is active
   };
 
   useEffect(() => {
@@ -65,24 +75,47 @@ export const AdminMapTable = () => {
         MySwal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'Error deletion content',
+          text: 'Error deleting content',
         });
       }
     }
   };
 
-  // const handleViewClick = item => {
-  //   setSelectedItem(item);
-  //   setIsModalOpen(true);
-  // };
-
-  // const closeModal = () => {
-  //   setIsModalOpen(false);
-  //   setSelectedItem(null);
-  // };
+  // Filter data based on the switches
+  const filteredMarkers = selectMarker.filter(item => {
+    if (filterUser) {
+      return item.usertype !== 'admin';
+    }
+    if (showOnlyAdmins) {
+      return item.usertype === 'admin';
+    }
+    return true;
+  });
 
   return (
     <div className="">
+      <div className="flex gap-4 mb-4">
+        <div className="flex items-center gap-2">
+          <h3>Filter User Contribution</h3>
+          <input
+            type="checkbox"
+            className="toggle toggle-primary"
+            onChange={handleFilterUserToggle}
+            checked={filterUser}
+            disabled={showOnlyAdmins} // Disable if the "Show Only Admins" toggle is active
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <h3>Show Only Admins</h3>
+          <input
+            type="checkbox"
+            className="toggle toggle-primary"
+            onChange={handleShowOnlyAdminsToggle}
+            checked={showOnlyAdmins}
+            disabled={filterUser} // Disable if the "Filter User" toggle is active
+          />
+        </div>
+      </div>
       <div className="overflow-x-auto my-4 shadow-lg rounded-md p-4">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-md">
           <thead className="ltr:text-left rtl:text-right">
@@ -93,7 +126,7 @@ export const AdminMapTable = () => {
               <th style={tableHeaderStyle}>Address</th>
               <th style={tableHeaderStyle}>Phone</th>
               <th style={tableHeaderStyle}>Services</th>
-              {/* <th style={tableHeaderStyle}>Edit</th> */}
+              <th style={tableHeaderStyle}>Posted By</th>
               <th style={tableHeaderStyle}>Delete</th>
             </tr>
           </thead>
@@ -104,8 +137,8 @@ export const AdminMapTable = () => {
                   <Loading type="primary" />
                 </td>
               </tr>
-            ) : Array.isArray(selectMarker) && selectMarker.length > 0 ? (
-              selectMarker.map(item => (
+            ) : Array.isArray(filteredMarkers) && filteredMarkers.length > 0 ? (
+              filteredMarkers.map(item => (
                 <tr key={item.id}>
                   <td style={tableStyle}>{item.title}</td>
                   <td style={tableStyle}>{item.description}</td>
@@ -113,14 +146,7 @@ export const AdminMapTable = () => {
                   <td style={tableStyle}>{item.address}</td>
                   <td style={tableStyle}>{item.phone}</td>
                   <td style={tableStyle}>{item.services}</td>
-                  {/* <td style={tableStyle}>
-                    <PrimaryButton
-                      onClick={() => handleViewClick(item)}
-                      className="flex items-center justify-center py-2"
-                    >
-                      Edit
-                    </PrimaryButton>
-                  </td> */}
+                  <td style={tableStyle}>{item.username}</td>
                   <td style={tableStyle}>
                     <DangerButton onClick={() => handleDelete(item)} className="flex items-center justify-center py-2">
                       Delete
@@ -157,7 +183,6 @@ export const AdminMapTable = () => {
           Next
         </PrimaryButton>
       </div>
-      {/* {isModalOpen && selectedItem && <AdminEditMap map={selectedItem} isOpen={isModalOpen} onClose={closeModal} />} */}
     </div>
   );
 };

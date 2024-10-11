@@ -10,4 +10,7 @@ export const mapSchema = yup.object({
   address: yup.string().required('Address is required'),
   phone: yup.number().required('Phone number is required').typeError('Phone must be a number'),
   services: yup.array().of(yup.string().required('Service is required')).min(1, 'At least one service is required'),
+  usertype: yup.string().required('User type is required'),
+  username: yup.string().required('Username is required'),
+  is_Verified: yup.number().required('Verification is required'),
 });

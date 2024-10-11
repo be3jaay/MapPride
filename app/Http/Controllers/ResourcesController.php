@@ -64,4 +64,11 @@ class ResourcesController extends Controller
         $resources->delete();
         return response()->json($resources, 200);
     }
+
+    public function show()
+    {
+        $perPage = 1000;
+        $resources = Resources::orderBy('created_at', 'desc')->paginate($perPage);
+        return response()->json($resources);
+    }
 }

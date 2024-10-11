@@ -5,17 +5,17 @@ import { FaBook } from 'react-icons/fa6';
 import axios from 'axios';
 
 export default function UserAnalytics() {
-  const [map, setMap] = useState([]);
+  const [blog, setBlog] = useState([]);
   const [resources, setResources] = useState([]);
   const [training, setTraining] = useState([]);
 
   useEffect(() => {
     const fetchMap = async () => {
-      const response = await axios.get('/api/map');
-      setMap(response.data.data);
+      const response = await axios.get('api/blogs');
+      setBlog(response.data.data);
     };
     const fetchResources = async () => {
-      const response = await axios.get('/api/resources');
+      const response = await axios.get('/api/resources/view-all');
       setResources(response.data.data);
     };
     const fetchTraining = async () => {
@@ -29,10 +29,10 @@ export default function UserAnalytics() {
 
   const data = [
     {
-      title: <Badge type="info" message="Available Map" className="text-md" />,
+      title: <Badge type="info" message="Community Discussion" className="text-md" />,
       icon: <FaMapMarkerAlt />,
-      analytics: map.length,
-      path: 'map',
+      analytics: blog.length,
+      path: 'blogs',
     },
     {
       title: <Badge type="info" message="Available Resources" className="text-md" />,

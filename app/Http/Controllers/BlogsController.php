@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Blogs;
 use Illuminate\Http\Request;
-use App\Models\Comment; 
-
+use App\Models\Comment;
+use Illuminate\Support\Facades\Storage;
 
 class BlogsController extends Controller
 {
     public function index()
     {
-        $perPage = 30; 
-        $blogs = Blogs::orderBy('created_at', 'desc')->paginate($perPage); 
+        $perPage = 30;
+        $blogs = Blogs::orderBy('created_at', 'desc')->paginate($perPage);
         return response()->json($blogs);
     }
-    
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -31,6 +31,10 @@ class BlogsController extends Controller
             $imagePath = $image->store('images', 'public');
             $validatedData['image'] = $imagePath;
         }
+        // if ($request->hasFile('image')) {
+        //     $imagePath = $request->file('image')->store('images', 's3');
+        //     $validatedData['image'] = Storage::disk('s3')->url($imagePath);
+        // }
 
         $blogs = Blogs::create($validatedData);
 
@@ -47,7 +51,7 @@ class BlogsController extends Controller
     }
 
 
-/**
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)

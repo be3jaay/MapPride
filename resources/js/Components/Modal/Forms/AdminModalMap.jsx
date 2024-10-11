@@ -9,9 +9,18 @@ import withReactContent from 'sweetalert2-react-content';
 import { ModalMapForm } from './ModalMapForm';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { mapSchema } from '../../../../core/schema';
+
 const MySwal = withReactContent(Swal);
 
-export const AdminModalMap = () => {
+export const AdminModalMap = ({ auth }) => {
+  const user = auth.user;
+
+  const [username] = useState(user.name);
+  const [usertype] = useState(user.usertype);
+
+  console.log(username);
+  console.log(usertype);
+
   const [selection, setSelection] = useState([]);
   const { handleOpen, isOpen, closeModal } = useModal();
 
@@ -25,8 +34,16 @@ export const AdminModalMap = () => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { isSubmitting, errors },
   } = form;
+
+  useEffect(() => {
+    if (isOpen) {
+      setValue('username', username);
+      setValue('usertype', usertype);
+    }
+  }, [isOpen, setValue, username, usertype]);
 
   const onSubmit = useCallback(
     async data => {
@@ -40,6 +57,9 @@ export const AdminModalMap = () => {
         formData.append('description', data.description);
         formData.append('address', data.address);
         formData.append('phone', data.phone);
+        formData.append('usertype', data.usertype);
+        formData.append('username', data.username);
+        formData.append('is_Verified', data.is_Verified);
 
         const services = [data.service1, data.service2, data.service3].filter(Boolean);
         formData.append('services', JSON.stringify(services));
@@ -97,7 +117,9 @@ export const AdminModalMap = () => {
 
   return (
     <div>
-      <PrimaryButton onClick={handleOpen}>Create Marker</PrimaryButton>
+      <PrimaryButton onClick={handleOpen} className="py-4 px-12">
+        {user.usertype === 'admin' ? 'Add Marker' : 'Contribute to Map'}
+      </PrimaryButton>
       <Modal show={isOpen} onClose={handleClose}>
         <div className="modal-box bg-indigo-200 p-12 max-w-7xl">
           <ModalMapForm

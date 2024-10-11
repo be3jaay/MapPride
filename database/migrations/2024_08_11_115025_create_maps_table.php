@@ -16,11 +16,14 @@ return new class extends Migration
             $table->string('location');
             $table->float('longitude', 10, 6);
             $table->float('latitude', 10, 6);
-            $table->string('image')->nullable(); // Image path stored here
+            $table->string('image')->nullable();
             $table->string('title');
             $table->text('description');
             $table->text('address');
             $table->integer('phone');
+            $table->string('usertype');
+            $table->string('username');
+            $table->integer('is_Verified');
             $table->json('services')->nullable();
             $table->timestamps();
         });
@@ -31,6 +34,14 @@ return new class extends Migration
      */
     public function down(): void
     {
+
+        Schema::table('ratings', function (Blueprint $table) {
+            $table->dropForeign(['map_id']);
+        });
+
+        // Drop the ratings table
+        Schema::dropIfExists('ratings');
+
         Schema::dropIfExists('maps');
     }
 };
