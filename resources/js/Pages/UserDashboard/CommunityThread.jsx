@@ -144,7 +144,7 @@ export default function CommunityThread({ auth }) {
                 <hr className="py-2" />
 
                 <div className="mt-2 sm:flex sm:items-center sm:gap-2 w-full flex  justify-between ">
-                  <div className="flex items-center gap-1 text-gray-700 ">
+                  <div className="flex items-center gap-1 text-gray-700 " onClick={handleViewComment}>
                     <GoCommentDiscussion />
                     <p className="text-xs">{comments[item.id] ? comments[item.id].length : 0} comments</p>
                   </div>

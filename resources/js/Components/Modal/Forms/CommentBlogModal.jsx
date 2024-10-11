@@ -56,9 +56,11 @@ export const CommentBlogModal = ({ isOpen, onClose, blogId, auth }) => {
   } = form;
 
   useEffect(() => {
-    setValue('username', username);
-    setValue('icon', icon);
-  }, [setValue, username, icon]);
+    if (isOpen) {
+      setValue('username', username);
+      setValue('icon', icon);
+    }
+  }, [setValue, username, icon, isOpen]);
 
   const onSubmit = useCallback(
     async data => {
