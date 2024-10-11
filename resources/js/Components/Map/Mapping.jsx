@@ -134,7 +134,7 @@ export const Mapping = ({ auth }) => {
           <input type="checkbox" className="toggle toggle-primary" defaultChecked onChange={handleFilter} />
         </div>
       </div>
-      <MapContainer center={[14.2127, 121.1639]} zoom={14} scrollWheelZoom className="h-[47rem]">
+      <MapContainer center={[14.2127, 121.1639]} zoom={14} scrollWheelZoom className="h-[44rem]">
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -222,7 +222,7 @@ export const Mapping = ({ auth }) => {
                         <div>
                           {item.photos && item.photos.length > 0 && (
                             <img
-                              src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${item.photos[0].photo_reference}&key=AIzaSyByyiUUAKSdHaG02TAoeQp5_yq-qhq6Q-4`}
+                              src={`/api/proxy/photo?photoreference=${item.photos[0].photo_reference}`}
                               alt={item.name}
                               className="h-auto"
                             />
