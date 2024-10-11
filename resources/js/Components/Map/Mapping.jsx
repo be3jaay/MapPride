@@ -43,7 +43,7 @@ export const Mapping = ({ auth }) => {
       console.error('Error fetching places:', error);
     }
   };
-
+//test
   useEffect(() => {
     const fetchLayer = async () => {
       const response = await axios.get('/api/map/view-all');
