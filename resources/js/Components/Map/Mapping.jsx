@@ -34,7 +34,7 @@ export const Mapping = ({ auth }) => {
 
   const fetchPlaces = async () => {
     try {
-      const response = await fetch(`/api/proxy/places?location=14.2127,121.162&radius=10000&keyword=LGBTQ+friendly`);
+      const response = await fetch(`/api/proxy/places?location=14.2127,121.162&radius=10000&keyword=LGBTQ+`);
       const data = await response.json();
       if (data.results) {
         setPlaces(data.results);
@@ -125,6 +125,8 @@ export const Mapping = ({ auth }) => {
       });
     }
   });
+
+  const API_KEY = import.meta.env.GOOGLE_MAPS_API_KEY;
 
   return (
     <>
@@ -222,7 +224,7 @@ export const Mapping = ({ auth }) => {
                         <div>
                           {item.photos && item.photos.length > 0 && (
                             <img
-                              src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${item.photos[0].photo_reference}&key=${process.env.GOOGLE_MAPS_API_KEY}`}
+                              src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${item.photos[0].photo_reference}&key=${API_KEY}`}
                               alt={item.name}
                               className="h-auto"
                             />
