@@ -16,10 +16,11 @@
     @viteReactRefresh
     @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
     @inertiaHead
-    <script src="{{ asset('build/assets/app-DlY72xNz.js') }}"></script>
+    <script src="{{ mix('build/assets/app-hveJUrKk.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('build/assets/app-ogMTej3Y.css') }}">
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased"></body>
     @inertia
 </body>
 
