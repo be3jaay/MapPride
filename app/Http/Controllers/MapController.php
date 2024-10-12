@@ -46,7 +46,7 @@ class MapController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'address' => 'required|string',
-            'phone' => 'required|integer|max:999999999',
+            'phone' => 'required|integer|max:99999999999',
             'services' => 'nullable|string',
             'usertype' => 'required|string',
             'username' => 'required|string|max:255',
