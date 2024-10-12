@@ -18,8 +18,8 @@ export const AdminModalMap = ({ auth }) => {
   const [username] = useState(user.name);
   const [usertype] = useState(user.usertype);
 
-  console.log(username);
-  console.log(usertype);
+  
+  
 
   const [selection, setSelection] = useState([]);
   const { handleOpen, isOpen, closeModal } = useModal();
