@@ -46,7 +46,7 @@ class MapController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'address' => 'required|string',
-            'phone' => 'required|integer|max:99999999999',
+            'phone' => 'required|string|max:24',
             'services' => 'nullable|string',
             'usertype' => 'required|string',
             'username' => 'required|string|max:255',
@@ -68,6 +68,7 @@ class MapController extends Controller
 
         return response()->json($map, 201);
     }
+
 
     /**
      * Display the specified resource.
