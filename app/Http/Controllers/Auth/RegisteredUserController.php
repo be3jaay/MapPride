@@ -106,11 +106,13 @@ class RegisteredUserController extends Controller
         ];
     
         if ($request->hasFile('profile_picture')) {
+            // Delete the old profile picture from Cloudinary if it exists
             if ($user->profile_picture) {
                 $publicId = basename(parse_url($user->profile_picture, PHP_URL_PATH));
                 $this->cloudinary->deleteApi()->delete($publicId);
             }
-            
+    
+            // Upload the new profile picture to Cloudinary
             $profilePicture = $request->file('profile_picture');
             $result = $this->cloudinary->uploadApi()->upload($profilePicture->getRealPath(), [
                 'folder' => 'profile_pictures', // Specify the folder in Cloudinary
@@ -122,7 +124,7 @@ class RegisteredUserController extends Controller
     
         return response()->json($user->fresh(), 200);
     }
-
+    
     public function destroy(Request $request, $id)
     {
         $user = User::findOrFail($id);

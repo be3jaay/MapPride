@@ -159,7 +159,7 @@ export const AdminDashboardOverview = () => {
                     <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
                     <div className="sm:flex sm:justify-between sm:gap-4">
                       <div className="w-full">
-                        <Badge type="info" message={highestRatedMap.average_rating.toFixed(1)} className="py-3 px-6">
+                        <Badge type="info" message={highestRatedMap.average_rating} className="py-3 px-6">
                           <IoStarSharp className="ml-1 text-indigo-700" />
                         </Badge>
                         <hr className="w-full my-4" />
