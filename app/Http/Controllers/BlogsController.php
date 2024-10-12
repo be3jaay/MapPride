@@ -19,7 +19,7 @@ class BlogsController extends Controller
 
     public function index()
     {
-        $perPage = 30;
+        $perPage = 50;
         $blogs = Blogs::orderBy('created_at', 'desc')->paginate($perPage);
         return response()->json($blogs);
     }
@@ -73,7 +73,7 @@ class BlogsController extends Controller
         $validatedData = $request->validate([
             'username' => 'required|string',
             'content' => 'required|string',
-            'icon' => 'required|string',
+            'icon' => 'nullable|string',
         ]);
 
         $comment = Comment::create([

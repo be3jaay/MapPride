@@ -45,6 +45,7 @@ export const CommentBlogModal = ({ isOpen, onClose, blogId, auth }) => {
   const form = useForm({
     mode: 'all',
     resolver: yupResolver(commentSchema),
+    defaultValues: { ...commentSchema.getDefault() },
   });
 
   const {
