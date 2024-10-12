@@ -135,7 +135,7 @@ export default function CommunityThread({ auth }) {
                 </div>
               </div>
               {item.image ? (
-                <img src={`/storage/${item.image}`} aria-hidden alt="No Image" className="h-auto w-full object-cover" />
+                <img src={item.image} aria-hidden alt="No Image" className="h-auto w-full object-cover" />
               ) : null}
 
               <div className="bg-gray-100 p-4 sm:p-6 ">

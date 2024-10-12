@@ -26,14 +26,11 @@ class BlogsController extends Controller
             'icon' => 'required|string',
         ]);
 
-        // if ($request->hasFile('image')) {
-        //     $image = $request->file('image');
-        //     $imagePath = $image->store('images', 'public');
-        //     $validatedData['image'] = $imagePath;
-        // }
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 's3');
-            $validatedData['image'] = Storage::disk('s3')->url($imagePath);
+            $image = $request->file('image');
+            // Upload to Firebase Storage
+            $imagePath = Storage::disk('firebase')->put('images', $image);
+            $validatedData['image'] = $imagePath; 
         }
 
         $blogs = Blogs::create($validatedData);

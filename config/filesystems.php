@@ -56,6 +56,14 @@ return [
             'throw' => false,
         ],
 
+        'firebase' => [
+            'driver' => 'firebase',
+            'project_id' => env('FIREBASE_PROJECT_ID'),
+            'key_file' => env('FIREBASE_KEY_FILE'), // Path to your Firebase service account key
+            'bucket' => env('FIREBASE_STORAGE_BUCKET'),
+            'url' => env('FIREBASE_STORAGE_URL'),
+        ],
+
     ],
 
     /*

@@ -9,6 +9,7 @@
         "aws/aws-sdk-php": "^3.324",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.3",
+        "kreait/laravel-firebase": "*",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
