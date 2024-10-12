@@ -32,7 +32,7 @@ class RegisteredUserController extends Controller
         return response()->json($users);
     }
 
-    
+
 
     public function create(): Response
     {
@@ -48,7 +48,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    
+
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -74,7 +74,7 @@ class RegisteredUserController extends Controller
             $result = $this->cloudinary->uploadApi()->upload($profilePicture->getRealPath(), [
                 'folder' => 'profile_pictures', // Specify the folder in Cloudinary
             ]);
-            $userData['profile_picture'] = $result['secure_url']; 
+            $userData['profile_picture'] = $result['secure_url'];
         }
 
         $user = User::create($userData);
@@ -89,7 +89,7 @@ class RegisteredUserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-    
+
         $request->validate([
             'name' => 'required|string|max:255',
             'preferences' => 'required|string|max:255',
@@ -97,50 +97,36 @@ class RegisteredUserController extends Controller
             'profile_picture' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
             'email' => 'required|string|lowercase|email|max:255|unique:users,email,' . $id,
         ]);
-    
+
         $userData = [
             'name' => $request->name,
             'email' => $request->email,
             'preferences' => $request->preferences,
             'gender' => $request->gender,
         ];
-    
+
         if ($request->hasFile('profile_picture')) {
-            // Delete the old profile picture from Cloudinary if it exists
-            if ($user->profile_picture) {
-                $publicId = basename(parse_url($user->profile_picture, PHP_URL_PATH));
-                $this->cloudinary->deleteApi()->delete($publicId);
-            }
-    
-            // Upload the new profile picture to Cloudinary
             $profilePicture = $request->file('profile_picture');
             $result = $this->cloudinary->uploadApi()->upload($profilePicture->getRealPath(), [
                 'folder' => 'profile_pictures', // Specify the folder in Cloudinary
             ]);
-            $userData['profile_picture'] = $result['secure_url']; 
+            $userData['profile_picture'] = $result['secure_url'];
         }
-    
         $user->update($userData);
-    
+
         return response()->json($user->fresh(), 200);
     }
-    
-    public function destroy(Request $request, $id)
+
+    public function destroy(string $id)
     {
         $user = User::findOrFail($id);
-        
-        // Delete associated files from Cloudinary
-        if ($user->profile_picture) {
-            $publicId = basename(parse_url($user->profile_picture, PHP_URL_PATH));
-            $this->cloudinary->deleteApi()->delete($publicId);
-        }
 
         $user->delete();
 
         return response()->json(null, 204);
     }
 
-    
+
     public function show()
     {
         $perPage = 1000;
