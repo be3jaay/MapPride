@@ -122,10 +122,8 @@ export default function CommunityThread({ auth }) {
               <div className="flex items-center gap-3 mb-4">
                 <div className="avatar ">
                   <div className="w-10 rounded-full">
-                    {item.icon ? (
-                      <img src={`/storage/${item.icon}`} aria-hidden alt="No Image" className="h-auto w-full" />
-                    ) : (
-                      <img src={anonymous} aria-hidden alt="No Image" className="h-auto w-full" />
+                    {item.icon && (
+                      <img src={`/storage/${item.icon}`} aria-hidden alt="Icon" className="h-auto w-full" />
                     )}
                   </div>
                 </div>
@@ -135,7 +133,7 @@ export default function CommunityThread({ auth }) {
                 </div>
               </div>
               {item.image ? (
-                <img src={item.image} aria-hidden alt="No Image" className="h-auto w-full object-cover" />
+                <img src={item.image} alt={item.title || 'Blog image'} className="h-auto w-full object-cover" />
               ) : null}
 
               <div className="bg-gray-100 p-4 sm:p-6 ">

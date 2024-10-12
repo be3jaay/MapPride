@@ -6,9 +6,17 @@ use App\Models\Blogs;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Storage;
+use Cloudinary\Cloudinary;
 
 class BlogsController extends Controller
 {
+    protected $cloudinary;
+
+    public function __construct(Cloudinary $cloudinary)
+    {
+        $this->cloudinary = $cloudinary;
+    }
+
     public function index()
     {
         $perPage = 30;
@@ -28,9 +36,10 @@ class BlogsController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            // Upload to Firebase Storage
-            $imagePath = Storage::disk('firebase')->put('images', $image);
-            $validatedData['image'] = $imagePath; 
+            $result = $this->cloudinary->uploadApi()->upload($image->getRealPath(), [
+                'folder' => 'blog_images',
+            ]);
+            $validatedData['image'] = $result['secure_url'];
         }
 
         $blogs = Blogs::create($validatedData);
