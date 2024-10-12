@@ -3,7 +3,7 @@ import { FaRetweet } from 'react-icons/fa';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
 
-const SelectInput = ({ name, options, errors, setValue }) => {
+const SelectInput = ({ name, options, errors, setValue, label }) => {
   const [isOtherSelected, setIsOtherSelected] = useState(false);
 
   const handleSelectChange = e => {
@@ -50,7 +50,7 @@ const SelectInput = ({ name, options, errors, setValue }) => {
           onChange={handleSelectChange}
         >
           <option value="" disabled selected>
-            Select Type
+            {label}
           </option>
           {options.map(option => (
             <option key={option.id} value={option}>

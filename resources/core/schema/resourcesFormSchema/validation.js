@@ -5,4 +5,6 @@ export const resourcesForumSchema = yup.object({
   title: yup.string().required('Title is required').default(''),
   description: yup.string().required('Description is required').default(''),
   url_link: yup.string().required('Link is required').default(),
+  author: yup.string().required('Author is required').default(),
+  type: yup.string().required('Type is required').default(),
 });

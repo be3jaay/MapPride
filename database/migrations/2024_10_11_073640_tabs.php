@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('feedback', function (Blueprint $table) {
+        Schema::create('tabs', function (Blueprint $table) {
             $table->id();
-            $table->integer('feedback_value');
-            $table->text('description');
+            $table->string('tabs_type');
+            $table->string('tabs_title');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('feedback');
+        Schema::dropIfExists('tabs');
     }
 };

@@ -19,7 +19,7 @@ export default function AdminMap({ auth }) {
             />
           </div>
           <div className="mt-4">
-            <AdminModalMap />
+            <AdminModalMap auth={auth} />
           </div>
           <div className="w-full h-[44rem] mt-4">
             <AdminMapTable />

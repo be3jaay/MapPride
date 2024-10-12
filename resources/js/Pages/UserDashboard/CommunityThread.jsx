@@ -135,16 +135,16 @@ export default function CommunityThread({ auth }) {
                 </div>
               </div>
               {item.image ? (
-                <img src={`/storage/${item.image}`} aria-hidden alt="No Image" className="h-auto w-full rounded-md" />
+                <img src={`/storage/${item.image}`} aria-hidden alt="No Image" className="h-auto w-full object-cover" />
               ) : null}
 
               <div className="bg-gray-100 p-4 sm:p-6 ">
-                <h3 className="mt-0.5 text-lg text-gray-900">{item.title}</h3>
-                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500 mb-2">{item.description}</p>
+                <h3 className="mt-0.5 text-lg text-gray-900 font-bold">{item.title}</h3>
+                <p className="mt-2 text-sm/relaxed text-gray-500 mb-2">{item.description}</p>
                 <hr className="py-2" />
 
                 <div className="mt-2 sm:flex sm:items-center sm:gap-2 w-full flex  justify-between ">
-                  <div className="flex items-center gap-1 text-gray-700 ">
+                  <div className="flex items-center gap-1 text-gray-700 " onClick={handleViewComment}>
                     <GoCommentDiscussion />
                     <p className="text-xs">{comments[item.id] ? comments[item.id].length : 0} comments</p>
                   </div>

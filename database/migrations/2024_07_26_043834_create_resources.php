@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('tabs_title');
             $table->string('title');
             $table->text('description');
+            $table->string('author');
+            $table->string('type');
             $table->string('url_link');
             $table->timestamps();
         });

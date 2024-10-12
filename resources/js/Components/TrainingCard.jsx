@@ -18,14 +18,13 @@ const TrainingCard = ({ item, recruitment, formattedDate }) => {
           <div className="my-4">
             <p className="text-sm text-gray-500 h-40 overflow-hidden text-ellipsis">{item.description}</p>
           </div>
-          <div className="flex flex-col">
-            <span>Updated at: {formattedDate(item.updated_at)}</span>
+          <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2 mt-2">
               <Badge message={item.credits} type="info" />
               {item.certificate === 1 ? <Badge message="Free Certificate" type="info" /> : null}
             </div>
+            <span>Updated at: {formattedDate(item.updated_at)}</span>
           </div>
-
           <PrimaryButton className="w-full text-white justify-center py-3 mt-6 ">View Here</PrimaryButton>
         </div>
       </div>

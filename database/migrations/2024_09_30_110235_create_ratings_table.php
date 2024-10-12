@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('map_id')->constrained('maps')->onDelete('cascade');
-            $table->integer('rating_value'); 
+            $table->integer('rating_value');
             $table->timestamps();
         });
     }
@@ -24,6 +24,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('ratings', function (Blueprint $table) {
+            $table->dropForeign(['map_id']);
+        });
+
+        // Drop the ratings table
         Schema::dropIfExists('ratings');
     }
 };

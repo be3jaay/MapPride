@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Badge } from '@/Components/Badge';
 import { RiMapPinUserFill } from 'react-icons/ri';
 import { useDateFormat } from '../../../core/hooks';
+import { ForumModal } from '@/Components/Modal/Forms/ForumModal';
 
 export default function Experience({ auth }) {
   const [experience, setExperience] = useState([]);
@@ -47,6 +48,9 @@ export default function Experience({ auth }) {
               description="This is a freedom wall - These posted below are the approved shared experiences of users."
             />
           </div>
+          <div className="my-4">
+            <ForumModal />
+          </div>
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 mt-4 h-full">
             {experience.map((item, index) =>
               item.approved ? (
@@ -67,7 +71,7 @@ export default function Experience({ auth }) {
                     </div>
                   </div>
                   <div className="mt-4">
-                    <p className="text-pretty text-sm text-gray-500 text-ellipsis overflow-hidden">
+                    <p className="text-pretty text-sm text-gray-500 text-ellipsis overflow-hidden text-justify">
                       {item.description}
                     </p>
                   </div>

@@ -15,6 +15,8 @@ use App\Http\Controllers\MarkerLocationController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use Illuminate\Support\Facades\Http;
+use App\Models\Map; // Import the Map model
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,8 @@ Route::apiResource('tabs', TabsController::class);
 Route::apiResource('training-tabs', TrainingTabsController::class);
 
 Route::apiResource('resources', ResourcesController::class);
+Route::get('/resources/view-all', [ResourcesController::class, 'show']);
+
 
 Route::apiResource('support', SupportController::class);
 
@@ -48,7 +52,8 @@ Route::apiResource('hotlines', HotlineController::class);
 
 Route::apiResource('training', TrainingController::class);
 
-Route::get('/training/view-all', [TrainingController::class, 'view_all']);
+Route::get('/training/view-all', [TrainingController::class, 'show']);
+
 
 Route::apiResource('feedback', FeedbackController::class)->except(['update']);
 
@@ -57,6 +62,8 @@ Route::apiResource('map-selection', MapSelectionController::class)->only(['index
 Route::apiResource('marker-location', MarkerLocationController::class)->only(['index', 'store']);
 
 Route::apiResource('map', MapController::class);
+
+Route::get('/map/view-all', [MapController::class, 'show']);
 
 Route::post('/map/{id}/rate', [MapController::class, 'rate']);
 
@@ -70,5 +77,20 @@ Route::post('/blogs/{blog}/comments', [BlogsController::class, 'storeComment']);
 
 Route::get('/blogs/{blog}/comments', [BlogsController::class, 'showComments']);
 
-
 Route::apiResource('users', RegisteredUserController::class);
+
+Route::get('/proxy/places', function (Request $request) {
+    $apiKey = env('GOOGLE_MAPS_API_KEY'); // Ensure this is set in your .env file
+    $location = $request->input('location');
+    $radius = $request->input('radius');
+    $keyword = $request->input('keyword');
+
+    $response = Http::get("https://maps.googleapis.com/maps/api/place/nearbysearch/json", [
+        'location' => $location,
+        'radius' => $radius,
+        'keyword' => $keyword,
+        'key' => $apiKey,
+    ]);
+
+    return $response->json(); // Return the JSON response from the Google API
+});

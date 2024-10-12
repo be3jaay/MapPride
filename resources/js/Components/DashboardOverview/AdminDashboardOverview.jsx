@@ -10,6 +10,7 @@ import { RiChatThreadLine } from 'react-icons/ri';
 import axios from 'axios';
 import { Badge } from '../Badge';
 import { Alert } from '../Alert';
+import { FaUserCheck } from 'react-icons/fa6';
 
 export const AdminDashboardOverview = () => {
   const [user, setUser] = useState([]);
@@ -18,11 +19,22 @@ export const AdminDashboardOverview = () => {
   const [blogs, setBlogs] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [highestRatedMap, setHighestRatedMap] = useState(null);
+  const [map, setMap] = useState([]);
+  const [nonAdminContributions, setNonAdminContributions] = useState(0); // New state for non-admin contributions
 
   useEffect(() => {
     const fetchUser = async () => {
       const response = await axios.get('/api/users');
       setUser(response.data.data);
+    };
+    const fetchMap = async () => {
+      const response = await axios.get('/api/map');
+      const data = response.data.data ?? [];
+
+      // Filter out admin contributions
+      const filteredContributions = data.filter(item => item.usertype !== 'admin');
+      setMap(data);
+      setNonAdminContributions(filteredContributions.length); // Set the count of non-admin contributions
     };
     const fetchStory = async () => {
       const response = await axios.get('/api/experience');
@@ -57,6 +69,7 @@ export const AdminDashboardOverview = () => {
     fetchUser();
     fetchFeedback();
     fetchHighestRatedMap();
+    fetchMap();
   }, []);
 
   return (
@@ -70,6 +83,18 @@ export const AdminDashboardOverview = () => {
             </div>
             <span className="rounded-full bg-indigo-50 p-3 text-black text-2xl">
               <FaUsers />
+            </span>
+          </div>
+        </article>
+        <article className="rounded-lg border border-gray-100 bg-indigo-200 p-6 w-full">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-lg font-bold text-indigo-700">User Map Contribution</p>
+              <p className="text-xl font-medium text-gray-900">{nonAdminContributions}</p>{' '}
+              {/* Display non-admin contributions count */}
+            </div>
+            <span className="rounded-full bg-indigo-50 p-3 text-black text-2xl">
+              <FaUserCheck />
             </span>
           </div>
         </article>
@@ -98,14 +123,14 @@ export const AdminDashboardOverview = () => {
         <article className="rounded-lg border border-gray-100 bg-indigo-200 p-6 w-full">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-lg font-bold text-indigo-700">Average Rating on Application</p>
+              <p className="text-lg font-bold text-indigo-700">Average Rating on App</p>
               <p className="text-xl font-medium text-gray-900 flex items-center">
                 {averageRating}
                 <IoStarSharp className="ml-1 text-indigo-700" />
               </p>
             </div>
             <span className="rounded-full bg-indigo-50 p-3 text-black text-2xl">
-              <MdOutlinePinDrop />
+              <IoStarSharp />
             </span>
           </div>
         </article>
@@ -133,7 +158,7 @@ export const AdminDashboardOverview = () => {
                       src={`/storage/${highestRatedMap.image}`}
                       aria-hidden
                       alt="No image"
-                      className="h-auto w-full"
+                      className="h-[30rem] w-full"
                     />
                   </div>
                   <div className="w-full card-body shadow-lg relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">

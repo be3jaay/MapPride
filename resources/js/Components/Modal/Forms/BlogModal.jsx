@@ -64,9 +64,11 @@ export default function BlogModal({ auth }) {
   const [icon] = useState(user.profile_picture);
 
   useEffect(() => {
-    setValue('username', username);
-    setValue('icon', icon);
-  }, [username, icon, setValue]);
+    if (isOpen) {
+      setValue('username', username);
+      setValue('icon', icon);
+    }
+  }, [username, icon, setValue, isOpen]);
 
   const onSubmit = useCallback(async data => {
     try {

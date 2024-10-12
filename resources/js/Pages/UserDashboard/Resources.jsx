@@ -19,7 +19,7 @@ export default function Resources({ auth }) {
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        const response = await axios.get('/api/resources');
+        const response = await axios.get('/api/resources/view-all');
         const data = response.data.data;
 
         const groupedData = data.reduce((acc, item) => {
@@ -61,7 +61,7 @@ export default function Resources({ auth }) {
               description="In this section, you will be able to see all the available resources that will help you develop and understand more about LGBTQ+."
             />
           </div>
-          <div className="my-4 flex">
+          <div className="my-4 w-full">
             <CustomTabs tabs={tabs} />
           </div>
         </div>

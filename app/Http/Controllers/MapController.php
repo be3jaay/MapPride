@@ -42,6 +42,10 @@ class MapController extends Controller
             'address' => 'required|string',
             'phone' => 'required|integer|max:999999999',
             'services' => 'nullable|string',
+            'usertype' => 'required|string',
+            'username' => 'required|string|max:255',
+            'is_Verified' => 'required|integer',
+
         ]);
 
         if ($request->hasFile('image')) {
@@ -61,9 +65,11 @@ class MapController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        $map = Map::findOrFail($id);
+       
+        $perPage = 1000;
+        $map = Map::orderBy('created_at', 'desc')->paginate($perPage);
         return response()->json($map);
     }
 
