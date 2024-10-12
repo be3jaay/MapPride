@@ -14,23 +14,17 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Cloudinary\Cloudinary;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
-    public function index()
-    {
-        $perPage = 10;
-        $users = User::orderBy('created_at', 'desc')->paginate($perPage);
-        return response()->json($users);
-    }
+    protected $cloudinary;
 
-    public function create(): Response
+    public function __construct(Cloudinary $cloudinary)
     {
-        return Inertia::render('Auth/Register');
+        $this->cloudinary = $cloudinary;
     }
+    // ... other methods ...
 
     /**
      * Handle an incoming registration request.
@@ -46,7 +40,6 @@ class RegisteredUserController extends Controller
             'profile_picture' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'resume' => 'nullable|file|mimes:pdf,doc,docx|max:2048'
         ]);
 
         $userData = [
@@ -57,16 +50,13 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ];
 
+        // Upload profile picture to Cloudinary if it exists
         if ($request->hasFile('profile_picture')) {
             $profilePicture = $request->file('profile_picture');
-            $imagePath = $profilePicture->store('profile_pictures', 'public');
-            $userData['profile_picture'] = $imagePath;
-        }
-
-        if ($request->hasFile('resume')) {
-            $resume = $request->file('resume');
-            $resumePath = $resume->store('resumes', 'public');
-            $userData['resume'] = $resumePath;
+            $result = $this->cloudinary->uploadApi()->upload($profilePicture->getRealPath(), [
+                'folder' => 'profile_pictures', // Specify the folder in Cloudinary
+            ]);
+            $userData['profile_picture'] = $result['secure_url']; // Get the secure URL of the uploaded image
         }
 
         $user = User::create($userData);
@@ -88,7 +78,6 @@ class RegisteredUserController extends Controller
             'gender' => 'required|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
             'email' => 'required|string|lowercase|email|max:255|unique:users,email,' . $id,
-            'resume' => 'nullable|file|mimes:pdf,doc,docx|max:2048'
         ]);
 
         $userData = [
@@ -98,24 +87,20 @@ class RegisteredUserController extends Controller
             'gender' => $request->gender,
         ];
 
+        // Handle profile picture upload
         if ($request->hasFile('profile_picture')) {
             // Delete old profile picture if exists
             if ($user->profile_picture) {
-                Storage::disk('public')->delete($user->profile_picture);
+                // You may want to delete the old image from Cloudinary if needed
+                // This requires the public ID of the image, which you can extract from the URL
+                $publicId = basename(parse_url($user->profile_picture, PHP_URL_PATH));
+                $this->cloudinary->deleteApi()->delete($publicId);
             }
             $profilePicture = $request->file('profile_picture');
-            $imagePath = $profilePicture->store('profile_pictures', 'public');
-            $userData['profile_picture'] = $imagePath;
-        }
-
-        if ($request->hasFile('resume')) {
-            // Delete old resume if exists
-            if ($user->resume) {
-                Storage::disk('public')->delete($user->resume);
-            }
-            $resume = $request->file('resume');
-            $resumePath = $resume->store('resumes', 'public');
-            $userData['resume'] = $resumePath;
+            $result = $this->cloudinary->uploadApi()->upload($profilePicture->getRealPath(), [
+                'folder' => 'profile_pictures',
+            ]);
+            $userData['profile_picture'] = $result['secure_url'];
         }
 
         $user->update($userData);
@@ -127,12 +112,10 @@ class RegisteredUserController extends Controller
     {
         $user = User::findOrFail($id);
         
-        // Delete associated files
+        // Delete associated files from Cloudinary
         if ($user->profile_picture) {
-            Storage::disk('public')->delete($user->profile_picture);
-        }
-        if ($user->resume) {
-            Storage::disk('public')->delete($user->resume);
+            $publicId = basename(parse_url($user->profile_picture, PHP_URL_PATH));
+            $this->cloudinary->deleteApi()->delete($publicId);
         }
 
         $user->delete();

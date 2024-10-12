@@ -6,9 +6,17 @@ use App\Models\Map;
 use Illuminate\Http\Request;
 use App\Models\Rating;
 use Illuminate\Support\Facades\DB;
+use Cloudinary\Cloudinary;
 
 class MapController extends Controller
 {
+    protected $cloudinary;
+
+    public function __construct(Cloudinary $cloudinary)
+    {
+        $this->cloudinary = $cloudinary;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -28,8 +36,6 @@ class MapController extends Controller
         return response()->json($maps);
     }
 
-
-
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -45,20 +51,21 @@ class MapController extends Controller
             'usertype' => 'required|string',
             'username' => 'required|string|max:255',
             'is_Verified' => 'required|integer',
-
         ]);
-
+    
+        // Upload image to Cloudinary if it exists
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            // Save the file in the 'images' directory within 'public'
-            $imagePath = $image->store('images', 'public');
-            $validatedData['image'] = $imagePath;
+            $result = $this->cloudinary->uploadApi()->upload($image->getRealPath(), [
+                'folder' => 'map_images', // Specify the folder in Cloudinary
+            ]);
+            $validatedData['image'] = $result['secure_url']; // Get the secure URL of the uploaded image
         }
-
+    
         $validatedData['services'] = json_decode($validatedData['services'], true);
-
+    
         $map = Map::create($validatedData);
-
+    
         return response()->json($map, 201);
     }
 
@@ -67,7 +74,6 @@ class MapController extends Controller
      */
     public function show()
     {
-       
         $perPage = 1000;
         $map = Map::orderBy('created_at', 'desc')->paginate($perPage);
         return response()->json($map);
@@ -104,9 +110,16 @@ class MapController extends Controller
 
         // Handle image upload
         if ($request->hasFile('image')) {
+            // Delete old image from Cloudinary if it exists
+            if ($map->image) {
+                $publicId = basename(parse_url($map->image, PHP_URL_PATH));
+                $this->cloudinary->deleteApi()->delete($publicId);
+            }
             $image = $request->file('image');
-            $imagePath = $image->store('images', 'public');
-            $validatedData['image'] = $imagePath;
+            $result = $this->cloudinary->uploadApi()->upload($image->getRealPath(), [
+                'folder' => 'map_images',
+            ]);
+            $validatedData['image'] = $result['secure_url'];
         }
 
         // Decode services if present
@@ -125,6 +138,13 @@ class MapController extends Controller
     public function destroy(string $id)
     {
         $map = Map::findOrFail($id);
+        
+        // Delete associated image from Cloudinary if it exists
+        if ($map->image) {
+            $publicId = basename(parse_url($map->image, PHP_URL_PATH));
+            $this->cloudinary->deleteApi()->delete($publicId);
+        }
+
         $map->delete();
 
         return response()->json(null, 204);
