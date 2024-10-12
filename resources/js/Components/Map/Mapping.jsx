@@ -34,7 +34,7 @@ export const Mapping = ({ auth }) => {
 
   const fetchPlaces = async () => {
     try {
-      const response = await fetch(`/api/proxy/places?location=14.2127,121.162&radius=10000&keyword=LGBTQ+`);
+      const response = await fetch('/api/proxy/places?location=14.2127,121.162&radius=10000&keyword=LGBTQ+');
       const data = await response.json();
       if (data.results) {
         setPlaces(data.results);
