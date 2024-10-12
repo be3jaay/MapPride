@@ -13,12 +13,12 @@ export default function Authenticated({ header, children }) {
   const { auth } = usePage().props;
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
-  const getProfilePictureUrl = useCallback(() => {
+  const getProfilePictureUrl = () => {
     if (auth.user.profile_picture) {
-      return auth.user.profile_picture;
+      return `/storage/${auth.user.profile_picture}`;
     }
-    return anonymous;
-  }, [auth.user.profile_picture]);
+    return '../../core/images/about.png';
+  };
 
   const toggleSidebar = useCallback(() => {
     setIsSidebarCollapsed(!isSidebarCollapsed);
