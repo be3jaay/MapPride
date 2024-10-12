@@ -32,6 +32,8 @@ class RegisteredUserController extends Controller
         return response()->json($users);
     }
 
+    
+
     public function create(): Response
     {
         return Inertia::render('Auth/Register');
@@ -137,5 +139,13 @@ class RegisteredUserController extends Controller
         $user->delete();
 
         return response()->json(null, 204);
+    }
+
+    
+    public function show()
+    {
+        $perPage = 1000;
+        $user = User::orderBy('created_at', 'desc')->paginate($perPage);
+        return response()->json($user);
     }
 }

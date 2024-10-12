@@ -22,7 +22,7 @@ export const AdminDashboardOverview = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await axios.get('/api/users');
+      const response = await axios.get('/api/users/view-all');
       setUser(response.data.data);
     };
     const fetchMap = async () => {

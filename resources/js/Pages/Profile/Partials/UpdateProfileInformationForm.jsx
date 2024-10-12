@@ -47,7 +47,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
     }
 
     axios
-      .post(route('profile.update'), formData, {
+      .post(route('profile.update', user.id), formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -145,7 +145,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
           <div className="shrink-0">
             <img
               className="h-16 w-16 object-cover rounded-full"
-              src={previewUrl || (user.profile_picture ? `/storage/${user.profile_picture}` : '/default-avatar.png')}
+              src={previewUrl || (user.profile_picture ? user.profile_picture : '/default-avatar.png')}
               alt={user.name || 'User'}
             />
           </div>

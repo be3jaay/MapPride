@@ -138,7 +138,6 @@ export default function CommunityThread({ auth }) {
               {item.image ? (
                 <img src={item.image} alt={item.title || 'Blog image'} className="h-auto w-full object-cover" />
               ) : null}
-
               <div className="bg-gray-100 p-4 sm:p-6 ">
                 <h3 className="mt-0.5 text-lg text-gray-900 font-bold">{item.title}</h3>
                 <p className="mt-2 text-sm/relaxed text-gray-500 mb-2">{item.description}</p>
