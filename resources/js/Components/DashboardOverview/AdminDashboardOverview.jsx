@@ -2,15 +2,13 @@ import { useEffect, useState } from 'react';
 import { BarGraph } from '../Chart/Bar';
 import { LineGraph } from '../Chart/Line';
 import { PieGraph } from '../Chart/Pie';
-import { FaUsers } from 'react-icons/fa6';
+import { FaUsers, FaUserCheck } from 'react-icons/fa6';
 import { BsPostcardHeart } from 'react-icons/bs';
-import { MdOutlinePinDrop } from 'react-icons/md';
 import { IoStarSharp } from 'react-icons/io5';
 import { RiChatThreadLine } from 'react-icons/ri';
 import axios from 'axios';
 import { Badge } from '../Badge';
 import { Alert } from '../Alert';
-import { FaUserCheck } from 'react-icons/fa6';
 
 export const AdminDashboardOverview = () => {
   const [user, setUser] = useState([]);
@@ -20,7 +18,7 @@ export const AdminDashboardOverview = () => {
   const [averageRating, setAverageRating] = useState(0);
   const [highestRatedMap, setHighestRatedMap] = useState(null);
   const [map, setMap] = useState([]);
-  const [nonAdminContributions, setNonAdminContributions] = useState(0); // New state for non-admin contributions
+  const [nonAdminContributions, setNonAdminContributions] = useState(0);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -30,11 +28,9 @@ export const AdminDashboardOverview = () => {
     const fetchMap = async () => {
       const response = await axios.get('/api/map');
       const data = response.data.data ?? [];
-
-      // Filter out admin contributions
       const filteredContributions = data.filter(item => item.usertype !== 'admin');
       setMap(data);
-      setNonAdminContributions(filteredContributions.length); // Set the count of non-admin contributions
+      setNonAdminContributions(filteredContributions.length);
     };
     const fetchStory = async () => {
       const response = await axios.get('/api/experience');
@@ -48,7 +44,6 @@ export const AdminDashboardOverview = () => {
       const response = await axios.get('/api/feedback');
       const feedbackData = response.data.data;
       setFeedback(feedbackData);
-
       const totalFeedbackValue = feedbackData.reduce((sum, item) => sum + item.feedback_value, 0);
       const average = totalFeedbackValue / feedbackData.length || 0;
       setAverageRating(average.toFixed(1));
@@ -90,8 +85,7 @@ export const AdminDashboardOverview = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-lg font-bold text-indigo-700">User Map Contribution</p>
-              <p className="text-xl font-medium text-gray-900">{nonAdminContributions}</p>{' '}
-              {/* Display non-admin contributions count */}
+              <p className="text-xl font-medium text-gray-900">{nonAdminContributions}</p>
             </div>
             <span className="rounded-full bg-indigo-50 p-3 text-black text-2xl">
               <FaUserCheck />
@@ -155,9 +149,9 @@ export const AdminDashboardOverview = () => {
                 <div className="card w-full bg-white flex items-center justify-center">
                   <div className="w-full">
                     <img
-                      src={`/storage/${highestRatedMap.image}`}
+                      src={highestRatedMap.image ? highestRatedMap.image : '/path/to/default/image.jpg'} // Handle default image
                       aria-hidden
-                      alt="No image"
+                      alt="Map Image"
                       className="h-[30rem] w-full"
                     />
                   </div>

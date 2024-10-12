@@ -150,7 +150,13 @@ export const Mapping = ({ auth }) => {
                     <Popup ref={popupRef} className="w-full" closeOnClick={close}>
                       <div className="card bg-white w-[30rem] flex items-center justify-center">
                         <div>
-                          <img src={`/storage/${item.image}`} aria-hidden alt="No Image" className="h-auto" />
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt={item.title || 'Map image'}
+                              className="h-auto w-full object-cover"
+                            />
+                          ) : null}
                         </div>
                         <div className="w-full card-body shadow-lg relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">
                           <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>

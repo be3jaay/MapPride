@@ -25,12 +25,28 @@ class RegisteredUserController extends Controller
         $this->cloudinary = $cloudinary;
     }
     // ... other methods ...
+    public function index()
+    {
+        $perPage = 10;
+        $users = User::orderBy('created_at', 'desc')->paginate($perPage);
+        return response()->json($users);
+    }
+
+    public function create(): Response
+    {
+        return Inertia::render('Auth/Register');
+    }
 
     /**
      * Handle an incoming registration request.
      *
      * @throws \Illuminate\Validation\ValidationException
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
+    
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
