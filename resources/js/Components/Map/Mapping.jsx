@@ -175,7 +175,7 @@ export const Mapping = ({ auth }) => {
                               Address: {item.address}
                             </span>
                             <span className="mb-2 text-pretty text-sm text-gray-700 font-bold flex items-center">
-                              Available Services:
+                              Available Services: {item.services.join(', ')}
                             </span>
                             <span className="mb-2 text-pretty text-sm text-gray-700 font-bold flex items-center">
                               Contact Number: +63 {item.phone}
@@ -242,7 +242,8 @@ export const Mapping = ({ auth }) => {
                             <div className="w-full">
                               <div className="flex items-center justify-between">
                                 <h3 className="text-xl font-bold text-indigo-700 sm:text-xl">{item.name}</h3>
-                                <Badge message="Verified" type="success" />
+                                <Badge message="Verified" type="success" className="mr-2" />
+                                <Badge message="Google" type="info" />
                               </div>
                               <p className="text-md">{item.vicinity}</p>
                               <hr className="w-full mb-4" />
@@ -256,15 +257,19 @@ export const Mapping = ({ auth }) => {
                               Type: {item.types[0]}
                             </span>
                             <span className="mb-2 text-pretty text-sm text-gray-700 font-bold flex items-center">
-                              Contact Number: {item.formatted_phone_number || 'N/A'}
+                              Business Status: {item.business_status || 'N/A'}
                             </span>
                             <span className="mr-2 text-pretty text-xl text-indigo-700 font-bold flex items-center">
-                              Ratings:{' '}
+                              Ratings:
                               {item.rating ? (
-                                <div className="flex flex-col">{item.rating.toFixed(1)}</div>
+                                <div className="flex flex-col ml-2"> {item.rating.toFixed(1)}</div>
                               ) : (
                                 'No ratings yet'
                               )}
+                            </span>
+                            <span className="text-pretty text-xl text-indigo-700 font-bold flex items-center">
+                              <span className="mr-2">{item.user_ratings_total}</span>
+                              User Review{item.user_ratings_total > 1 ? 's' : ''}
                             </span>
                           </div>
                           <hr className="my-4" />
