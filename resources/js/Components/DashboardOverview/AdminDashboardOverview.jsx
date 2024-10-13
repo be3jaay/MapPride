@@ -174,7 +174,7 @@ export const AdminDashboardOverview = () => {
                         Address: {highestRatedMap.address}
                       </span>
                       <span className="ext-pretty text-sm text-gray-700 font-bold flex items-center">
-                        Available Services: {highestRatedMap.services}
+                        Available Services: {highestRatedMap.services.join(', ')}
                       </span>
                     </div>
                   </div>
