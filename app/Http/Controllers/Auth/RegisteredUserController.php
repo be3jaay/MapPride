@@ -55,7 +55,7 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'preferences' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
+            'profile_picture' => 'nullable|file|mimes:jpeg,png,gif|max:2048',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -94,7 +94,7 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'preferences' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
+            'profile_picture' => 'nullable|file|mimes:jpeg,png,gif|max:2048',
             'email' => 'required|string|lowercase|email|max:255|unique:users,email,' . $id,
         ]);
 
@@ -108,7 +108,7 @@ class RegisteredUserController extends Controller
         if ($request->hasFile('profile_picture')) {
             $profilePicture = $request->file('profile_picture');
             $result = $this->cloudinary->uploadApi()->upload($profilePicture->getRealPath(), [
-                'folder' => 'profile_pictures', // Specify the folder in Cloudinary
+                'folder' => 'profile_pictures',
             ]);
             $userData['profile_picture'] = $result['secure_url'];
         }

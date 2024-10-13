@@ -18,6 +18,7 @@ export default function CommunityThread({ auth }) {
   const [isCommentModalOpen, setCommentModalOpen] = useState(false);
   const [selectedBlogId, setSelectedBlogId] = useState(null);
   const [showComment, setShowComment] = useState(false);
+  const [showMyPostsOnly, setShowMyPostsOnly] = useState(false);
   const [toggle, setToggle] = useState(false);
 
   const toggleComment = () => {
@@ -40,10 +41,14 @@ export default function CommunityThread({ auth }) {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      const response = await axios.get('/api/blogs');
-      const result = response.data.data;
-      setBlogs(result);
-      result.forEach(blog => fetchComments(blog.id));
+      try {
+        const response = await axios.get('/api/blogs');
+        const result = response.data.data;
+        setBlogs(result);
+        result.forEach(blog => fetchComments(blog.id));
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      }
     };
     fetchBlogs();
   }, []);
@@ -97,6 +102,11 @@ export default function CommunityThread({ auth }) {
   const formattedDate = dateString => {
     return getFormattedDate(dateString);
   };
+  const handleFilterChange = () => {
+    setShowMyPostsOnly(!showMyPostsOnly);
+  };
+
+  const filteredBlogs = showMyPostsOnly ? blogs.filter(blog => blog.username === user.name) : blogs;
 
   return (
     <AuthenticatedLayout user={user}>
@@ -116,8 +126,18 @@ export default function CommunityThread({ auth }) {
             </div>
           </div>
         </header>
-        <section className="px-4 lg:px-[20rem] mt-12 h-auto">
-          {blogs.map((item, index) => (
+        <div className="px-4 lg:px-[20rem] my-6 flex items-center justify-center gap-2">
+          <label className="text-lg text-indigo-700">Show my posts only</label>
+          <input
+            type="checkbox"
+            className="toggle toggle-primary"
+            onChange={handleFilterChange}
+            checked={showMyPostsOnly}
+          />
+        </div>
+
+        <section className="px-4 lg:px-[20rem] mt-6 h-auto">
+          {filteredBlogs.map((item, index) => (
             <article
               key={index}
               className="bg-white overflow-hidden rounded-lg shadow transition hover:shadow-lg p-6 mb-6"
