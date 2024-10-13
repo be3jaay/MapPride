@@ -14,18 +14,25 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Cloudinary\Cloudinary;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
+    protected $cloudinary;
+
+    public function __construct(Cloudinary $cloudinary)
+    {
+        $this->cloudinary = $cloudinary;
+    }
+    // ... other methods ...
     public function index()
     {
         $perPage = 10;
         $users = User::orderBy('created_at', 'desc')->paginate($perPage);
         return response()->json($users);
     }
+
+
 
     public function create(): Response
     {
@@ -36,7 +43,12 @@ class RegisteredUserController extends Controller
      * Handle an incoming registration request.
      *
      * @throws \Illuminate\Validation\ValidationException
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
+
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -46,7 +58,6 @@ class RegisteredUserController extends Controller
             'profile_picture' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'resume' => 'nullable|file|mimes:pdf,doc,docx|max:2048'
         ]);
 
         $userData = [
@@ -57,16 +68,13 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ];
 
+        // Upload profile picture to Cloudinary if it exists
         if ($request->hasFile('profile_picture')) {
             $profilePicture = $request->file('profile_picture');
-            $imagePath = $profilePicture->store('profile_pictures', 'public');
-            $userData['profile_picture'] = $imagePath;
-        }
-
-        if ($request->hasFile('resume')) {
-            $resume = $request->file('resume');
-            $resumePath = $resume->store('resumes', 'public');
-            $userData['resume'] = $resumePath;
+            $result = $this->cloudinary->uploadApi()->upload($profilePicture->getRealPath(), [
+                'folder' => 'profile_pictures', // Specify the folder in Cloudinary
+            ]);
+            $userData['profile_picture'] = $result['secure_url'];
         }
 
         $user = User::create($userData);
@@ -88,7 +96,6 @@ class RegisteredUserController extends Controller
             'gender' => 'required|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
             'email' => 'required|string|lowercase|email|max:255|unique:users,email,' . $id,
-            'resume' => 'nullable|file|mimes:pdf,doc,docx|max:2048'
         ]);
 
         $userData = [
@@ -99,44 +106,31 @@ class RegisteredUserController extends Controller
         ];
 
         if ($request->hasFile('profile_picture')) {
-            // Delete old profile picture if exists
-            if ($user->profile_picture) {
-                Storage::disk('public')->delete($user->profile_picture);
-            }
             $profilePicture = $request->file('profile_picture');
-            $imagePath = $profilePicture->store('profile_pictures', 'public');
-            $userData['profile_picture'] = $imagePath;
+            $result = $this->cloudinary->uploadApi()->upload($profilePicture->getRealPath(), [
+                'folder' => 'profile_pictures', // Specify the folder in Cloudinary
+            ]);
+            $userData['profile_picture'] = $result['secure_url'];
         }
-
-        if ($request->hasFile('resume')) {
-            // Delete old resume if exists
-            if ($user->resume) {
-                Storage::disk('public')->delete($user->resume);
-            }
-            $resume = $request->file('resume');
-            $resumePath = $resume->store('resumes', 'public');
-            $userData['resume'] = $resumePath;
-        }
-
         $user->update($userData);
 
         return response()->json($user->fresh(), 200);
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(string $id)
     {
         $user = User::findOrFail($id);
-        
-        // Delete associated files
-        if ($user->profile_picture) {
-            Storage::disk('public')->delete($user->profile_picture);
-        }
-        if ($user->resume) {
-            Storage::disk('public')->delete($user->resume);
-        }
 
         $user->delete();
 
         return response()->json(null, 204);
+    }
+
+
+    public function show()
+    {
+        $perPage = 1000;
+        $user = User::orderBy('created_at', 'desc')->paginate($perPage);
+        return response()->json($user);
     }
 }

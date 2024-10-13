@@ -15,7 +15,7 @@ export default function AdminSupport({ auth }) {
             <Alert
               type="info"
               message="Support Content Management"
-              description="In this section, the administrator will add/create training platform that will be shown for user training platform."
+              description="In this section, the administrator will add/create support card that will be shown for user support resources."
             />
           </div>
           <div className="my-4 flex gap-1">

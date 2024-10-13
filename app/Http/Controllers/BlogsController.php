@@ -6,12 +6,20 @@ use App\Models\Blogs;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Storage;
+use Cloudinary\Cloudinary;
 
 class BlogsController extends Controller
 {
+    protected $cloudinary;
+
+    public function __construct(Cloudinary $cloudinary)
+    {
+        $this->cloudinary = $cloudinary;
+    }
+
     public function index()
     {
-        $perPage = 30;
+        $perPage = 50;
         $blogs = Blogs::orderBy('created_at', 'desc')->paginate($perPage);
         return response()->json($blogs);
     }
@@ -26,14 +34,12 @@ class BlogsController extends Controller
             'icon' => 'required|string',
         ]);
 
-        // if ($request->hasFile('image')) {
-        //     $image = $request->file('image');
-        //     $imagePath = $image->store('images', 'public');
-        //     $validatedData['image'] = $imagePath;
-        // }
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 's3');
-            $validatedData['image'] = Storage::disk('s3')->url($imagePath);
+            $image = $request->file('image');
+            $result = $this->cloudinary->uploadApi()->upload($image->getRealPath(), [
+                'folder' => 'blog_images',
+            ]);
+            $validatedData['image'] = $result['secure_url'];
         }
 
         $blogs = Blogs::create($validatedData);
@@ -67,7 +73,7 @@ class BlogsController extends Controller
         $validatedData = $request->validate([
             'username' => 'required|string',
             'content' => 'required|string',
-            'icon' => 'required|string',
+            'icon' => 'nullable|string',
         ]);
 
         $comment = Comment::create([

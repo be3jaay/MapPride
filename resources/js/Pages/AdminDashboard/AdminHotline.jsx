@@ -13,8 +13,8 @@ export default function AdminHotline({ auth }) {
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <Alert
               type="info"
-              message="Support Content Management"
-              description="In this section, the administrator will add/create training platform that will be shown for user training platform."
+              message="Hotline Content Management"
+              description="In this section, the administrator will add/create hotline card that will be shown for user hotline resources."
             />
           </div>
           <div className="my-4 flex gap-1">

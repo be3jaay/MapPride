@@ -78,6 +78,7 @@ Route::post('/blogs/{blog}/comments', [BlogsController::class, 'storeComment']);
 Route::get('/blogs/{blog}/comments', [BlogsController::class, 'showComments']);
 
 Route::apiResource('users', RegisteredUserController::class);
+Route::get('/users/view-all', [RegisteredUserController::class, 'show']);
 
 Route::get('/proxy/places', function (Request $request) {
     $apiKey = env('GOOGLE_MAPS_API_KEY'); // Ensure this is set in your .env file

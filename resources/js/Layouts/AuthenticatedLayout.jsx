@@ -13,12 +13,12 @@ export default function Authenticated({ header, children }) {
   const { auth } = usePage().props;
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
-  const getProfilePictureUrl = useCallback(() => {
+  const getProfilePictureUrl = () => {
     if (auth.user.profile_picture) {
       return `/storage/${auth.user.profile_picture}`;
     }
-    return anonymous;
-  }, [auth.user.profile_picture, anonymous]);
+    return '../../core/images/about.png';
+  };
 
   const toggleSidebar = useCallback(() => {
     setIsSidebarCollapsed(!isSidebarCollapsed);
@@ -41,7 +41,7 @@ export default function Authenticated({ header, children }) {
 
         <hr />
 
-        <nav className="mt-5 flex items-start justify-center flex-col  gap-10">
+        <nav className="mt-5 flex items-start justify-center flex-col gap-10">
           <button
             onClick={toggleSidebar}
             className="text-indigo-700 focus:outline-none px-6 flex items-center justify-end w-full"
@@ -73,7 +73,7 @@ export default function Authenticated({ header, children }) {
             <div className="avatar">
               <div className="w-10 rounded-full">
                 <Link href={route('profile.edit')}>
-                  <img src={getProfilePictureUrl()} aria-hidden alt="No-PFP" />
+                  <img src={getProfilePictureUrl()} aria-hidden alt="Profile Picture" />
                 </Link>
               </div>
             </div>

@@ -16,7 +16,7 @@ export const AdminBlogTable = () => {
 
   return (
     <div>
-      <div className="overflow-x-auto my-4 shadow-lg rounded-md p-4  ">
+      <div className="overflow-x-auto my-4 shadow-lg rounded-md p-4">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-md">
           <thead className="ltr:text-left rtl:text-right">
             <tr>
@@ -24,26 +24,24 @@ export const AdminBlogTable = () => {
               <th style={tableHeaderStyle}>Title</th>
               <th style={tableHeaderStyle}>Description</th>
               <th style={tableHeaderStyle}>Image</th>
-
-              <th style={tableHeaderStyle}>Created At: </th>
-              <th style={tableHeaderStyle}>Updated At: </th>
+              <th style={tableHeaderStyle}>Created At:</th>
+              <th style={tableHeaderStyle}>Updated At:</th>
               <th style={tableHeaderStyle}>Delete</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {Array.isArray(blogs) && blogs.length > 0 ? (
               blogs.map(blog => (
-                <tr key={blogs.id}>
+                <tr key={blog.id}>
                   <td style={tableStyle}>{blog.username}</td>
                   <td style={tableStyle}>{blog.title}</td>
                   <td style={tableStyle}>{blog.description}</td>
                   <td style={tableStyle}>
-                    <img
-                      src={`/storage/${blog.image}`}
-                      aria-hidden
-                      alt="No Image"
-                      className="h-auto w-full rounded-md"
-                    />
+                    {blog.image ? (
+                      <img src={blog.image} aria-hidden alt="Blog Image" className="h-auto w-full rounded-md" />
+                    ) : (
+                      <span>No Image</span>
+                    )}
                   </td>
                   <td style={tableStyle}>{formattedDate(blog.created_at)}</td>
                   <td style={tableStyle}>{formattedDate(blog.updated_at)}</td>
@@ -56,7 +54,7 @@ export const AdminBlogTable = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="5" style={tableStyle}>
+                <td colSpan="7" style={tableStyle}>
                   <Loading type={'primary'} />
                 </td>
               </tr>

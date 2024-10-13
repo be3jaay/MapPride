@@ -8,7 +8,6 @@ import axios from 'axios';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useDateFormat } from '../../../core/hooks';
 import { FaReply, FaRegEyeSlash, FaEye } from 'react-icons/fa';
-import anonymous from '../../../core/images/anonymous.png';
 import SecondaryButton from '@/Components/SecondaryButton';
 
 export default function CommunityThread({ auth }) {
@@ -19,7 +18,12 @@ export default function CommunityThread({ auth }) {
   const [isCommentModalOpen, setCommentModalOpen] = useState(false);
   const [selectedBlogId, setSelectedBlogId] = useState(null);
   const [showComment, setShowComment] = useState(false);
+  const [showMyPostsOnly, setShowMyPostsOnly] = useState(false);
   const [toggle, setToggle] = useState(false);
+
+  const toggleComment = () => {
+    setShowComment(prevVal => !prevVal);
+  };
 
   const viewComment = () => {
     setShowComment(true);
@@ -37,10 +41,14 @@ export default function CommunityThread({ auth }) {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      const response = await axios.get('/api/blogs');
-      const result = response.data.data;
-      setBlogs(result);
-      result.forEach(blog => fetchComments(blog.id));
+      try {
+        const response = await axios.get('/api/blogs');
+        const result = response.data.data;
+        setBlogs(result);
+        result.forEach(blog => fetchComments(blog.id));
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      }
     };
     fetchBlogs();
   }, []);
@@ -94,6 +102,11 @@ export default function CommunityThread({ auth }) {
   const formattedDate = dateString => {
     return getFormattedDate(dateString);
   };
+  const handleFilterChange = () => {
+    setShowMyPostsOnly(!showMyPostsOnly);
+  };
+
+  const filteredBlogs = showMyPostsOnly ? blogs.filter(blog => blog.username === user.name) : blogs;
 
   return (
     <AuthenticatedLayout user={user}>
@@ -113,8 +126,18 @@ export default function CommunityThread({ auth }) {
             </div>
           </div>
         </header>
-        <section className="px-4 lg:px-[20rem] mt-12 h-auto">
-          {blogs.map((item, index) => (
+        <div className="px-4 lg:px-[20rem] my-6 flex items-center justify-center gap-2">
+          <label className="text-lg text-indigo-700">Show my posts only</label>
+          <input
+            type="checkbox"
+            className="toggle toggle-primary"
+            onChange={handleFilterChange}
+            checked={showMyPostsOnly}
+          />
+        </div>
+
+        <section className="px-4 lg:px-[20rem] mt-6 h-auto">
+          {filteredBlogs.map((item, index) => (
             <article
               key={index}
               className="bg-white overflow-hidden rounded-lg shadow transition hover:shadow-lg p-6 mb-6"
@@ -122,10 +145,8 @@ export default function CommunityThread({ auth }) {
               <div className="flex items-center gap-3 mb-4">
                 <div className="avatar ">
                   <div className="w-10 rounded-full">
-                    {item.icon ? (
-                      <img src={`/storage/${item.icon}`} aria-hidden alt="No Image" className="h-auto w-full" />
-                    ) : (
-                      <img src={anonymous} aria-hidden alt="No Image" className="h-auto w-full" />
+                    {item.icon && (
+                      <img src={`/storage/${item.icon}`} aria-hidden alt="Icon" className="h-auto w-full" />
                     )}
                   </div>
                 </div>
@@ -135,16 +156,15 @@ export default function CommunityThread({ auth }) {
                 </div>
               </div>
               {item.image ? (
-                <img src={`/storage/${item.image}`} aria-hidden alt="No Image" className="h-auto w-full object-cover" />
+                <img src={item.image} alt={item.title || 'Blog image'} className="h-auto w-full object-cover" />
               ) : null}
-
               <div className="bg-gray-100 p-4 sm:p-6 ">
                 <h3 className="mt-0.5 text-lg text-gray-900 font-bold">{item.title}</h3>
                 <p className="mt-2 text-sm/relaxed text-gray-500 mb-2">{item.description}</p>
                 <hr className="py-2" />
 
                 <div className="mt-2 sm:flex sm:items-center sm:gap-2 w-full flex  justify-between ">
-                  <div className="flex items-center gap-1 text-gray-700 " onClick={handleViewComment}>
+                  <div className="flex items-center gap-1 text-gray-700 cursor-pointer" onClick={toggleComment}>
                     <GoCommentDiscussion />
                     <p className="text-xs">{comments[item.id] ? comments[item.id].length : 0} comments</p>
                   </div>

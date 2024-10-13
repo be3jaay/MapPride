@@ -62,7 +62,7 @@ export const AdminHotlineModal = () => {
       MySwal.fire({
         icon: 'success',
         title: 'Success',
-        text: 'Story submitted successfully.',
+        text: 'Content submitted successfully.',
       });
       reset();
     } catch (error) {

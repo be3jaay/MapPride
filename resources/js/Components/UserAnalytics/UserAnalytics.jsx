@@ -32,7 +32,7 @@ export default function UserAnalytics() {
       title: <Badge type="info" message="Community Discussion" className="text-md" />,
       icon: <FaMapMarkerAlt />,
       analytics: blog.length,
-      path: 'blogs',
+      path: 'thread',
     },
     {
       title: <Badge type="info" message="Available Resources" className="text-md" />,

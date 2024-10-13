@@ -6,9 +6,17 @@ use App\Models\Map;
 use Illuminate\Http\Request;
 use App\Models\Rating;
 use Illuminate\Support\Facades\DB;
+use Cloudinary\Cloudinary;
 
 class MapController extends Controller
 {
+    protected $cloudinary;
+
+    public function __construct(Cloudinary $cloudinary)
+    {
+        $this->cloudinary = $cloudinary;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -28,8 +36,6 @@ class MapController extends Controller
         return response()->json($maps);
     }
 
-
-
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -40,19 +46,20 @@ class MapController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'address' => 'required|string',
-            'phone' => 'required|integer|max:999999999',
+            'phone' => 'required|string|max:24',
             'services' => 'nullable|string',
             'usertype' => 'required|string',
             'username' => 'required|string|max:255',
             'is_Verified' => 'required|integer',
-
         ]);
 
+        // Upload image to Cloudinary if it exists
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            // Save the file in the 'images' directory within 'public'
-            $imagePath = $image->store('images', 'public');
-            $validatedData['image'] = $imagePath;
+            $result = $this->cloudinary->uploadApi()->upload($image->getRealPath(), [
+                'folder' => 'map_images', // Specify the folder in Cloudinary
+            ]);
+            $validatedData['image'] = $result['secure_url']; // Get the secure URL of the uploaded image
         }
 
         $validatedData['services'] = json_decode($validatedData['services'], true);
@@ -62,12 +69,12 @@ class MapController extends Controller
         return response()->json($map, 201);
     }
 
+
     /**
      * Display the specified resource.
      */
     public function show()
     {
-       
         $perPage = 1000;
         $map = Map::orderBy('created_at', 'desc')->paginate($perPage);
         return response()->json($map);
@@ -96,7 +103,7 @@ class MapController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'address' => 'required|string',
-            'phone' => 'required|integer|max:999999999',
+            'phone' => 'required|integer|max:99999999999',
             'services' => 'nullable|string',
         ]);
 
@@ -104,9 +111,16 @@ class MapController extends Controller
 
         // Handle image upload
         if ($request->hasFile('image')) {
+            // Delete old image from Cloudinary if it exists
+            if ($map->image) {
+                $publicId = basename(parse_url($map->image, PHP_URL_PATH));
+                $this->cloudinary->uploadApi()->destroy($publicId);
+            }
             $image = $request->file('image');
-            $imagePath = $image->store('images', 'public');
-            $validatedData['image'] = $imagePath;
+            $result = $this->cloudinary->uploadApi()->upload($image->getRealPath(), [
+                'folder' => 'map_images',
+            ]);
+            $validatedData['image'] = $result['secure_url'];
         }
 
         // Decode services if present
@@ -122,9 +136,11 @@ class MapController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(string $id)
     {
         $map = Map::findOrFail($id);
+
         $map->delete();
 
         return response()->json(null, 204);
@@ -158,7 +174,20 @@ class MapController extends Controller
     {
         $highestRatedMap = Map::select('maps.*', DB::raw('AVG(ratings.rating_value) as average_rating'))
             ->leftJoin('ratings', 'maps.id', '=', 'ratings.map_id')
-            ->groupBy('maps.id', 'maps.location', 'maps.longitude', 'maps.latitude', 'maps.image', 'maps.title', 'maps.description', 'maps.address', 'maps.phone', 'maps.services', 'maps.created_at', 'maps.updated_at')
+            ->groupBy(
+                'maps.id',
+                'maps.location',
+                'maps.longitude',
+                'maps.latitude',
+                'maps.image',
+                'maps.title',
+                'maps.description',
+                'maps.address',
+                'maps.phone',
+                DB::raw('maps.services::text'), // Cast services to text
+                'maps.created_at',
+                'maps.updated_at'
+            )
             ->orderByDesc('average_rating')
             ->first();
 
