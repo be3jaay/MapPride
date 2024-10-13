@@ -77,7 +77,7 @@ export const AdminEditHotline = ({ hotline, isOpen, onClose }) => {
         MySwal.fire({
           icon: 'success',
           title: 'Success',
-          text: 'Support content updated successfully.',
+          text: 'Hotline content updated successfully.',
         });
         reset();
         onClose();

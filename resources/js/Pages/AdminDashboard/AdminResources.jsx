@@ -15,8 +15,8 @@ export default function AdminDashboard({ auth }) {
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <Alert
               type="info"
-              message="Experience Content Management"
-              description="In this section, the administrator will approve/decline user's experience that will be shown for experience module."
+              message="Resources Content Management"
+              description="In this section, the administrator will create the resources cards that will be shown for resources module."
             />
           </div>
           <div className="my-4 flex gap-1">

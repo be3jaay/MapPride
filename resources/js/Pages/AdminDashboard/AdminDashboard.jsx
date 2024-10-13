@@ -14,8 +14,8 @@ export default function AdminDashboard({ auth }) {
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <Alert
               type="info"
-              message="Dashboard"
-              description="In this section, you will be able to see the data analytics of the web application"
+              message="Admin Dashboard"
+              description="In this section, admin will be able to see the data analytics of the web application"
             />
           </div>
         </div>

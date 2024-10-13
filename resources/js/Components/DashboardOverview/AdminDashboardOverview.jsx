@@ -48,11 +48,14 @@ export const AdminDashboardOverview = () => {
       const average = totalFeedbackValue / feedbackData.length || 0;
       setAverageRating(average.toFixed(1));
     };
+
     const fetchHighestRatedMap = async () => {
       try {
         const response = await axios.get('/api/maps/highest-rated');
         if (response.data?.highest_rated_map) {
-          setHighestRatedMap(response.data.highest_rated_map);
+          const highestRatedMap = response.data.highest_rated_map;
+          highestRatedMap.average_rating = parseFloat(highestRatedMap.average_rating).toFixed(2);
+          setHighestRatedMap(highestRatedMap);
         }
       } catch (error) {
         console.error('Error fetching highest rated map:', error);
