@@ -172,7 +172,7 @@ class MapController extends Controller
 
     public function getHighestRatedMap()
     {
-        $highestRatedMap = Map::select('maps.*', DB::raw('AVG(ratings.rating_value) as average_rating'))
+        $highestRatedMap = Map::select('maps.*', DB::raw('COALESCE(AVG(ratings.rating_value), 0) as average_rating'))
             ->leftJoin('ratings', 'maps.id', '=', 'ratings.map_id')
             ->groupBy(
                 'maps.id',
