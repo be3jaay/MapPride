@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hotlines', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->string('phoneNumber');
-            $table->timestamps();
+        Schema::table('supports', function (Blueprint $table) {
+            $table->string('phoneNumber')->change();
+            $table->string('service')->after('description');
         });
     }
 
@@ -25,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hotlines');
+        Schema::table('supports', function (Blueprint $table) {
+            $table->integer('phoneNumber')->change();
+            $table->dropColumn('service');
+        });
     }
 };

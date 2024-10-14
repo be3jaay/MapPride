@@ -11,7 +11,7 @@ class SupportController extends Controller
 
     public function index()
     {
-        $perPage = 10; 
+        $perPage = 10;
         $support = Support::orderBy('created_at', 'desc')->paginate($perPage);
         return response()->json($support);
     }
@@ -21,7 +21,8 @@ class SupportController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'phoneNumber' => 'required|integer'
+            'service' => 'required|string|max:255',
+            'phoneNumber' => 'required|string|max:255'
         ]);
 
         $support = Support::create($validatedData);
@@ -35,7 +36,8 @@ class SupportController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'phoneNumber' => 'required|integer|max:999999999',
+            'service' => 'required|string|max:255',
+            'phoneNumber' => 'required|string|max:255'
         ]);
 
         // Find the training record

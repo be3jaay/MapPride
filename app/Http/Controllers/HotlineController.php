@@ -10,7 +10,7 @@ class HotlineController extends Controller
     //
     public function index()
     {
-        $perPage = 10; 
+        $perPage = 10;
         $hotline = Hotline::orderBy('created_at', 'desc')->paginate($perPage);
         return response()->json($hotline);
     }
@@ -20,7 +20,7 @@ class HotlineController extends Controller
         $validateData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'phoneNumber' => 'required|integer|max:99999999999'
+            'phoneNumber' => 'required|string|max:255'
         ]);
 
         $hotline = Hotline::create($validateData);
@@ -33,7 +33,7 @@ class HotlineController extends Controller
         $validateData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'phoneNumber' => 'required|integer'
+            'phoneNumber' => 'required|string|max:255'
         ]);
 
         $hotline = Hotline::find($id);
@@ -43,7 +43,7 @@ class HotlineController extends Controller
         }
 
         $hotline->update($validateData);
-        
+
         return response()->json($hotline, 200);
     }
 
@@ -51,12 +51,10 @@ class HotlineController extends Controller
     {
         $hotline = Hotline::find($id);
 
-        if(!$hotline)
-        {
+        if (!$hotline) {
             return response()->json(['message' => 'Hotline content not found'], 404);
         }
         $hotline->delete();
         return response()->json($hotline, 200);
     }
-
 }
