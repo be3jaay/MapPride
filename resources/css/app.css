@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html{
+html {
   scroll-behavior: smooth;
 }
 
@@ -23,7 +23,7 @@ html{
   border: 1px solid var(--color);
   border-bottom: 1px solid transparent;
   border-radius: 100%;
-  animation: keyframes-rotate .8s infinite linear;
+  animation: keyframes-rotate 0.8s infinite linear;
 }
 
 .loader svg {
@@ -31,7 +31,7 @@ html{
   height: 100%;
   padding: 25%;
   fill: var(--color);
-  animation: keyframes-blink .8s infinite ease-in-out;
+  animation: keyframes-blink 0.8s infinite ease-in-out;
 }
 
 @keyframes keyframes-rotate {
