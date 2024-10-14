@@ -65,7 +65,7 @@ export const SupportOverview = () => {
                 </div>
                 <div className="mt-4">
                   <p className="text-pretty text-sm text-gray-500">{support.description}</p>
-                  <p className="text-pretty text-sm text-gray-500">{support.service}</p>
+                  <p className="text-pretty text-sm text-gray-500">Services: {support.service}</p>
                 </div>
                 <dl className="mt-6 flex gap-4 sm:gap-6">
                   <div className="flex flex-col-reverse">
