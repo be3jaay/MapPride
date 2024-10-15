@@ -178,7 +178,7 @@ export const Mapping = ({ auth }) => {
                               Available Services: {item.services.join(', ')}
                             </span>
                             <span className="mb-2 text-pretty text-sm text-gray-700 font-bold flex items-center">
-                              Contact Number: +63 {item.phone}
+                              Contact Number: {item.phone}
                             </span>
                             <span className="mr-2 text-pretty text-xl text-indigo-700 font-bold flex items-center">
                               Ratings:{' '}
