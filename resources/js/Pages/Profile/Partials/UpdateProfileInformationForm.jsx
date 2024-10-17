@@ -80,6 +80,23 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
     }
   };
 
+  useEffect(() => {
+    if (user.profile_picture) {
+      setPreviewUrl(user.profile_picture);
+    }
+  }, [user.profile_picture]);
+
+  const handleProfilePictureChange = event => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <section className={'w-full'}>
       <header>
@@ -145,9 +162,10 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
           <div className="shrink-0">
             <img
               className="h-16 w-16 object-cover rounded-full"
-              src={previewUrl || (user.profile_picture ? user.profile_picture : '/default-avatar.png')}
+              src={previewUrl || '/default-avatar.png'}
               alt={user.name || 'User'}
             />
+            <input type="file" onChange={handleProfilePictureChange} />
           </div>
           <label className="block">
             <span className="sr-only">Choose profile photo</span>

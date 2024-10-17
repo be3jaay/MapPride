@@ -88,7 +88,7 @@ export const ForumModal = () => {
       MySwal.fire({
         icon: 'success',
         title: 'Success',
-        text: 'Content submitted successfully.',
+        text: 'Please wait for the admin to approved your story. Thank You.',
       });
       closeModal();
       reset();
