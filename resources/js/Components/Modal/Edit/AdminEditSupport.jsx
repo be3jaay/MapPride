@@ -28,6 +28,13 @@ const EditSupportForms = ({ handleSubmit, handleUpdate, register, errors, isSubm
         name="phoneNumber"
         errors={errors}
       />
+      <TextField
+        label="Services"
+        placeholder="Type your services here..."
+        register={register}
+        name="service"
+        errors={errors}
+      />
       <PrimaryButton
         className="flex items-center  w-full justify-center py-4 text-white "
         disabled={isSubmitting}
@@ -80,6 +87,7 @@ export const AdminEditSupport = ({ support, isOpen, onClose }) => {
       title: support.title,
       description: support.description,
       phoneNumber: support.phoneNumber,
+      service: support.service,
     });
   }, [support, reset]);
 
