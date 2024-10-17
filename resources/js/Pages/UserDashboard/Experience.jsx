@@ -38,7 +38,6 @@ export default function Experience({ auth }) {
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Experience" />
-
       <div className=" py-4 lg:py-12">
         <div className="w-full px-4  sm:px-6 lg:px-8">
           <div className="bg-indigo-200  overflow-hidden shadow-sm sm:rounded-lg">

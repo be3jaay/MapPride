@@ -136,7 +136,7 @@ export const Mapping = ({ auth }) => {
           <input type="checkbox" className="toggle toggle-primary" defaultChecked onChange={handleFilter} />
         </div>
       </div>
-      <MapContainer center={[14.2127, 121.1639]} zoom={14} scrollWheelZoom className="h-[44rem]">
+      <MapContainer center={[14.2127, 121.1639]} zoom={14} scrollWheelZoom className="h-[60rem]">
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

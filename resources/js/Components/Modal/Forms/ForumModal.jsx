@@ -110,7 +110,7 @@ export const ForumModal = () => {
 
   return (
     <div>
-      <PrimaryButton onClick={handleOpen} className="py-4 px-6">
+      <PrimaryButton onClick={handleOpen} className="w-full md:w-56 py-4 px-6">
         Share Story <MdForum className="ml-2" />
       </PrimaryButton>
       <Modal show={isOpen} onClose={handleClose}>

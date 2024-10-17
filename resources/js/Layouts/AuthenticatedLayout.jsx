@@ -110,9 +110,9 @@ export default function Authenticated({ header, children }) {
       <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
         {header && (
           <header className="bg-indigo-50 border-b border-gray-200">
-            <div className="bg-indigo-700 px-4 py-3 text-white flex items-center justify-center gap-2">
+            <div className="flex-col lg:flex-row bg-indigo-700 px-4 py-3 text-white flex items-center justify-center gap-2">
               <FaCircleInfo />
-              <p className="text-center text-sm font-medium">
+              <p className="text-center text-[.7rem] md:text-sm font-medium">
                 Please be respectful to others and avoid any inappropriate behavior to help keep this community clean
                 and welcoming for everyone.
               </p>

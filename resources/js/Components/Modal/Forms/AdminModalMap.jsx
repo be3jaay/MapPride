@@ -114,7 +114,7 @@ export const AdminModalMap = ({ auth }) => {
 
   return (
     <div>
-      <PrimaryButton onClick={handleOpen} className="py-4 px-12 flex items-center">
+      <PrimaryButton onClick={handleOpen} className="w-full py-4 px-12 flex items-center">
         {user.usertype === 'admin' ? 'Add Marker' : 'Contribute to Map'}
       </PrimaryButton>
       <Modal show={isOpen} onClose={handleClose}>
