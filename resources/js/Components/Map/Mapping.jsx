@@ -242,8 +242,10 @@ export const Mapping = ({ auth }) => {
                             <div className="w-full">
                               <div className="flex items-center justify-between">
                                 <h3 className="text-xl font-bold text-indigo-700 sm:text-xl">{item.name}</h3>
-                                <Badge message="Verified" type="success" className="mr-2" />
-                                <Badge message="Google" type="info" />
+                                <div className="flex items-center">
+                                  <Badge message="Verified" type="success" className="mr-2" />
+                                  <Badge message="Google" type="info" />
+                                </div>
                               </div>
                               <p className="text-md">{item.vicinity}</p>
                               <hr className="w-full mb-4" />
