@@ -102,22 +102,17 @@ export default function CommunityThread({ auth }) {
   const formattedDate = dateString => {
     return getFormattedDate(dateString);
   };
-
   const handleFilterChange = () => {
     setShowMyPostsOnly(!showMyPostsOnly);
   };
 
   const filteredBlogs = showMyPostsOnly ? blogs.filter(blog => blog.username === user.name) : blogs;
 
-  const getProfilePictureUrl = icon => {
-    return icon ? `/storage/${icon}` : '/default-avatar.png';
-  };
-
   return (
     <AuthenticatedLayout user={user}>
       <div className="w-full bg-indigo-50 h-full">
         <header className="w-full px-4 lg:px-[20rem] border-b border-indigo-700 bg-indigo-50">
-          <div className="w-full py-8 sm:py-12">
+          <div className="w-full  py-8 sm:py-12 ">
             <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <h1 className="text-2xl text-center md:text-start font-bold text-indigo-700 sm:text-3xl">
@@ -148,9 +143,13 @@ export default function CommunityThread({ auth }) {
               className="bg-white overflow-hidden rounded-lg shadow transition hover:shadow-lg p-6 mb-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="avatar">
+                <div className="avatar ">
                   <div className="w-10 rounded-full">
-                    <img src={getProfilePictureUrl(item.icon)} aria-hidden alt="Icon" className="h-auto w-full" />
+                    {item.icon ? (
+                      <img src={item.icon} alt={item.title || 'Icon'} className="h-auto w-full" />
+                    ) : (
+                      <img src={anonymous} aria-hidden alt="Icon" className="h-auto w-full" />
+                    )}
                   </div>
                 </div>
                 <div>
@@ -161,23 +160,23 @@ export default function CommunityThread({ auth }) {
               {item.image ? (
                 <img src={item.image} alt={item.title || 'Blog image'} className="h-auto w-full object-cover" />
               ) : null}
-              <div className="bg-gray-100 p-4 sm:p-6">
+              <div className="bg-gray-100 p-4 sm:p-6 ">
                 <h3 className="mt-0.5 text-lg text-gray-900 font-bold">{item.title}</h3>
                 <p className="mt-2 text-sm/relaxed text-gray-500 mb-2">{item.description}</p>
                 <hr className="py-2" />
 
-                <div className="mt-2 sm:flex sm:items-center sm:gap-2 w-full flex justify-between">
+                <div className="mt-2 sm:flex sm:items-center sm:gap-2 w-full flex  justify-between ">
                   <div className="flex items-center gap-1 text-gray-700 cursor-pointer" onClick={toggleComment}>
                     <GoCommentDiscussion />
                     <p className="text-xs">{comments[item.id] ? comments[item.id].length : 0} comments</p>
                   </div>
                   {!toggle ? (
                     <SecondaryButton onClick={handleViewComment}>
-                      <FaEye className="text-2xl text-black cursor-pointer" />
+                      <FaEye className="text-2xl text-black cursor-pointer " />
                     </SecondaryButton>
                   ) : (
                     <SecondaryButton onClick={handleHideComment}>
-                      <FaRegEyeSlash className="text-2xl text-black cursor-pointer" />
+                      <FaRegEyeSlash className="text-2xl text-black cursor-pointer " />
                     </SecondaryButton>
                   )}
                 </div>
@@ -192,14 +191,18 @@ export default function CommunityThread({ auth }) {
                             className="p-2 md:p-6 bg-white rounded-md mb-2 w-[16rem] md:w-full flex items-start justify-start flex-col gap-3"
                           >
                             <div className="flex items-center justify-start">
-                              <div className="avatar">
+                              <div className="avatar ">
                                 <div className="w-10 rounded-full">
-                                  <img
-                                    src={getProfilePictureUrl(comment.icon)}
-                                    aria-hidden
-                                    alt="No Image"
-                                    className="h-auto w-full"
-                                  />
+                                  {comment.icon ? (
+                                    <img
+                                      src={comment.icon}
+                                      aria-hidden
+                                      alt={comment.icon || 'Icon'}
+                                      className="h-auto w-full"
+                                    />
+                                  ) : (
+                                    <img src={anonymous} aria-hidden alt="Icon" className="h-auto w-full" />
+                                  )}
                                 </div>
                               </div>
                               <p className="text-sm text-indigo-700 font-bold ml-4">{comment.username}</p>
@@ -213,9 +216,9 @@ export default function CommunityThread({ auth }) {
                   </div>
                 )}
                 <div className="w-full items-end justify-end flex">
-                  <PrimaryButton className="py-3 px-6 mt-6" onClick={() => handleOpenCommentModal(item.id)}>
+                  <PrimaryButton className="py-3 px-6 mt-6 " onClick={() => handleOpenCommentModal(item.id)}>
                     Add Comment
-                    <FaReply className="ml-2" />
+                    <FaReply className=" ml-2" />
                   </PrimaryButton>
                 </div>
               </div>
