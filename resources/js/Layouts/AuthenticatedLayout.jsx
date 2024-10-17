@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import { Link, usePage } from '@inertiajs/react';
@@ -12,12 +12,18 @@ import anonymous from '../../core/images/anonymous.png';
 export default function Authenticated({ header, children }) {
   const { auth } = usePage().props;
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+  const [profilePictureUrl, setProfilePictureUrl] = useState(null);
+
+  useEffect(() => {
+    if (auth.user.profile_picture) {
+      setProfilePictureUrl(auth.user.profile_picture);
+    } else {
+      setProfilePictureUrl('../../core/images/about.png');
+    }
+  }, [auth.user.profile_picture]);
 
   const getProfilePictureUrl = () => {
-    if (auth.user.profile_picture) {
-      return `/storage/${auth.user.profile_picture}`;
-    }
-    return '../../core/images/about.png';
+    return profilePictureUrl;
   };
 
   const toggleSidebar = useCallback(() => {

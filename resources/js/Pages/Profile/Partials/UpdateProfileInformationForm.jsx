@@ -86,17 +86,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
     }
   }, [user.profile_picture]);
 
-  const handleProfilePictureChange = event => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   return (
     <section className={'w-full'}>
       <header>
@@ -165,7 +154,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
               src={previewUrl || '/default-avatar.png'}
               alt={user.name || 'User'}
             />
-            <input type="file" onChange={handleProfilePictureChange} />
           </div>
           <label className="block">
             <span className="sr-only">Choose profile photo</span>

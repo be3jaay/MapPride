@@ -5,19 +5,26 @@ import { AdminHeaderData } from '../../core/constant';
 import { FaChevronDown } from 'react-icons/fa6';
 import ally from '../../core/images/ally.png';
 import { route } from 'ziggy-js';
+import { useState, useEffect } from 'react';
 
 export default function AdminAuthenticated({ user, header, children }) {
   const { auth } = usePage().props;
+  const [profilePictureUrl, setProfilePictureUrl] = useState(null);
 
   if (!user) {
     return <div>Loading...</div>;
   }
 
-  const getProfilePictureUrl = () => {
+  useEffect(() => {
     if (auth.user.profile_picture) {
-      return `/storage/${auth.user.profile_picture}`;
+      setProfilePictureUrl(auth.user.profile_picture);
+    } else {
+      setProfilePictureUrl('../../core/images/about.png');
     }
-    return '../../core/images/about.png';
+  }, [auth.user.profile_picture]);
+
+  const getProfilePictureUrl = () => {
+    return profilePictureUrl;
   };
 
   return (
@@ -42,7 +49,7 @@ export default function AdminAuthenticated({ user, header, children }) {
           <div className="avatar">
             <div className="w-10 rounded-full">
               <Link href={route('profile.edit')}>
-                <img src={getProfilePictureUrl()} alt="No-PFP" />
+                <img src={getProfilePictureUrl()} alt="Profile Picture" />
               </Link>
             </div>
           </div>
