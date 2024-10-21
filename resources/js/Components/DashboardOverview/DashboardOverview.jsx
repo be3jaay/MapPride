@@ -30,17 +30,18 @@ export const DashboardOverview = () => {
         <UserAnalytics />
       </div>
       {highestRatedMap && (
-        <div className="w-full flex items-center justify-center flex-col my-6">
-          <Alert message=" Featured as the highest rated inclusive environment" type="info" />
-
+        <div className="w-full flex items-center justify-center flex-col">
+          <div className=" my-4">
+            <Alert message=" Featured as the highest rated inclusive environment" type="info" />
+          </div>
           <article className="rounded-lg mt-6 w-full flex items-center justify-center">
             <div className="card w-full bg-white flex items-center justify-center">
-              <div className="w-full">
+              <div className="w-full ">
                 <img
                   src={highestRatedMap.image ? highestRatedMap.image : '/path/to/default/image.jpg'}
                   aria-hidden
                   alt="Map Image"
-                  className="h-[30rem] w-full"
+                  className="h-[30rem] w-[50rem]"
                 />
               </div>
               <div className="w-full card-body shadow-lg relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 ">
