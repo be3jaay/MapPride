@@ -37,6 +37,7 @@ Route::apiResource('experience', ExperienceController::class);
 Route::put('/experience/{id}/approve', [ExperienceController::class, 'approve']);
 Route::put('/experience/{id}/decline', [ExperienceController::class, 'decline']);
 Route::get('/experience/approved', [ExperienceController::class, 'getApproved']);
+Route::get('/experience/view-all', [ExperienceController::class, 'show']);
 
 Route::apiResource('tabs', TabsController::class);
 
