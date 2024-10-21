@@ -21,7 +21,7 @@ export const LineGraph = () => {
   useEffect(() => {
     const fetchStory = async () => {
       const response = await axios.get('/api/experience/view-all');
-      setLineData(response.data.data);
+      setLineData(response.data);
     };
     fetchStory();
   }, []);
