@@ -30,7 +30,7 @@ export const DashboardOverview = () => {
         <UserAnalytics />
       </div>
       {highestRatedMap && (
-        <div className="w-[30rem] flex items-center justify-center">
+        <div className="w-[30rem] flex items-center justify-center flex-col">
           <Alert message=" Featured as the highest rated inclusive environment" type="info" />
 
           <article className="rounded-lg mt-6 w-full flex items-center justify-center">
