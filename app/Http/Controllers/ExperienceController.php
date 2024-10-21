@@ -9,15 +9,16 @@ class ExperienceController extends Controller
 {
     public function index()
     {
-        $perPage = 10; 
+        $perPage = 10;
         $experiences = Experience::orderBy('created_at', 'desc')->paginate($perPage);
         return response()->json($experiences);
     }
 
-    public function show($id)
+    public function show()
     {
-        $experience = Experience::findOrFail($id);
-        return response()->json($experience);
+        $perPage = 1000;
+        $experiences = Experience::orderBy('created_at', 'desc')->paginate($perPage);
+        return response()->json($experiences);
     }
 
     public function store(Request $request)

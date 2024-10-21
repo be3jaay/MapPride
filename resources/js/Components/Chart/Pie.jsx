@@ -10,7 +10,7 @@ export const PieGraph = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get('/api/users');
+      const response = await axios.get('/api/users/view-all');
       setPieData(response.data.data);
     };
     fetchData();
