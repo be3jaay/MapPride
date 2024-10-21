@@ -11,7 +11,7 @@ export const BarGraph = () => {
   useEffect(() => {
     const fetchStory = async () => {
       const response = await axios.get('/api/experience/view-all');
-      setBarData(response.data);
+      setBarData(response.data.data);
     };
     fetchStory();
   }, []);
