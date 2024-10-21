@@ -108,7 +108,7 @@ export default function BlogModal({ auth }) {
 
   return (
     <div>
-      <PrimaryButton onClick={handleOpen} className="py-4 px-6 ">
+      <PrimaryButton onClick={handleOpen} className="w-full py-4 px-6 ">
         Add Post <IoMdAddCircle className="text-lg ml-2  " />
       </PrimaryButton>
       <Modal show={isOpen} onClose={handleClose}>

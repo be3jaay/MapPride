@@ -35,6 +35,13 @@ const AdminSupportForm = ({ handleSubmit, onSubmit, register, errors, isSubmitti
         name="phoneNumber"
         errors={errors}
       />
+      <TextField
+        label="Services"
+        placeholder="Type your services here..."
+        register={register}
+        name="service"
+        errors={errors}
+      />
       <PrimaryButton className="w-full justify-center py-4" disabled={processing} type="submit">
         {isSubmitting ? 'Submitting...' : 'Submit'}
       </PrimaryButton>

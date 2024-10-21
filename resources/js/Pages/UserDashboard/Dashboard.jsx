@@ -12,12 +12,15 @@ export default function Dashboard({ auth }) {
       header={
         <header>
           <div className="mx-auto w-full lg:px-8">
-            <div className="sm:flex sm:items-center sm:justify-between">
+            <div className="lg:flex lg:items-center lg:justify-between">
               <div className="text-start sm:text-left">
-                <h1 className="text-lg  font-bold text-indigo-700 sm:text-3xl">Welcome, {user.name}</h1>
-                <p className="mt-1.5 text-md text-gray-600">I hope you&apos;re doing good, best of luck! 🎉</p>
+                <h1 className="text-lg  font-bold text-indigo-700 sm:text-3xl">Hello, {user.name}! 👋</h1>
+                <p className="mt-1.5 text-sm text-slate-600">
+                  I hope this message finds you well. Wishing you the best of luck in all your endeavors—let&apos;s make
+                  great things happen!"
+                </p>
               </div>
-              <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
+              <div className="mt-4 flex flex-col gap-4 lg:mt-0 sm:flex-row sm:items-center">
                 <AdminModalMap auth={auth} />
               </div>
             </div>

@@ -65,11 +65,12 @@ export const SupportOverview = () => {
                 </div>
                 <div className="mt-4">
                   <p className="text-pretty text-sm text-gray-500">{support.description}</p>
+                  <p className="text-pretty text-indigo-700 mt-4">Services: {support.service}</p>
                 </div>
                 <dl className="mt-6 flex gap-4 sm:gap-6">
                   <div className="flex flex-col-reverse">
-                    <dt className="text-sm font-medium text-gray-600">+63 {support.phoneNumber}</dt>
-                    <dd className="text-md text-black font-bold">Contact Number</dd>
+                    <dt className="text-sm font-medium text-gray-600">{support.phoneNumber}</dt>
+                    <dd className="text-md text-black font-bold">Contact:</dd>
                   </div>
                 </dl>
               </div>
@@ -107,8 +108,8 @@ export const SupportOverview = () => {
                 </div>
                 <dl className="mt-6 flex gap-4 sm:gap-6">
                   <div className="flex flex-col-reverse">
-                    <dt className="text-sm font-medium text-gray-600">+63 {support.phoneNumber}</dt>
-                    <dd className="text-md text-black font-bold">Contact Number</dd>
+                    <dt className="text-sm font-medium text-gray-600">{support.phoneNumber}</dt>
+                    <dd className="text-md text-black font-bold">Contact</dd>
                   </div>
                 </dl>
               </div>

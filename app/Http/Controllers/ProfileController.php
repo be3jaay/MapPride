@@ -10,9 +10,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Cloudinary\Cloudinary;
 
 class ProfileController extends Controller
 {
+    protected $cloudinary;
+
+    public function __construct(Cloudinary $cloudinary)
+    {
+        $this->cloudinary = $cloudinary;
+    }
+
     /**
      * Display the user's profile form.
      */
@@ -29,19 +37,23 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
         if ($request->hasFile('profile_picture')) {
-            // Handle profile picture upload
-            $path = $request->file('profile_picture')->store('profile-pictures', 'public');
-            $request->user()->profile_picture = $path;
+            // Handle profile picture upload to Cloudinary
+            $profilePicture = $request->file('profile_picture');
+            $result = $this->cloudinary->uploadApi()->upload($profilePicture->getRealPath(), [
+                'folder' => 'profile_pictures', // Specify the folder in Cloudinary
+            ]);
+            $user->profile_picture = $result['secure_url'];
         }
 
-        $request->user()->save();
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

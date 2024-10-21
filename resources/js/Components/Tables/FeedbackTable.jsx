@@ -30,7 +30,7 @@ export const FeedbackTable = () => {
             <tr>
               <th style={tableHeaderStyle}>Ratings</th>
               <th style={tableHeaderStyle}>Description</th>
-              <th style={tableHeaderStyle}>Date Created</th>
+              <th style={tableHeaderStyle}>Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -42,19 +42,21 @@ export const FeedbackTable = () => {
                   </td>
                   <td style={tableStyle}>{item.description}</td>
                   <td style={tableStyle}>
-                    <PrimaryButton
-                      onClick={() => handleViewClick(item)}
-                      className="flex items-center justify-center py-2"
-                    >
-                      View
-                    </PrimaryButton>
+                    <div className="w-full flex items-center justify-center">
+                      <PrimaryButton
+                        onClick={() => handleViewClick(item)}
+                        className="flex items-center justify-center py-2"
+                      >
+                        View
+                      </PrimaryButton>
+                    </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
                 <td colSpan="5" style={tableStyle}>
-                  <Loading type={'primary'} />
+                  <span>No data available...</span>
                 </td>
               </tr>
             )}

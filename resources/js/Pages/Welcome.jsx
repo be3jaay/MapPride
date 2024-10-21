@@ -75,17 +75,12 @@ export default function Welcome({ auth }) {
                   </a>
                 ))}
                 {auth.user ? (
-                  <Link
-                    href={route('dashboard')}
-                    className="btn w-24 bg-transparent text-indigo-700 border-indigo-700 hover:bg-indigo-700 hover:text-white"
-                  >
+                  <Link href={route('dashboard')} className="text-white ">
                     Dashboard
                   </Link>
                 ) : (
                   <Link href={route('login')}>
-                    <button className="btn w-24 bg-transparent text-indigo-700 border-indigo-700 hover:bg-indigo-700 hover:text-white">
-                      Login
-                    </button>
+                    <button className="text-white ">Login</button>
                   </Link>
                 )}
               </div>

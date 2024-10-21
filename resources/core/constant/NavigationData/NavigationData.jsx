@@ -28,8 +28,4 @@ export const MobileNavigationData = [
     title: 'Services',
     path: '#services',
   },
-  {
-    title: 'Login',
-    path: '/login',
-  },
 ];

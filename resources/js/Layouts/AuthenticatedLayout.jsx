@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import { Link, usePage } from '@inertiajs/react';
@@ -7,17 +7,23 @@ import { FaChevronDown, FaBars } from 'react-icons/fa6';
 import ally from '../../core/images/ally.png';
 import { route } from 'ziggy-js';
 import { CollapsedSidebar } from '@/Components/CollapsedSidebar';
-import anonymous from '../../core/images/anonymous.png';
+import { FaCircleInfo } from 'react-icons/fa6';
 
 export default function Authenticated({ header, children }) {
   const { auth } = usePage().props;
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+  const [profilePictureUrl, setProfilePictureUrl] = useState(null);
+
+  useEffect(() => {
+    if (auth.user.profile_picture) {
+      setProfilePictureUrl(auth.user.profile_picture);
+    } else {
+      setProfilePictureUrl('../../core/images/about.png');
+    }
+  }, [auth.user.profile_picture]);
 
   const getProfilePictureUrl = () => {
-    if (auth.user.profile_picture) {
-      return `/storage/${auth.user.profile_picture}`;
-    }
-    return '../../core/images/about.png';
+    return profilePictureUrl;
   };
 
   const toggleSidebar = useCallback(() => {
@@ -32,16 +38,16 @@ export default function Authenticated({ header, children }) {
         }`}
       >
         {!isSidebarCollapsed && (
-          <div className="px-6 py-7 flex items-center justify-center">
+          <div className="px-6 py-4 flex items-center justify-center">
             <Link href="/">
-              <img src={ally} aria-hidden alt="" className="w-14 h-14" />
+              <img src={ally} aria-hidden alt="" className="w-9 h-9" />
             </Link>
           </div>
         )}
 
         <hr />
 
-        <nav className="mt-5 flex items-start justify-center flex-col gap-10">
+        <nav className="mt-2 flex items-start justify-center flex-col gap-6">
           <button
             onClick={toggleSidebar}
             className="text-indigo-700 focus:outline-none px-6 flex items-center justify-end w-full"
@@ -69,7 +75,7 @@ export default function Authenticated({ header, children }) {
         {isSidebarCollapsed ? (
           <CollapsedSidebar getProfilePictureUrl={getProfilePictureUrl} />
         ) : (
-          <div className="mt-5 px-8 flex items-end h-14">
+          <div className="px-8 flex items-end h-14">
             <div className="avatar">
               <div className="w-10 rounded-full">
                 <Link href={route('profile.edit')}>
@@ -104,6 +110,13 @@ export default function Authenticated({ header, children }) {
       <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
         {header && (
           <header className="bg-indigo-50 border-b border-gray-200">
+            <div className="flex-col lg:flex-row bg-indigo-700 px-4 py-3 text-white flex items-center justify-center gap-2">
+              <FaCircleInfo />
+              <p className="text-center text-[.7rem] md:text-sm font-medium">
+                Please be respectful to others and avoid any inappropriate behavior to help keep this community clean
+                and welcoming for everyone.
+              </p>
+            </div>
             <div className="w-full mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
           </header>
         )}

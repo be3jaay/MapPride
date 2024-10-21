@@ -34,6 +34,7 @@ export const SupportTable = () => {
               <th style={tableHeaderStyle}>Title</th>
               <th style={tableHeaderStyle}>Description</th>
               <th style={tableHeaderStyle}>Phone Number</th>
+              <th style={tableHeaderStyle}>Services</th>
               <th style={tableHeaderStyle}>Created At: </th>
               <th style={tableHeaderStyle}>Updated At: </th>
               <th style={tableHeaderStyle}>Edit</th>
@@ -47,6 +48,7 @@ export const SupportTable = () => {
                   <td style={tableStyle}>{item.title}</td>
                   <td style={tableStyle}>{item.description}</td>
                   <td style={tableStyle}>{item.phoneNumber}</td>
+                  <td style={tableStyle}>{item.service}</td>
                   <td style={tableStyle}>{formattedDate(item.created_at)}</td>
                   <td style={tableStyle}>{formattedDate(item.updated_at)}</td>
                   <td style={tableStyle}>

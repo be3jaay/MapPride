@@ -88,7 +88,7 @@ export const ForumModal = () => {
       MySwal.fire({
         icon: 'success',
         title: 'Success',
-        text: 'Content submitted successfully.',
+        text: 'Please wait for the admin to approved your story. Thank You.',
       });
       closeModal();
       reset();
@@ -110,7 +110,7 @@ export const ForumModal = () => {
 
   return (
     <div>
-      <PrimaryButton onClick={handleOpen} className="py-4 px-6">
+      <PrimaryButton onClick={handleOpen} className="w-full md:w-56 py-4 px-6">
         Share Story <MdForum className="ml-2" />
       </PrimaryButton>
       <Modal show={isOpen} onClose={handleClose}>

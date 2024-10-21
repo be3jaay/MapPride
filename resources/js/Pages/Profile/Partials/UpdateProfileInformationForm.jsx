@@ -80,6 +80,12 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
     }
   };
 
+  useEffect(() => {
+    if (user.profile_picture) {
+      setPreviewUrl(user.profile_picture);
+    }
+  }, [user.profile_picture]);
+
   return (
     <section className={'w-full'}>
       <header>
@@ -145,7 +151,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
           <div className="shrink-0">
             <img
               className="h-16 w-16 object-cover rounded-full"
-              src={previewUrl || (user.profile_picture ? user.profile_picture : '/default-avatar.png')}
+              src={previewUrl || '/default-avatar.png'}
               alt={user.name || 'User'}
             />
           </div>

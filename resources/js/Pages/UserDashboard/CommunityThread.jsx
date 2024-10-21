@@ -145,8 +145,10 @@ export default function CommunityThread({ auth }) {
               <div className="flex items-center gap-3 mb-4">
                 <div className="avatar ">
                   <div className="w-10 rounded-full">
-                    {item.icon && (
-                      <img src={`/storage/${item.icon}`} aria-hidden alt="Icon" className="h-auto w-full" />
+                    {item.icon ? (
+                      <img src={item.icon} alt={item.title || 'Icon'} className="h-auto w-full" />
+                    ) : (
+                      <img src={anonymous} aria-hidden alt="Icon" className="h-auto w-full" />
                     )}
                   </div>
                 </div>
@@ -191,12 +193,16 @@ export default function CommunityThread({ auth }) {
                             <div className="flex items-center justify-start">
                               <div className="avatar ">
                                 <div className="w-10 rounded-full">
-                                  <img
-                                    src={`/storage/${comment.icon}`}
-                                    aria-hidden
-                                    alt="No Image"
-                                    className="h-auto w-full"
-                                  />
+                                  {comment.icon ? (
+                                    <img
+                                      src={comment.icon}
+                                      aria-hidden
+                                      alt={comment.icon || 'Icon'}
+                                      className="h-auto w-full"
+                                    />
+                                  ) : (
+                                    <img src={anonymous} aria-hidden alt="Icon" className="h-auto w-full" />
+                                  )}
                                 </div>
                               </div>
                               <p className="text-sm text-indigo-700 font-bold ml-4">{comment.username}</p>
